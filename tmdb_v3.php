@@ -1,11 +1,3 @@
-<!DOCTYPE html>
-<html>
-  <head>
-
-    <title>.</title>
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta charset="utf-8" />
-</head>
 <?php
 	// phpinfo();
 /**

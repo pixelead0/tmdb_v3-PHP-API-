@@ -10,11 +10,19 @@
 * @date 2012-02-12
 * @link http://www.github.com/adangq
 * @version 0.0.1
+* @license BSD http://www.opensource.org/licenses/bsd-license.php
 *
-* @license  @license BSD http://www.opensource.org/licenses/bsd-license.php
 *
-*/
-/*
+* Portions of this file are based on pieces of TMDb PHP API class - API 'themoviedb.org'
+* @Copyright Jonas De Smet - Glamorous | https://github.com/glamorous/TMDb-PHP-API
+* Licensed under BSD (http://www.opensource.org/licenses/bsd-license.php)
+* @date 10.12.2010
+* @version 0.9.10
+* @author Jonas De Smet - Glamorous
+* @link {https://github.com/glamorous/TMDb-PHP-API}
+*
+*
+*
 * Function List
 * 	1.
 * 	2.

@@ -59,7 +59,7 @@
 
 
 ###########################
-$apikey="32bb20c068a8d5e90a7996241f7f81af";
+$apikey="YOUR APIKEY";
 $tmdb_V3 = new TMDBv3($apikey);
 
 # Url de las imagenes

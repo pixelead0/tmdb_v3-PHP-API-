@@ -1,4 +1,14 @@
-# THE MOVIE DB V3 PHP API #
+## NOTE ## 
+
+Some lines of this class is _NOT_ my code.  
+I simply updated it for the API version 3 from the TMDb PHP API class - API 'themoviedb.
+The author of the module "TMDb PHP API class - API 'themoviedb." is Jonas De Smet (Glamorous)
+the original code is avaible in https://github.com/glamorous/TMDb-PHP-API/blob/master/TMDb.php
+
+ I _DO_ maintain this code, and Jonas De Smet has nothing to do with the update of this code.  
+ Any questions directly related to this class library should be directed to me.
+
+
 
 ## Requirements ##
 

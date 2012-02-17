@@ -1,31 +1,40 @@
 ## CREDITS  ##
 
-/**
-* TMDB API v3 PHP class - wrapper to API version 3 of 'themoviedb.org
-* API Documentation: http://help.themoviedb.org/kb/api/about-3
-* Documentation and usage in README file
-*
-* @pakage TMDB_V3_API_PHP
-* @author adangq <adangq@gmail.com>
-* @copyright 2012 adangq
-* @date 2012-02-12
-* @link http://www.github.com/adangq
-* @version 0.0.1
-* @license BSD http://www.opensource.org/licenses/bsd-license.php
-*
-*
-* Portions of this file are based on pieces of TMDb PHP API class - API 'themoviedb.org'
-* @Copyright Jonas De Smet - Glamorous | https://github.com/glamorous/TMDb-PHP-API
-* Licensed under BSD (http://www.opensource.org/licenses/bsd-license.php)
-* @date 10.12.2010
-* @version 0.9.10
-* @author Jonas De Smet - Glamorous
-* @link {https://github.com/glamorous/TMDb-PHP-API}
-*/
+ TMDB API v3 PHP class - wrapper to API version 3 of 'themoviedb.org
+ 
+ API Documentation: http://help.themoviedb.org/kb/api/about-3
+ 
+ Documentation and usage in README file
+
+ @pakage TMDB_V3_API_PHP
+ 
+ @author adangq <adangq@gmail.com>
+ 
+ @copyright 2012 adangq
+ 
+ @date 2012-02-12
+ 
+ @link http://www.github.com/adangq
+ 
+ @version 0.0.1
+ 
+ @license BSD http://www.opensource.org/licenses/bsd-license.php
 
 
-
-
+ Portions of this file are based on pieces of TMDb PHP API class - API 'themoviedb.org'
+ 
+ @Copyright Jonas De Smet - Glamorous | https://github.com/glamorous/TMDb-PHP-API
+ 
+ Licensed under BSD (http://www.opensource.org/licenses/bsd-license.php)
+ 
+ @date 10.12.2010
+ 
+ @version 0.9.10
+ 
+ @author Jonas De Smet - Glamorous
+ 
+ @link {https://github.com/glamorous/TMDb-PHP-API}
+ 
 
 ## Requirements ##
 

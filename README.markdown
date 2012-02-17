@@ -1,4 +1,4 @@
-# TMDB V3 PHP API #
+# THE MOVIE DB V3 PHP API #
 
 ## Requirements ##
 

@@ -1,47 +1,127 @@
-###########################
-$apikey="YOUR APIKEY";
-$tmdb_V3 = new TMDBv3($apikey);
+# TMDB V3 PHP API #
 
-# Url de las imagenes
-echo "URL DE IMAGENES:";
-echo"<pre>";var_dump( $tmdb_V3->getImageURL());echo"</pre>";
+## Requirements ##
 
-# Buscar Pelicula
-echo "BUSCA PELICULA";
-$buscar = $tmdb_V3->searchMovie('back to the future','cl');
-echo"<pre>";print_r($buscar);echo"</pre>";
+- PHP 5.2.x or higher
+- cURL
+- TMDB API-key
 
-# Info de  Pelicula
-$idMovie=11;
-#Info
-echo "DETALLES DE PELICULA";
-$pelinfo = $tmdb_V3->movieDetail($idMovie);
-echo"<pre>";print_r($pelinfo);echo"</pre>";
+## How to use ##
 
-#casts
-echo "CASTING";
-$pelinfo = $tmdb_V3->movieCast($idMovie);
-echo"<pre>";print_r($pelinfo);echo"</pre>";
+### Initialize the class ###
 
-#images
-echo "IMAGENES";
-$pelinfo = $tmdb_V3->moviePoster($idMovie);
-echo"<pre>";print_r($pelinfo);echo"</pre>";
+    <?php
+	    include('tmdb_v3.php');
+	    
+		//Insert your api key of TMDB    
+		$apikey="YOUR_APIKEY";
 
-#trailers
-echo "TRAILERS";
-$pelinfo = $tmdb_V3->movieTrailer($idMovie);
-echo"<pre>";print_r($pelinfo);echo"</pre>";//trailers
+		$tmdb_V3 = new TMDBv3($apikey);	?>
 
-#translations
-echo "TRANSLATIONS";
-$pelinfo = $tmdb_V3->movieTrans($idMovie);
-echo"<pre>";print_r($pelinfo);echo"</pre>";//trailers
+	?>
 
-#alternative_titles
-echo "ALTERNATIVE_TITLES";
-$pelinfo = $tmdb_V3->movieTitles($idMovie);
-echo"<pre>";print_r($pelinfo);echo"</pre>";//trailers
+### Search a Movie ###
+
+    <?php
+		//Title to search for
+		$title = 'back to the future';
+		$language='es'
+
+		$searchTitle = $tmdb_V3->searchMovie('$title','$language');
+
+		// return array
+		echo"<pre>";print_r($searchTitle);echo"</pre>";
+
+    ?>
 
 
-###########################
+## GET IMAGE URL IN CONFIGUTATION API ##
+	<?php
+		$imageURL= $tmdb_V3->getImageURL();
+
+		// return array
+		echo"<pre>";print_r($imageURL);echo"</pre>";
+	?>
+
+## Movie Info  ##
+
+	<?php
+		$idMovie=11;
+
+		#Info
+		$movieInfo = $tmdb_V3->movieDetail($idMovie);
+
+		// return array
+		echo"<pre>";print_r($movieInfo);echo"</pre>";
+	?>
+
+## casts ##
+	<?php
+		$idMovie=11;
+		$movieCast = $tmdb_V3->movieCast($idMovie);
+	
+		// return array
+		echo"<pre>";print_r($movieCast);echo"</pre>";
+	?>
+
+## images names ##
+	<?php
+		$idMovie=11;
+		$moviePoster = $tmdb_V3->moviePoster($idMovie);
+
+		// return array
+		echo"<pre>";print_r($moviePoster);echo"</pre>";
+	?>
+
+## trailers ##
+	<?php
+		$idMovie=11;
+
+		$movieTrailer = $tmdb_V3->movieTrailer($idMovie);
+
+		// return array
+		echo"<pre>";print_r($movieTrailer);echo"</pre>";
+	?>
+
+## translations ##
+	<?php
+		$idMovie=11;
+
+		$movieTrans = $tmdb_V3->movieTrans($idMovie);
+
+		// return array
+		echo"<pre>";print_r($movieTrans);echo"</pre>";
+	?>
+
+## alternative_titles ##
+	<?php
+		$idMovie=11;
+
+		$movieTitles = $tmdb_V3->movieTitles($idMovie);
+
+		// return array
+		echo"<pre>";print_r($movieTitles);echo"</pre>";
+	?>
+
+## Issues/Bugs ##
+
+We didn't find any bugs (yet). If you find one, please inform us with the issue tracker on [github](http://github.com/glamorous/TMDb-PHP-API/issues).
+
+## Changelog ##
+
+
+**TMDb 0.0.1**
+
+- This is the first version of the class without inline documentation or testing   
+
+## TO DO ##
+
+Comment the code.
+Documentation.
+
+
+## License ##
+
+This plugin has a [BSD License](http://www.opensource.org/licenses/bsd-license.php). You can find the license in license.txt that is included with class-package
+
+

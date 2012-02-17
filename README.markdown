@@ -1,4 +1,4 @@
-## CREDITS  ## 
+## CREDITS  ##
 
 Some lines of this class is _NOT_ my code.  
 

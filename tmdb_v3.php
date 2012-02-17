@@ -7,7 +7,6 @@
 <meta charset="utf-8" />
 </head>
 <?php
-	// phpinfo();
 /**
 * TMDB API v3 PHP class - wrapper to API version 3 of 'themoviedb.org
 * API Documentation: http://help.themoviedb.org/kb/api/about-3
@@ -20,26 +19,14 @@
 * @link http://www.github.com/adangq
 * @version 0.0.1
 *
-* @license GNU General Public License 3.0
+* @license  @license BSD http://www.opensource.org/licenses/bsd-license.php
 *
-* This program is free software: you can redistribute it and/or modify
-* it under the terms of the GNU General Public License as published by
-* the Free Software Foundation, either version 3 of the License, or
-* (at your option) any later version.
-*
-* This program is distributed in the hope that it will be useful,
-* but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-* GNU General Public License for more details.
-*
-* You should have received a copy of the GNU General Public License
-* along with
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 /*
 * Function List
 * 	1.
 * 	2.
+
 //configuration		http://api.themoviedb.org/3/configuration
 // Imagenes			http://cf2.imgobject.com/t/p/original/IMAGEN.jpg
 
@@ -62,74 +49,6 @@
 $apikey="YOUR APIKEY";
 $tmdb_V3 = new TMDBv3($apikey);
 
-# Url de las imagenes
-// echo "URL DE IMAGENES:";
-// echo"<pre>";var_dump( $tmdb_V3->getImageURL());echo"</pre>";
-
-// # Buscar Pelicula
-// echo "BUSCA PELICULA";
-// $buscar = $tmdb_V3->searchMovie('back to the future','cl');
-// echo"<pre>";print_r($buscar);echo"</pre>";
-
-// # Info de  Pelicula
-$idMovie=11;
-#Info
-echo "DETALLES DE PELICULA";
-$pelinfo = $tmdb_V3->movieDetail($idMovie);
-echo"<pre>";print_r($pelinfo);echo"</pre>";
-    // [adult] =>
-    // [backdrop_path] => /mrbTLFsYup7iIXgJzxJVLaitcwZ.jpg
-    // [belongs_to_collection] =>
-    // [budget] => 0
-    // [genres] => Array
-                    // [id] => 35
-                    // [name] => Comedy
-
-                    // [id] => 18
-                    // [name] => Drama
-
-                    // [id] => 10769
-                    // [name] => Foreign
-
-    // [homepage] =>
-    // [id] => 637
-    // [imdb_id] => tt0118799
-    // [original_title] => La vita è bella
-    // [overview] =>
-    // [poster_path] => /5x4DPdEaZfnO1OBJ1E0EuHlFLDA.jpg
-
-
-    // [tagline] =>
-    // [title] => La vita è bella
-
-#casts
-// echo "CASTING";
-// $pelinfo = $tmdb_V3->movieCast($idMovie);
-// echo"<pre>";print_r($pelinfo);echo"</pre>";
-
-#images
-// echo "IMAGENES";
-// $pelinfo = $tmdb_V3->moviePoster($idMovie);
-// echo"<pre>";print_r($pelinfo);echo"</pre>";
-
-#trailers
-// echo "TRAILERS";
-// $pelinfo = $tmdb_V3->movieTrailer($idMovie);
-// echo"<pre>";print_r($pelinfo);echo"</pre>";//trailers
-
-#translations
-// echo "TRANSLATIONS";
-// $pelinfo = $tmdb_V3->movieTrans($idMovie);
-// echo"<pre>";print_r($pelinfo);echo"</pre>";//trailers
-
-// #alternative_titles
-// echo "ALTERNATIVE_TITLES";
-// $pelinfo = $tmdb_V3->movieTitles($idMovie);
-// echo"<pre>";print_r($pelinfo);echo"</pre>";//trailers
-// exit;
-
-
-###########################
 
 class TMDBv3{
 	/**#@+

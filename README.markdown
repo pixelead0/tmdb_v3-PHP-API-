@@ -7,7 +7,7 @@
  
  @pakage TMDB_V3_API_PHP
  
- @author adangq <adangq@gmail.com>
+ @author pixelead0 <adangq@gmail.com>
  
  @link http://www.github.com/pixelead0
  
@@ -115,7 +115,7 @@ View example.php
 		echo"<pre>";print_r($movieTitles);echo"</pre>";
 	?>
 ## Issues/Bugs ##
-We didn't find any bugs (yet). If you find one, please inform us with the issue tracker on [github](http://github.com/glamorous/TMDb-PHP-API/issues).
+We didn't find any bugs (yet). If you find one, please inform us with the issue tracker on [github](https://github.com/pixelead0/tmdb_v3-PHP-API-/issues).
 
 ## TO DO LIST ##
  -Documentation.

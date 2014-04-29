@@ -208,11 +208,25 @@ class TMDBv3{
 	* http://api.themoviedb.org/3/movie/$id/images
 	* @param array  moviePoster
 	*/
-		public function moviePoster($idMovie)
+		public function moviePoster($idMovie, $lang="")
 		{
-			$posters = $this->movieInfo($idMovie,"images",false);
-			$posters =$posters['posters'];
+			$lang = (strlen($lang) == 2 ? $lang : $this->_lang);
+			$posters = $this->movieInfo($idMovie,"images",false,$lang);
+			$posters = $posters['posters'];
 			return $posters;
+		}//end of 
+
+	/**
+	* movie Backdrop
+	* http://api.themoviedb.org/3/movie/$id/images
+	* @param array  movieBackdrops
+	*/
+		public function movieBackdrop($idMovie, $lang="")
+		{
+			$lang = (strlen($lang) == 2 ? $lang : $this->_lang);
+			$backdrops = $this->movieInfo($idMovie,"images",false,$lang);
+			$backdrops = $backdrops['backdrops'];
+			return $backdrops;
 		}//end of 
 
 	/**
@@ -234,10 +248,10 @@ class TMDBv3{
 	* http://api.themoviedb.org/3/movie/$id
 	* @param array  movieInfo
 	*/
-		public function movieInfo($idMovie,$option="",$print=false){
+		public function movieInfo($idMovie,$option="",$print=false,$lang=""){
 			$option = (empty($option))?"":"/" . $option;
 			$params = "movie/" . $idMovie . $option;
-			$movie= $this->_call($params,"");
+			$movie= $this->_call($params,"",$lang);
 				return $movie;
 		}//end of movieInfo
 
@@ -246,9 +260,10 @@ class TMDBv3{
 	* http://api.themoviedb.org/3/search/movie?api_keyf&language&query=future
 	* @param string  $peopleName
 	*/
-		public function searchMovie($movieTitle){
+		public function searchMovie($movieTitle,$lang=""){
+			$lang = (strlen($lang) == 2 ? $lang : $this->_lang);
 			$movieTitle="query=".urlencode($movieTitle);
-			return $this->_call("search/movie",$movieTitle,$this->_lang);
+			return $this->_call("search/movie",$movieTitle,$lang);
 		}//end of searchMovie
 
 
@@ -289,8 +304,8 @@ class TMDBv3{
 		private function _call($action,$text,$lang=""){
 		// # http://api.themoviedb.org/3/movie/11?api_key=XXX
 			$lang=(empty($lang))?$this->getLang():$lang;
-			$url= TMDBv3::_API_URL_.$action."?api_key=".$this->getApikey()."&language=".$lang."&".$text;
-			// echo "<pre>$url</pre>";
+			$url= TMDBv3::_API_URL_.$action."?api_key=".$this->getApikey().(($lang != "00" and strlen($lang) == 2) ? "&language=".$lang : "").(strlen($text) >= 1 ? "&".$text : "");
+			// echo "<pre>\n$lang\n$url</pre>";
 			$ch = curl_init();
 				curl_setopt($ch, CURLOPT_URL, $url);
 				curl_setopt($ch, CURLOPT_HEADER, 0);

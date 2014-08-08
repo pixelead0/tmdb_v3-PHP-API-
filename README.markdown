@@ -60,7 +60,7 @@ View example.php
 		//Title to search for
 		$title = 'back to the future';
 		$language='es'
-		$searchTitle = $tmdb_V3->searchMovie('$title','$language');
+		$searchTitle = $tmdb_V3->searchMovie($title,$language);
 		// return array
 		echo"<pre>";print_r($searchTitle);echo"</pre>";
     ?>

@@ -289,8 +289,7 @@ class TMDBv3{
 		private function _call($action,$text,$lang=""){
 		// # http://api.themoviedb.org/3/movie/11?api_key=XXX
 			$lang=(empty($lang))?$this->getLang():$lang;
-			$url= TMDBv3::_API_URL_.$action."?api_key=".$this->getApikey()."&language=".$lang."&".$text;
-			// echo "<pre>$url</pre>";
+			$url= SELF::_API_URL_.$action."?api_key=".$this->getApikey()."&language=".$lang."&".$text; 			// echo "<pre>$url</pre>";
 			$ch = curl_init();
 				curl_setopt($ch, CURLOPT_URL, $url);
 				curl_setopt($ch, CURLOPT_HEADER, 0);
@@ -309,6 +308,8 @@ class TMDBv3{
 			$results = json_decode(($results),true);
 			return (array) $results;
 		}//end of _call
+                
+                /**/
 
 
 } //end of class

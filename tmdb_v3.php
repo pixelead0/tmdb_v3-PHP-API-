@@ -83,6 +83,8 @@ class TMDBv3{
 
 	#@var string url of TMDB images
 	private $_imgUrl;
+        
+        public $config;
      #</CONSTANTS>
 ###############################################################################################################
 	/**
@@ -100,7 +102,7 @@ class TMDBv3{
 			//Get Configuration
 			$conf = $this->getConfig();
 			if (empty($conf)){echo "Unable to read configuration, verify that the API key is valid";exit;}
-
+                        $this->config = $conf;
 			//set Images URL contain in config
 			$this->setImageURL($conf);
 		}//end of __construct
@@ -308,9 +310,6 @@ class TMDBv3{
 			$results = json_decode(($results),true);
 			return (array) $results;
 		}//end of _call
-                
-                /**/
-
-
+            
 } //end of class
 ?>

@@ -100,7 +100,7 @@ class TMDBv3{
 			$this->setLang($lang);
 
 			//Get Configuration
-			$conf = $this->getConfig();
+			$conf = $this->_getConfig();
 			if (empty($conf)){echo "Unable to read configuration, verify that the API key is valid";exit;}
                         $this->config = $conf;
 			//set Images URL contain in config
@@ -233,13 +233,15 @@ class TMDBv3{
 
 	/**
 	* Movie Info
+         * @param string $append_requst additional request
 	* http://api.themoviedb.org/3/movie/$id
 	* @param array  movieInfo
+         * 
 	*/
-		public function movieInfo($idMovie,$option="",$print=false){
+		public function movieInfo($idMovie,$option="",$append_request=""){
 			$option = (empty($option))?"":"/" . $option;
 			$params = "movie/" . $idMovie . $option;
-			$movie= $this->_call($params,"");
+			$movie= $this->_call($params,$append_request);
 				return $movie;
 		}//end of movieInfo
 
@@ -260,10 +262,14 @@ class TMDBv3{
 	* http://api.themoviedb.org/3/configuration?apikey
 	* @return array
 	*/
-		public function getConfig() {
+		private function _getConfig() {
 			return $this->_call("configuration","");
 		}//end of getConfig
 
+                
+                public function getConfig(){
+                    return $this->config;
+                }
 	/**
 	* Latest Movie
 	* http://api.themoviedb.org/3/latest/movie?api_key

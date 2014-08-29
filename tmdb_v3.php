@@ -221,7 +221,7 @@ class TMDBv3{
 	* http://api.themoviedb.org/3/movie/$id/images
 	* @param array  movieBackdrops
 	*/
-		public function movieBackdrop($idMovie, $lang="")
+		public function movieBackdrops($idMovie, $lang="")
 		{
 			$lang = (strlen($lang) == 2 ? $lang : $this->_lang);
 			$backdrops = $this->movieInfo($idMovie,"images",false,$lang);
@@ -263,7 +263,29 @@ class TMDBv3{
 		public function searchMovie($movieTitle,$lang=""){
 			$lang = (strlen($lang) == 2 ? $lang : $this->_lang);
 			$movieTitle="query=".urlencode($movieTitle);
-			return $this->_call("search/movie",$movieTitle,$lang);
+			$searchMovie_page1 = $this->_call("search/movie",$movieTitle,$lang);
+			if ($searchMovie_page1['total_pages'] > 1){
+				$searchMovie_all_results = array();
+
+				foreach ($searchMovie_page1['results'] as $searchMovie_page){
+
+					$searchMovie_all_results['results'][] = $searchMovie_page;
+				}
+
+				for( $i= ($searchMovie_page1['page']+1) ; $i <= $searchMovie_page1['total_pages'] ; $i++ ){
+
+					$searchMovie_each_page = $this->_call("search/movie",$movieTitle,$lang,$i);
+
+					foreach ($searchMovie_each_page['results'] as $searchMovie_page){
+
+						$searchMovie_all_results['results'][] = $searchMovie_page;
+					}
+				}
+
+				return $searchMovie_all_results;
+			}else{
+				return $searchMovie_page1;
+			}
 		}//end of searchMovie
 
 
@@ -301,11 +323,10 @@ class TMDBv3{
 	 * @param string $text		Unencoded paramter for in the URL
 	 * @return string
 	 */
-		private function _call($action,$text,$lang=""){
+		private function _call($action,$text,$lang="",$page=""){
 		// # http://api.themoviedb.org/3/movie/11?api_key=XXX
 			$lang=(empty($lang))?$this->getLang():$lang;
-			$url= TMDBv3::_API_URL_.$action."?api_key=".$this->getApikey().(($lang != "00" and strlen($lang) == 2) ? "&language=".$lang : "").(strlen($text) >= 1 ? "&".$text : "");
-			// echo "<pre>\n$lang\n$url</pre>";
+			$url= TMDBv3::_API_URL_.$action."?api_key=".$this->getApikey().(($lang != "00" and strlen($lang) == 2) ? "&language=".$lang : "").(strlen($text) >= 1 ? "&".$text : "").($page >= 1 ? "&page=".$page : "");
 			$ch = curl_init();
 				curl_setopt($ch, CURLOPT_URL, $url);
 				curl_setopt($ch, CURLOPT_HEADER, 0);

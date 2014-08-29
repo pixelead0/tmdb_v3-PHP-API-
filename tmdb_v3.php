@@ -265,7 +265,9 @@ class TMDBv3{
 			$movieTitle="query=".urlencode($movieTitle);
 			$searchMovie_page1 = $this->_call("search/movie",$movieTitle,$lang);
 			if ($searchMovie_page1['total_pages'] > 1){
+
 				$searchMovie_all_results = array();
+				$searchMovie_all_results['page'] = 1;
 
 				foreach ($searchMovie_page1['results'] as $searchMovie_page){
 
@@ -282,6 +284,8 @@ class TMDBv3{
 					}
 				}
 
+				$searchMovie_all_results['total_pages'] = 1;
+				$searchMovie_all_results['total_results'] = $searchMovie_page1['total_results'];
 				return $searchMovie_all_results;
 			}else{
 				return $searchMovie_page1;

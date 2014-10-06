@@ -272,11 +272,11 @@ class TMDBv3{
                 }
 	/**
 	* Latest Movie
-	* http://api.themoviedb.org/3/latest/movie?api_key
+	* http://api.themoviedb.org/3/movie/latest?api_key
 	* @return array
 	*/
 		public function latestMovie() {
-			return $this->_call('latest/movie','');
+			return $this->_call('movie/latest','');
 		}
 	/**
 	* Now Playing Movies

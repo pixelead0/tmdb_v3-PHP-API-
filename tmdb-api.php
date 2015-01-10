@@ -84,10 +84,12 @@ class TMDB{
 	#@var string Default language
 	private $_lang;
 
-	#@var string url of TMDB images
-	private $_imgUrl;
-        
-    public $config;
+	#@var array of TMDB config
+    private $_config;
+
+	#@var boolean for testing
+	private $_debug = true;
+
 
 	/**
 	 * 	Construct Class
@@ -95,7 +97,7 @@ class TMDB{
 	 * 	@param string $apikey The API key token
 	 * 	@param string $lang The languaje to work with, default is english
 	 */
-	public function  __construct($apikey, $lang = 'en') {
+	public function __construct($apikey, $lang = 'en') {
 
 		// Sets the API key
 		$this->setApikey($apikey);
@@ -103,19 +105,19 @@ class TMDB{
 		//Setting Language
 		$this->setLang($lang);
 
-		//Get Configuration
-		$this->config = $this->_getConfig();
-		if (empty($this->config)){
-			echo "Unable to read configuration, verify that the API key is valid (". $this->_apikey .")";
+		// Load the configuration
+		if (! $this->_loadConfig()){
+			echo "Unable to read configuration, verify that the API key is valid";
 			exit;
 		}
-
-		//set Images URL contain in config
-		$this->setImageURL($this->config);
 	}
+
+	//------------------------------------------------------------------------------
+	// Api Key
+	//------------------------------------------------------------------------------
          
 	/** 
-	 * 	Setter for the API-key
+	 * 	Set the API key
 	 *
 	 * 	@param string $apikey
 	 * 	@return void
@@ -125,7 +127,7 @@ class TMDB{
 	}
 
 	/** 
-	 * 	Getter for the API-key
+	 * 	Get the API key
 	 *
 	 * 	@return string
 	 */
@@ -133,215 +135,155 @@ class TMDB{
 		return $this->_apikey;
 	}
 
+	//------------------------------------------------------------------------------
+	// Language
+	//------------------------------------------------------------------------------
+
 	/** 
-	 *  Setter for the default language
+	 *  Set the language
+	 *	By default english
+	 *
 	 * 	@param string $lang
-	 * 	@return void
-	 **/
+	 */
 	public function setLang($lang = 'en') {
 		$this->_lang = $lang;
 	}
 
 	/** 
-	 * 	Getter for the default language
+	 * 	Get the language
+	 *
 	 * 	@return string
-	 **/
+	 */
 	public function getLang() {
 		return $this->_lang;
 	}
 
+	//------------------------------------------------------------------------------
+	// Config
+	//------------------------------------------------------------------------------
+
 	/**
-	 * 	Set URL of images
-	 * 	@param  $config Configurarion of API
-	 * 	@return array
+	 * 	Loads the configuration of the API
+	 *
+	 * 	@return boolean
 	 */
-	public function setImageURL($config) {
-		$this->_imgUrl = (string) $this->config['images']['base_url'];
+	private function _loadConfig() {
+		$this->_config = $this->_call('configuration', '');
+
+		return ! empty($this->_config);
 	}
 
+	/**
+	 * 	Get Configuration of the API (Revisar)
+	 *
+	 * 	@return array
+	 */
+	public function getConfig(){
+		return $this->_config;
+	}
+
+	//------------------------------------------------------------------------------
+	// Get Variables
+	//------------------------------------------------------------------------------
+
 	/** 
-	 *	Getter for the URL images
+	 *	Get the URL images
+	 * 	You can specify the width, by default original
+	 *
+	 * 	@param String $size A String like 'w185' where you specify the image width
 	 * 	@return string
 	 */
 	public function getImageURL($size = 'original') {
-		return $this->_imgUrl . $size;
+		return $this->_config['images']['base_url'] . $size;
 	}
 
 	/**
-	 * 	Movie Alternative Titles
-	 * 	http://api.themoviedb.org/3/movie/$id/alternative_titles
-	 * 	@param array  titles
-	 */
-	public function movieTitles($idMovie) {
-		$titleTmp = $this->movieInfo($idMovie, 'alternative_titles', false);
-		foreach ($titleTmp['titles'] as $titleArr){
-			$title[] = $titleArr['title'].' - '.$titleArr['iso_3166_1'];
-		}
-
-		return $title;
-	}
-
-	/**
-	 * Movie Translations
-	 *
-	 * @param array  translationsInfo
-	 * @return array
-	 */
-	public function movieTrans($idMovie){
-		$transTmp = $this->movieInfo($idMovie, 'translations', false);
-
-		foreach ($transTmp['translations'] as $transArr){
-			$trans[] = $transArr['english_name'].' - '.$transArr['iso_639_1'];
-		}
-
-		return $trans;
-	}
-
-	/**
-	 * Movie Trailer
-	 *
-	 * @param int $idMovie The Movie id
-	 * @see #movieInfo()
-	 * @return array
-	 */
-	public function movieTrailer($idMovie) {
-		return $this->movieInfo($idMovie, 'trailers', false);
-	}
-
-	/**
-	 * 	Movie Detail
+	 * 	Get Movie Info
+	 * 	Gets part of the info of the Movie, mostly used for the lazy load
 	 *
 	 * 	@param int $idMovie The Movie id
+	 *  @param string $option The request option
+	 * 	@param string $append_request additional request
 	 * 	@return array
 	 */
-	public function movieDetail($idMovie){
-		return $this->movieInfo($idMovie, '', false);
-	}
-
-	/**
-	 * 	Get the images of a Movie
-	 *
-	 * 	@param int $idMovie The Movie id
-	 * 	@return Image[]
-	 */
-	public function getImages($idMovie){
-		$result = $this->movieInfo($idMovie, 'images', false);
-
-		return $result['posters'];
-	}
-
-	/**
-	 * Movie Casting
-	 *
-	 * @param array  movieCast
-	 * @see #movieInfo()
-	 * @return array
-	 */
-	public function movieCast($idMovie){
-		$castingTmp = $this->movieInfo($idMovie,'casts',false);
-		foreach ($castingTmp['cast'] as $castArr){
-			$casting[]=$castArr['name'].' - '.$castArr['character'];
-		}
-
-		return $casting;
-	}
-
-	/**
-	 * 	Movie Info
-     * 	@param string $append_requst additional request
-	 * 	@param array  movieInfo
-	 * 	@see #movieInfo()
-     */ 
-	public function movieInfo($idMovie, $option = '', $append_request = ''){
+	public function getMovieInfo($idMovie, $option = '', $append_request = ''){
 		$option = (empty($option)) ? '' : '/' . $option;
 		$params = 'movie/' . $idMovie . $option;
-		$movie = $this->_getDataArray($params, $append_request);
+		$result = $this->_call($params, $append_request);
 			
-		return $movie;
+		return $result;
+	}
+
+	//------------------------------------------------------------------------------
+	// Get Lists of Movies
+	//------------------------------------------------------------------------------
+
+	/**
+	 * 	Get latest Movie
+	 *
+	 * 	@return Movie
+	 */
+	public function getLatestMovie() {
+		return new Movie($this->_call('movie/latest',''));
 	}
 
 	/**
 	 *  Search Movie
 	 *
-	 * @param string $movieTitle The title of a Movie
-	 * @return array
-	 * @see #movieInfo()
+	 * 	@param string $movieTitle The title of a Movie
+	 * 	@return Movie[]
 	 */
 	public function searchMovie($movieTitle){
-		$movieTitle = 'query='. urlencode($movieTitle);
 
-		return $this->_getDataArray('search/movie', $movieTitle, $this->getLang());
+		$movies = array();
+
+		$result = $this->_call('search/movie', 'query='. urlencode($movieTitle), $this->getLang());
+
+		foreach($result['results'] as $data){
+			$movies[] = new Movie($data);
+		}
+
+		return $movies;
 	}
 
 	/**
-	 * 	Get Configuration of API
-	 * 	@return array $config
-	 */
-	private function _getConfig() {
-		return $this->_getDataArray('configuration', '');
-	}
-
-    /**
-     * 	Get Configuration of the API (Revisar)
-     * 	
-     */           
-    public function getConfig(){
-        return $this->config;
-    }
-
-	/**
-	 * 	Latest Movie
+	 *  Now Playing Movies
+	 *
+	 * 	@param integer $page
 	 * 	@return array
-	 */
-	public function latestMovie() {
-		return $this->_getDataArray('movie/latest','');
-	}
-
-	/**
-	 *    Now Playing Movies
-	 *
-	 * @param integer $page
-	 *
-	 * @link http://api.themoviedb.org/3/movie/now-playing?api_key&language&{{$page}}
-	 * @return array
 	 */
 	public function nowPlayingMovies($page = 1) {
-		return $this->_getDataArray('movie/now-playing', 'page='.$page);
+
+		$movies = array();
+
+		$result = $this->_call('movie/now-playing', 'page='.$page);
+
+		foreach($result['results'] as $data){
+			$movies[] = new Movie($data);
+		}
+
+		return $movies;
 	}
 
-	/**
-	 * 	Transforms the API Response in a Array
-	 *
-	 * 	@param string $action	API specific function name for in the URL
-	 * 	@param string $text		Unencoded paramter for in the URL
-	 * 	@return array
-	 *
-	 * 	@link http://api.themoviedb.org/3/movie/11?api_key={{$apiKey}}
-	 */
-	private function _getDataArray($action, $text){
-
-		$json = $this->_getDataJSON($action, $text);
-		$results = json_decode(($json), true);
-		//header('Content-Type: text/html; charset=iso-8859-1');
-		//var_dump(debug_backtrace());
-		//echo"JSONData: <pre>";print_r(($json));echo"</pre>";
-		//echo"ArrayData: <pre>";print_r(($results));echo"</pre>";
-		return (array) $results;
-	}    
+	//------------------------------------------------------------------------------
+	// API Call
+	//------------------------------------------------------------------------------
 
 	/**
 	 * 	Makes the call to the API and retrieves the data as a JSON
 	 *
 	 * 	@param string $action	API specific function name for in the URL
-	 * 	@param string $text		Unencoded parameter for in the URL
+	 * 	@param string $appendToResponse	The extra append of the request
 	 * 	@return string
-	 *
-	 * 	@link http://api.themoviedb.org/3/movie/11?api_key={{$apiKey}}
 	 */
-	private function _getDataJSON($action, $text){
+	private function _call($action, $appendToResponse){
 
-		$url = self::_API_URL_.$action .'?api_key='. $this->getApikey() .'&language='. $this->getLang() .'&'.$text; 			
-		//echo "<pre>$url</pre>";
+		$url = self::_API_URL_.$action .'?api_key='. $this->getApikey() .'&language='. $this->getLang() .'&'.$appendToResponse;
+
+		if ($this->_debug) {
+			echo '<pre><a href="' . $url . '">check request</a></pre>';
+		}
+
 		$ch = curl_init();
 		curl_setopt($ch, CURLOPT_URL, $url);
 		curl_setopt($ch, CURLOPT_HEADER, 0);
@@ -349,23 +291,25 @@ class TMDB{
 		curl_setopt($ch, CURLOPT_FAILONERROR, 1);
 
 		$results = curl_exec($ch);
-		$headers = curl_getinfo($ch);
-
-		$error_number = curl_errno($ch);
-		$error_message = curl_error($ch);
 
 		curl_close($ch);
 
-		return $results;
-	}  
+		return (array) json_decode(($results), true);
+	}
+
+	//------------------------------------------------------------------------------
+	// Get Data Objects
+	//------------------------------------------------------------------------------
 
 	/**
 	 * 	Get a Movie
+	 *
 	 * 	@param int $idMovie The Movie id
+	 * 	@param string $appendToResponse The extra append of the request, by default all
 	 * 	@return Movie
 	 */
-	public function getMovie($idMovie){
-		return new Movie($this->_getDataJSON('movie/' . $idMovie, 'append_to_response=trailers,images'));
+	public function getMovie($idMovie, $appendToResponse = 'append_to_response=trailers,images,casts,translations'){
+		return new Movie($this->_call('movie/' . $idMovie, $appendToResponse));
 	}
 }
 ?>

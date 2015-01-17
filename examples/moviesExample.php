@@ -10,7 +10,7 @@
             include("../tmdb-api.php");
 
             $apikey = "Your API Key";
-            $tmdb = new TMDB($apikey, 'en');
+            $tmdb = new TMDB($apikey, 'en', true);
 
             echo '<h2>API Usage for Movies examples</h2>';
 

@@ -72,6 +72,10 @@ include("data/Movie.php");
 include("data/TVShow.php");
 include("data/Season.php");
 include("data/Episode.php");
+include("data/Person.php");
+include("data/Role.php");
+include("data/roles/MovieRole.php");
+include("data/roles/TVShowRole.php");
 
 class TMDB{
 
@@ -91,7 +95,7 @@ class TMDB{
     private $_config;
 
 	#@var boolean for testing
-	private $_debug = true;
+	private $_debug;
 
 
 	/**
@@ -100,13 +104,16 @@ class TMDB{
 	 * 	@param string $apikey The API key token
 	 * 	@param string $lang The languaje to work with, default is english
 	 */
-	public function __construct($apikey, $lang = 'en') {
+	public function __construct($apikey, $lang = 'en', $debug = false) {
 
 		// Sets the API key
 		$this->setApikey($apikey);
 	
-		//Setting Language
+		// Setting Language
 		$this->setLang($lang);
+
+		// Set the debug mode
+		$this->_debug = $debug;
 
 		// Load the configuration
 		if (! $this->_loadConfig()){
@@ -208,6 +215,7 @@ class TMDB{
 	 *  @param string $option The request option
 	 * 	@param string $append_request additional request
 	 * 	@return array
+	 *	@deprecated
 	 */
 	public function getMovieInfo($idMovie, $option = '', $append_request = ''){
 		$option = (empty($option)) ? '' : '/' . $option;
@@ -240,13 +248,43 @@ class TMDB{
 
 		$movies = array();
 
-		$result = $this->_call('movie/now-playing', 'page='.$page);
+		$result = $this->_call('movie/now-playing', 'page='. $page);
 
 		foreach($result['results'] as $data){
 			$movies[] = new Movie($data);
 		}
 
 		return $movies;
+	}
+
+	//------------------------------------------------------------------------------
+	// Get Lists of Persons
+	//------------------------------------------------------------------------------
+
+	/**
+	 * 	Get latest Person
+	 *
+	 * 	@return Person
+	 */
+	public function getLatestPerson() {
+		return new Person($this->_call('person/latest',''));
+	}
+
+	/**
+	 * 	Get Popular Persons
+	 *
+	 * 	@return Person[]
+	 */
+	public function getPopularPersons($page = 1) {
+		$persons = array();
+
+		$result = $this->_call('person/popular','page='. $page);
+
+		foreach($result['results'] as $data){
+			$persons[] = new Person($data);
+		}
+
+		return $persons;
 	}
 
 	//------------------------------------------------------------------------------
@@ -307,7 +345,6 @@ class TMDB{
 		return new TVShow($this->_call('tv/' . $idTVShow, $appendToResponse));
 	}
 
-
 	/**
 	 * 	Get a Season
 	 *
@@ -356,6 +393,17 @@ class TMDB{
 		return new Episode($this->_call('tv/'. $idTVShow .'/season/'. $numSeason .'/episode/'. $numEpisode, $appendToResponse), $idTVShow);
 	}
 
+	/**
+	 * 	Get a Person
+	 *
+	 * 	@param int $idPerson The Person id
+	 * 	@param string $appendToResponse The extra append of the request, by default all
+	 * 	@return Person
+	 */
+	public function getPerson($idPerson, $appendToResponse = 'append_to_response=tv_credits,movie_credits'){
+		return new Person($this->_call('person/' . $idPerson, $appendToResponse));
+	}
+
 	//------------------------------------------------------------------------------
 	// Searches
 	//------------------------------------------------------------------------------
@@ -389,13 +437,32 @@ class TMDB{
 
 		$tvShows = array();
 
-		$result = $this->_call('search/movie', 'query='. urlencode($tvShowTitle), $this->getLang());
+		$result = $this->_call('search/tv', 'query='. urlencode($tvShowTitle), $this->getLang());
 
 		foreach($result['results'] as $data){
 			$tvShows[] = new TVShow($data);
 		}
 
 		return $tvShows;
+	}
+
+	/**
+	 *  Search Person
+	 *
+	 * 	@param string $personName The name of the Person
+	 * 	@return Person[]
+	 */
+	public function searchPerson($personName){
+
+		$persons = array();
+
+		$result = $this->_call('search/person', 'query='. urlencode($personName), $this->getLang());
+
+		foreach($result['results'] as $data){
+			$persons[] = new TVShow($data);
+		}
+
+		return $persons;
 	}
 }
 ?>

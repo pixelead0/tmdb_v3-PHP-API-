@@ -2,7 +2,7 @@
 
 TMDB API PHP Library - wrapper to API version 3 of [themoviedb.org](http://themoviedb.org).
 
-By using this library maybe you should take a look at the full [Documentation](http://code.octal.es/php/tmdb-api/) of this proyect.
+By using this library maybe you should take a look at the full [Documentation](http://code.octal.es/php/tmdb-api/) of this project.
 
 @pakage TMDB-API-PHP<br/>
 @author [Alvaro Octal](https://twitter.com/Alvaro_Octal) also on [Github](https://github.com/Alvaroctal)<br/>
@@ -11,14 +11,14 @@ By using this library maybe you should take a look at the full [Documentation](h
 
 ### CREDITS  ###
 
-Forked from a similar [proyect](https://github.com/pixelead0/tmdb_v3-PHP-API-) by [Pixelad0](https://github.com/pixelead0)
+Forked from a similar [project](https://github.com/pixelead0/tmdb_v3-PHP-API-) by [Pixelad0](https://github.com/pixelead0)
 
 ### CHANGE LOG ###
   * [17/01/2015] 0.1 - First usable code.
 	- Forked from  [/pixelead0/tmdb_v3-PHP-API-](https://github.com/pixelead0/tmdb_v3-PHP-API-).
 	- Some modifications and dedicated classes added.
  
-## Requirements ##
+### Requirements ###
 - PHP 5.2.x or higher
 - cURL
 - TMDB API-key
@@ -72,7 +72,6 @@ returns an array of [TVShow](http://code.octal.es/php/tmdb-api/class-TVShow.html
 You should take a look at the TVShow class [Documentation](http://code.octal.es/php/tmdb-api/class-TVShow.html) and see all the info you can get from a TVShow Object.
 
 	<?php
-		//Title to search for
 		$idTVShow = 1396;
 		$tvShow = $tmdb->getTVShow($idTVShow);
 		// returns a TVShow Object
@@ -83,7 +82,6 @@ returns a [TVShow](http://code.octal.es/php/tmdb-api/class-TVShow.html) Object.
 You should take a look at the Season class [Documentation](http://code.octal.es/php/tmdb-api/class-Season.html) and see all the info you can get from a Season Object.
 
 	<?php
-		//Title to search for
 		$idTVShow = 1396;
 		$numSeason = 2;
 		$season = $tmdb->getSeason($idTVShow, $numSeason);
@@ -95,7 +93,6 @@ returns a [Season](http://code.octal.es/php/tmdb-api/class-Season.html) Object.
 You should take a look at the Episode class [Documentation](http://code.octal.es/php/tmdb-api/class-Episode.html) and see all the info you can get from a Episode Object.
 
 	<?php
-		//Title to search for
 		$idTVShow = 1396;
 		$numSeason = 2;
 		$numEpisode = 8;
@@ -104,8 +101,47 @@ You should take a look at the Episode class [Documentation](http://code.octal.es
 		echo $episode->getName();
 	?>
 returns a [Episode](http://code.octal.es/php/tmdb-api/class-Episode.html) Object.
+## Persons ##
+### Search a Person ###
+	<?php
+		// Title to search for
+		$name = 'Johnny';
+		$persons = $tmdb->searchPerson($name);
+        foreach($persons as $person){
+            echo $person->getName() .'<br>';
+        }
+	?>
+returns an array of [Person](http://code.octal.es/php/tmdb-api/class-Person.html) Objects.
+### Get a Person ###
+You should take a look at the Person class [Documentation](http://code.octal.es/php/tmdb-api/class-Person.html) and see all the info you can get from a Person Object.
+
+	<?php
+		$idPerson = 85;
+		$person = $tmdb->getPerson($idPerson);
+		// returns a Person Object
+		echo $person->getName();
+	?>
+returns a [Person](http://code.octal.es/php/tmdb-api/class-Person.html) Object.
+### Get Person's Roles ###
+You should take a look at the Role class [Documentation](http://code.octal.es/php/tmdb-api/class-Role.html) and see all the info you can get from a Role Object.
+
+	<?php
+		$movieRoles = $person->getMovieRoles();
+		foreach($movieRoles as $movieRole){
+            echo $movieRole->getCharacter() .' in '. $movieRole->getMovieTitle() .'<br>';
+        }
+	?>
+returns an array of [MovieRole](http://code.octal.es/php/tmdb-api/class-Person.html) Objects.
+
+	<?php
+		$tvShowRoles = $person->getTVShow();
+		foreach($tvShowRoles as $tvShowRole){
+            echo $tvShowRole->getCharacter() .' in '. $tvShowRole->getMovieName() .'<br>';
+        }
+	?>
+returns an array of [TVShowRole](http://code.octal.es/php/tmdb-api/class-TVShow.html) Objects.
 ## Issues/Bugs ##
 Bugs are expected, this is still under development, you can [report](https://github.com/Alvaroctal/TMDB-PHP-API/issues) them.
 
-## TO DO LIST ##
+### TODO List ###
 - Empty :D, you can [propose](https://github.com/Alvaroctal/TMDB-PHP-API/issues) new functionalities.

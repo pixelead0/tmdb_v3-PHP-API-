@@ -3,7 +3,7 @@ extensions: [php]
 
 # directories and files matching this file mask will not be parsed
 exclude:
-    - example.php
+    - examples/
 
 # similar to above, but this files will be included in class tree
 skipDocPath:

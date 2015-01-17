@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>.</title>
+        <title>API usage for Movies</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta charset="utf-8" />
     </head>
     <body>
         <?php
-            include("tmdb-api.php");
+            include("../tmdb-api.php");
 
-            $apikey = "Your API Key Here";
+            $apikey = "Your API Key";
             $tmdb = new TMDB($apikey, 'en');
 
-            echo '<h2>API Usage examples</h2>';
+            echo '<h2>API Usage for Movies examples</h2>';
 
             // 1. Search Movie
 
@@ -24,8 +24,6 @@
             }
 
             echo '</ul></li><hr>';
-
-            //echo '11'. $movies[11]->getTitle() .' and '. $movies[11]->getTrailer() . '<br>';
 
             // 2. Now Playing Movies
 
@@ -52,7 +50,7 @@
             echo '<li><a id="movieInfo"><h3>Full Movie Info</h3></a>';
 
             $movie = $tmdb->getMovie(11);
-            echo 'Now the $movie var got all the data, check the <a href="http://code.octal.es/php/tmdb-api/class-Movie.html">documentation</a> for the complete list of methods.<br><br>';
+            echo 'Now the <b>$movie</b> var got all the data, check the <a href="http://code.octal.es/php/tmdb-api/class-Movie.html">documentation</a> for the complete list of methods.<br><br>';
 
             echo '<b>'. $movie->getTitle() .'</b><ul>';
             echo '  <li>ID:'. $movie->getID() .'</li>';

@@ -1,10 +1,12 @@
 <?php
 /**
- * Licensed under BSD (http://www.opensource.org/licenses/bsd-license.php)
- * @date 09/01/2015
- * @version 0.1
- * @author Alvaro Octal | https://twitter.com/Alvaro_Octal
- * @link https://github.com/Alvaroctal/TMDB-PHP-API
+ * 	This class handles all the data you can get from a Movie
+ *
+ * 	@author Alvaro Octal | <a href="https://twitter.com/Alvaro_Octal">Twitter</a>
+ * 	@version 0.1
+ * 	@date 09/01/2015
+ * 	@link https://github.com/Alvaroctal/TMDB-PHP-API
+ * 	@copyright Licensed under BSD (http://www.opensource.org/licenses/bsd-license.php)
  */
 
 class Movie{
@@ -90,7 +92,7 @@ class Movie{
 	 */
 	public function getTrailers() {
 
-		if (empty($this->_data['trailers'])){
+		if (empty($this->_data['trailers']) && isset($this->_tmdb)){
 			$this->loadTrailer();
 		}
 
@@ -104,6 +106,17 @@ class Movie{
 	 */
 	public function getTrailer() {
 		return $this->getTrailers()['youtube'][0]['source'];
+	}
+
+	/**
+	 *  Get Generic.<br>
+	 *  Get a item of the array, you should not get used to use this, better use specific get's.
+	 *
+	 * 	@param string $item The item of the $data array you want
+	 * 	@return array
+	 */
+	public function get($item = ''){
+		return (empty($item)) ? $this->_data : $this->_data[$item];
 	}
 
 	//------------------------------------------------------------------------------
@@ -143,13 +156,13 @@ class Movie{
 	}
 
 	//------------------------------------------------------------------------------
-	// Import a API instance
+	// Import an API instance
 	//------------------------------------------------------------------------------
 
 	/**
-	 *	Set a instance of the API
+	 *	Set an instance of the API
 	 *
-	 *	@param TMDB $tmdb An instance of the api, necesary for the lazy load
+	 *	@param TMDB $tmdb An instance of the api, necessary for the lazy load
 	 */
 	public function setAPI($tmdb){
 		$this->_tmdb = $tmdb;

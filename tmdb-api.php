@@ -69,6 +69,9 @@
  */
 
 include("data/Movie.php");
+include("data/TVShow.php");
+include("data/Season.php");
+include("data/Episode.php");
 
 class TMDB{
 
@@ -228,25 +231,6 @@ class TMDB{
 	}
 
 	/**
-	 *  Search Movie
-	 *
-	 * 	@param string $movieTitle The title of a Movie
-	 * 	@return Movie[]
-	 */
-	public function searchMovie($movieTitle){
-
-		$movies = array();
-
-		$result = $this->_call('search/movie', 'query='. urlencode($movieTitle), $this->getLang());
-
-		foreach($result['results'] as $data){
-			$movies[] = new Movie($data);
-		}
-
-		return $movies;
-	}
-
-	/**
 	 *  Now Playing Movies
 	 *
 	 * 	@param integer $page
@@ -310,6 +294,108 @@ class TMDB{
 	 */
 	public function getMovie($idMovie, $appendToResponse = 'append_to_response=trailers,images,casts,translations'){
 		return new Movie($this->_call('movie/' . $idMovie, $appendToResponse));
+	}
+
+	/**
+	 * 	Get a TVShow
+	 *
+	 * 	@param int $idTVShow The TVShow id
+	 * 	@param string $appendToResponse The extra append of the request, by default all
+	 * 	@return TVShow
+	 */
+	public function getTVShow($idTVShow, $appendToResponse = 'append_to_response=trailers,images,casts,translations,keywords'){
+		return new TVShow($this->_call('tv/' . $idTVShow, $appendToResponse));
+	}
+
+
+	/**
+	 * 	Get a Season
+	 *
+	 *  @param int $idTVShow The TVShow id
+	 *  @param int $numSeason The Season number
+	 * 	@param string $appendToResponse The extra append of the request, by default all
+	 * 	@return Season
+	 */
+	public function getSeason($idTVShow, $numSeason, $appendToResponse = 'append_to_response=trailers,images,casts,translations'){
+		return new Season($this->_call('tv/'. $idTVShow .'/season/' . $numSeason, $appendToResponse), $idTVShow);
+	}
+
+	/**
+	 * 	Get a Season by Number
+	 *
+	 *  @param int $idTVShow The TVShow id
+	 *  @param int $numSeason The Season number
+	 * 	@param string $appendToResponse The extra append of the request, by default all
+	 * 	@return Season
+	 */
+	/*public function getSeasonByNumber($idTVShow, $numSeason, $appendToResponse = 'append_to_response=trailers,images,casts,translations'){
+		return new Season($this->_call('tv/'. $idTVShow .'/season/' . $numSeason, $appendToResponse));
+	}*/
+
+	/**
+	 * 	Get a Episode
+	 *
+	 *  @param int $idEpisode The Episode id
+	 * 	@param string $appendToResponse The extra append of the request, by default all
+	 * 	@return Episode
+	 */
+	/*public function getEpisode($idEpisode, $appendToResponse = 'append_to_response=trailers,images,casts,translations'){
+		return new Episode($this->_call('tv/season/episode/' . $idEpisode, $appendToResponse));
+	}*/
+
+	/**
+	 * 	Get a Episode
+	 *
+	 *  @param int $idTVShow The TVShow id
+	 *  @param int $numSeason The Season number
+	 *  @param int $numEpisode the Episode number
+	 * 	@param string $appendToResponse The extra append of the request, by default all
+	 * 	@return Episode
+	 */
+	public function getEpisode($idTVShow, $numSeason, $numEpisode, $appendToResponse = 'append_to_response=trailers,images,casts,translations'){
+		return new Episode($this->_call('tv/'. $idTVShow .'/season/'. $numSeason .'/episode/'. $numEpisode, $appendToResponse), $idTVShow);
+	}
+
+	//------------------------------------------------------------------------------
+	// Searches
+	//------------------------------------------------------------------------------
+
+	/**
+	 *  Search Movie
+	 *
+	 * 	@param string $movieTitle The title of a Movie
+	 * 	@return Movie[]
+	 */
+	public function searchMovie($movieTitle){
+
+		$movies = array();
+
+		$result = $this->_call('search/movie', 'query='. urlencode($movieTitle), $this->getLang());
+
+		foreach($result['results'] as $data){
+			$movies[] = new Movie($data);
+		}
+
+		return $movies;
+	}
+
+	/**
+	 *  Search TVShow
+	 *
+	 * 	@param string $tvShowTitle The title of a TVShow
+	 * 	@return TVShow[]
+	 */
+	public function searchTVShow($tvShowTitle){
+
+		$tvShows = array();
+
+		$result = $this->_call('search/movie', 'query='. urlencode($tvShowTitle), $this->getLang());
+
+		foreach($result['results'] as $data){
+			$tvShows[] = new TVShow($data);
+		}
+
+		return $tvShows;
 	}
 }
 ?>

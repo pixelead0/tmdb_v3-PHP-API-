@@ -1,43 +1,22 @@
-## CREDITS  ##
- TMDB API v3 PHP class - wrapper to API version 3 of 'themoviedb.org
- 
- API Documentation: http://help.themoviedb.org/kb/api/about-3
- 
- Documentation and usage in README file
- 
- @pakage TMDB_V3_API_PHP
- 
- @author pixelead0 <adangq@gmail.com>
- 
- @link http://www.github.com/pixelead0
- 
- @date 2012-11-07
- 
- @version 0.0.2
- 
- ----------------------
- 
- Portions of this file are based on pieces of TMDb PHP API class - API 'themoviedb.org'
- 
- @Copyright Jonas De Smet - Glamorous | https://github.com/glamorous/TMDb-PHP-API
- 
- @date 10.12.2010
- 
- @version 0.9.10
- 
- @author Jonas De Smet - Glamorous
- 
- @link {https://github.com/glamorous/TMDb-PHP-API}
- 
- Licensed under BSD (http://www.opensource.org/licenses/bsd-license.php)
+## Documentation ##
 
-# CHANGE LOG #
-  * TMDB_V3_API_PHP v0.0.2 (2012-11-07)
-    - Fixed issue #2 (Object created in class php file)
-    - Added functions latestMovie, nowPlayingMovies (thank's to steffmeister)
- 
-  * TMDB_V3_API_PHP v0.0.1 (2012-02-12)
-    - This is the first version of the class without inline documentation or testing   
+TMDB API PHP Library - wrapper to API version 3 of [themoviedb.org](http://themoviedb.org).
+
+By using this library maybe you should take a look at the full [Documentation](http://code.octal.es/php/tmdb-api/) of this proyect.
+
+@pakage TMDB-API-PHP<br/>
+@author [Alvaro Octal](https://twitter.com/Alvaro_Octal) also on [Github](https://github.com/Alvaroctal)<br/>
+@date 17/01/2015<br/>
+@version 0.1<br/>
+
+### CREDITS  ###
+
+Forked from a similar [proyect](https://github.com/pixelead0/tmdb_v3-PHP-API-) by [Pixelad0](https://github.com/pixelead0)
+
+### CHANGE LOG ###
+  * [17/01/2015] 0.1 - First usable code.
+	- Forked from  [/pixelead0/tmdb_v3-PHP-API-](https://github.com/pixelead0/tmdb_v3-PHP-API-).
+	- Some modifications and dedicated classes added.
  
 ## Requirements ##
 - PHP 5.2.x or higher
@@ -45,79 +24,88 @@
 - TMDB API-key
 
 ## How to use ##
-View example.php
+View examples/
 
-## Initialize the class ##
-    <?php
-	    include('tmdb_v3.php');
-	    
-		//Insert your api key of TMDB    
-		$apikey="YOUR_APIKEY";
-		$tmdb_V3 = new TMDBv3($apikey);	?>
+### Initialize the class ###
+	<?php
+		include('tmdb-api.php');
+
+		// Insert your api key of TMDB
+		$apikey = 'YOUR_APIKEY';
+		$languaje = 'es';
+		$tmdb = new TMDB($apikey, $language); // by simply giving $apikey it sets the default lang to 'en'
 	?>
-## Search a Movie ##
-    <?php
+## Movies ##
+### Search a Movie ###
+	<?php
 		//Title to search for
 		$title = 'back to the future';
-		$language='es'
-		$searchTitle = $tmdb_V3->searchMovie($title,$language);
-		// return array
-		echo"<pre>";print_r($searchTitle);echo"</pre>";
-    ?>
-## GET IMAGE URL IN CONFIGUTATION API ##
-	<?php
-		$imageURL= $tmdb_V3->getImageURL();
-		// return array
-		echo"<pre>";print_r($imageURL);echo"</pre>";
+		$movies = $tmdb->searchMovie($title);
+		// returns an array of Movie Object
+		foreach($movies as $movie){
+			echo $movie->getTitle() .'<br>;
+		}
 	?>
-## Movie Info  ##
+returns an array of [Movie](http://code.octal.es/php/tmdb-api/class-Movie.html) Objects.
+### Get a Movie ###
+You should take a look at the Movie class [Documentation](http://code.octal.es/php/tmdb-api/class-Movie.html) and see all the info you can get from a Movie Object.
+
 	<?php
-		$idMovie=11;
-		#Info
-		$movieInfo = $tmdb_V3->movieDetail($idMovie);
-		// return array
-		echo"<pre>";print_r($movieInfo);echo"</pre>";
+		$idMovie = 11;
+		$movie = $tmdb->getMovie($title);
+		// returns a Movie Object
+		echo $movie->getTitle();
 	?>
-## casts ##
+returns a [Movie](http://code.octal.es/php/tmdb-api/class-Movie.html) Object.
+## TV Shows ##
+### Search a TV Show ###
 	<?php
-		$idMovie=11;
-		$movieCast = $tmdb_V3->movieCast($idMovie);
-	
-		// return array
-		echo"<pre>";print_r($movieCast);echo"</pre>";
+		// Title to search for
+		$title = 'breaking bad';
+		$tvShows = $tmdb->searchTVShow($title);
+        foreach($tvShows as $tvShow){
+            echo $tvShow->getName() .'<br>';
+		}
 	?>
-## images names ##
+returns an array of [TVShow](http://code.octal.es/php/tmdb-api/class-TVShow.html) Objects.
+### Get a TVShow ###
+You should take a look at the TVShow class [Documentation](http://code.octal.es/php/tmdb-api/class-TVShow.html) and see all the info you can get from a TVShow Object.
+
 	<?php
-		$idMovie=11;
-		$moviePoster = $tmdb_V3->moviePoster($idMovie);
-		// return array
-		echo"<pre>";print_r($moviePoster);echo"</pre>";
+		//Title to search for
+		$idTVShow = 1396;
+		$tvShow = $tmdb->getTVShow($idTVShow);
+		// returns a TVShow Object
+		echo $tvShow->getName();
 	?>
-## trailers ##
+returns a [TVShow](http://code.octal.es/php/tmdb-api/class-TVShow.html) Object.
+### Get a TVShow's Season ###
+You should take a look at the Season class [Documentation](http://code.octal.es/php/tmdb-api/class-Season.html) and see all the info you can get from a Season Object.
+
 	<?php
-		$idMovie=11;
-		$movieTrailer = $tmdb_V3->movieTrailer($idMovie);
-		// return array
-		echo"<pre>";print_r($movieTrailer);echo"</pre>";
+		//Title to search for
+		$idTVShow = 1396;
+		$numSeason = 2;
+		$season = $tmdb->getSeason($idTVShow, $numSeason);
+		// returns a Season Object
+		echo $season->getName();
 	?>
-## translations ##
+returns a [Season](http://code.octal.es/php/tmdb-api/class-Season.html) Object.
+### Get a TVShow's Episode ###
+You should take a look at the Episode class [Documentation](http://code.octal.es/php/tmdb-api/class-Episode.html) and see all the info you can get from a Episode Object.
+
 	<?php
-		$idMovie=11;
-		$movieTrans = $tmdb_V3->movieTrans($idMovie);
-		// return array
-		echo"<pre>";print_r($movieTrans);echo"</pre>";
+		//Title to search for
+		$idTVShow = 1396;
+		$numSeason = 2;
+		$numEpisode = 8;
+		$episode = $tmdb->getEpisode($idTVShow, $numSeason, $numEpisode);
+		// returns a Episode Object
+		echo $episode->getName();
 	?>
-## alternative_titles ##
-	<?php
-		$idMovie=11;
-		$movieTitles = $tmdb_V3->movieTitles($idMovie);
-		// return array
-		echo"<pre>";print_r($movieTitles);echo"</pre>";
-	?>
+returns a [Episode](http://code.octal.es/php/tmdb-api/class-Episode.html) Object.
 ## Issues/Bugs ##
-We didn't find any bugs (yet). If you find one, please inform us with the issue tracker on [github](https://github.com/pixelead0/tmdb_v3-PHP-API-/issues).
+Bugs are expected, this is still under development, you can [report](https://github.com/Alvaroctal/TMDB-PHP-API/issues) them.
 
 ## TO DO LIST ##
- -Documentation.
-## License ##
-This plugin has a [BSD License](http://www.opensource.org/licenses/bsd-license.php). You can find the license in license.txt that is included with class-package
+- Empty :D, you can [propose](https://github.com/Alvaroctal/TMDB-PHP-API/issues) new functionalities.

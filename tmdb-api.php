@@ -76,6 +76,7 @@ include("data/Person.php");
 include("data/Role.php");
 include("data/roles/MovieRole.php");
 include("data/roles/TVShowRole.php");
+include("data/Collection.php");
 
 class TMDB{
 
@@ -404,6 +405,17 @@ class TMDB{
 		return new Person($this->_call('person/' . $idPerson, $appendToResponse));
 	}
 
+	/**
+	 * 	Get a Collection
+	 *
+	 * 	@param int $idCollection The Person id
+	 * 	@param string $appendToResponse The extra append of the request, by default all
+	 * 	@return Collection
+	 */
+	public function getCollection($idCollection, $appendToResponse = 'append_to_response=images'){
+		return new Collection($this->_call('collection/' . $idCollection, $appendToResponse));
+	}
+
 	//------------------------------------------------------------------------------
 	// Searches
 	//------------------------------------------------------------------------------
@@ -459,10 +471,29 @@ class TMDB{
 		$result = $this->_call('search/person', 'query='. urlencode($personName), $this->getLang());
 
 		foreach($result['results'] as $data){
-			$persons[] = new TVShow($data);
+			$persons[] = new Person($data);
 		}
 
 		return $persons;
+	}
+
+	/**
+	 *  Search Collection
+	 *
+	 * 	@param string $collectionName The name of the Collection
+	 * 	@return Collection[]
+	 */
+	public function searchCollection($collectionName){
+
+		$collections = array();
+
+		$result = $this->_call('search/collection', 'query='. urlencode($collectionName), $this->getLang());
+
+		foreach($result['results'] as $data){
+			$collections[] = new Collection($data);
+		}
+
+		return $collections;
 	}
 }
 ?>

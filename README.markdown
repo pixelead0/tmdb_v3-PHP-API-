@@ -2,7 +2,7 @@
 
 TMDB API PHP Library - wrapper to API version 3 of [themoviedb.org](http://themoviedb.org).
 
-By using this library maybe you should take a look at the full [Documentation](http://code.octal.es/php/tmdb-api/) of this project.
+For using this library maybe you should take a look at the full [Documentation](http://code.octal.es/php/tmdb-api/) of this project.
 
 @pakage TMDB-API-PHP<br/>
 @author [Alvaro Octal](https://twitter.com/Alvaro_Octal) also on [Github](https://github.com/Alvaroctal)<br/>
@@ -52,7 +52,7 @@ You should take a look at the Movie class [Documentation](http://code.octal.es/p
 
 	<?php
 		$idMovie = 11;
-		$movie = $tmdb->getMovie($title);
+		$movie = $tmdb->getMovie($idMovie);
 		// returns a Movie Object
 		echo $movie->getTitle();
 	?>
@@ -104,7 +104,7 @@ returns a [Episode](http://code.octal.es/php/tmdb-api/class-Episode.html) Object
 ## Persons ##
 ### Search a Person ###
 	<?php
-		// Title to search for
+		// Name to search for
 		$name = 'Johnny';
 		$persons = $tmdb->searchPerson($name);
         foreach($persons as $person){
@@ -131,7 +131,7 @@ You should take a look at the Role class [Documentation](http://code.octal.es/ph
             echo $movieRole->getCharacter() .' in '. $movieRole->getMovieTitle() .'<br>';
         }
 	?>
-returns an array of [MovieRole](http://code.octal.es/php/tmdb-api/class-Person.html) Objects.
+returns an array of [MovieRole](http://code.octal.es/php/tmdb-api/class-MovieRole.html) Objects.
 
 	<?php
 		$tvShowRoles = $person->getTVShow();
@@ -139,7 +139,29 @@ returns an array of [MovieRole](http://code.octal.es/php/tmdb-api/class-Person.h
             echo $tvShowRole->getCharacter() .' in '. $tvShowRole->getMovieName() .'<br>';
         }
 	?>
-returns an array of [TVShowRole](http://code.octal.es/php/tmdb-api/class-TVShow.html) Objects.
+returns an array of [TVShowRole](http://code.octal.es/php/tmdb-api/class-TVShowRole.html) Objects.
+## Collections ##
+### Search a Collection ###
+
+	<?php
+		// Name to search for
+		$title = 'the hobbit';
+		$collections = $tmdb->searchCollection($title);
+		foreach($collections as $collection){
+			echo $collection->getName() .'<br>';
+		}
+	?>
+returns an array of [Collection](http://code.octal.es/php/tmdb-api/class-Collection.html) Objects.
+### Get a Collection ###
+You should take a look at the Collection class [Documentation](http://code.octal.es/php/tmdb-api/class-Collection.html) and see all the info you can get from a Collection Object.
+
+	<?php
+		$idCollection = 121938;
+		$collection = $tmdb->getCollection($idCollection);
+		// returns a Collection Object
+		echo $collection->getName();
+	?>
+returns a [Collection](http://code.octal.es/php/tmdb-api/class-Collection.html) Object.
 ## Issues/Bugs ##
 Bugs are expected, this is still under development, you can [report](https://github.com/Alvaroctal/TMDB-PHP-API/issues) them.
 

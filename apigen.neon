@@ -1,0 +1,55 @@
+# list of scanned file extensions (e.g. php5, phpt...)
+extensions: [php]
+
+# directories and files matching this file mask will not be parsed
+exclude:
+    - examples/
+
+# similar to above, but this files will be included in class tree
+skipDocPath:
+    - *Component\Console
+
+# character set of source files; if you use only one across your files, we recommend you name it
+charset: [UTF-8]
+
+# title of generated documentation
+title: TMDB PHP API Documentation
+
+# base url used for sitemap (useful for public doc)
+baseUrl: http://api.apigen.org
+
+# custom search engine id, will be used by search box
+googleCseId: 011549293477758430224
+
+# Google Analytics tracking code
+googleAnalytics: UA-35236-5
+
+# choose ApiGen template theme
+templateTheme: bootstrap # or: default
+
+# the way elements are grouped in menu
+groups: auto # also: namespace, packages, none; auto will detect namespace first, than packages
+
+# access levels of included method and properties
+accessLevels: [public, protected, private] # also [private]
+
+# include elements marked as @internal/{@internal}
+internal: true
+
+# generate documentation for PHP internal classes
+php: true
+
+# generate highlighted source code for elements
+sourceCode: true
+
+# generate tree view of classes, interfaces, traits and exceptions
+tree: false
+
+# generate documentation for deprecated elements
+deprecated: true
+
+# generate list of tasks with @todo annotation
+todo: true
+
+# add link to ZIP archive of documentation
+download: true

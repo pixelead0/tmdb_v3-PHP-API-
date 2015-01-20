@@ -1,6 +1,6 @@
 <?php
 /**
- * 	This class handles all the data you can get from a Collection
+ * 	This class handles all the data you can get from a Company
  *
  * 	@author Alvaro Octal | <a href="https://twitter.com/Alvaro_Octal">Twitter</a>
  * 	@version 0.1
@@ -9,7 +9,7 @@
  * 	@copyright Licensed under BSD (http://www.opensource.org/licenses/bsd-license.php)
  */
 
-class Collection {
+class Company {
 
     //------------------------------------------------------------------------------
     // Class Variables
@@ -20,7 +20,7 @@ class Collection {
     /**
      * 	Construct Class
      *
-     * 	@param array $data An array with the data of a Collection
+     * 	@param array $data An array with the data of a Company
      */
     public function __construct($data) {
         $this->_data = $data;
@@ -31,7 +31,7 @@ class Collection {
     //------------------------------------------------------------------------------
 
     /** 
-     *  Get the Collection's name
+     *  Get the Company's name
      *
      *  @return string
      */
@@ -40,7 +40,7 @@ class Collection {
     }
 
     /** 
-     *  Get the Collection's id
+     *  Get the Company's id
      *
      *  @return int
      */
@@ -49,41 +49,59 @@ class Collection {
     }
 
     /** 
-     *  Get the Collection's overview
+     *  Get the Company's description
      *
      *  @return string
      */
-    public function getOverview() {
-        return $this->_data['overview'];
+    public function getDescription() {
+        return $this->_data['description'];
     }
 
     /** 
-     *  Get the Collection's poster
+     *  Get the Company's headquearters
      *
      *  @return string
      */
-    public function getPoster() {
-        return $this->_data['poster_path'];
+    public function getHeadquarters() {
+        return $this->_data['headquarters'];
     }
 
     /** 
-     *  Get the Collection's backdrop
+     *  Get the Company's homepage
      *
      *  @return string
      */
-    public function getBackdrop() {
-        return $this->_data['backdrop_path'];
+    public function getHomepage() {
+        return $this->_data['homepage'];
+    }
+
+    /** 
+     *  Get the Company's logo
+     *
+     *  @return string
+     */
+    public function getLogo() {
+        return $this->_data['logo_path'];
+    }
+
+    /** 
+     *  Get the Company's parent company id
+     *
+     *  @return int
+     */
+    public function getParentCompanyID() {
+        return $this->_data['parent_company'];
     }
 
     /**
-     *  Get the Collection's Movies
+     *  Get the Company's Movies
      *
      *  @return Movie[]
      */
     public function getMovies() {
         $movies = array();
 
-        foreach($this->_data['parts'] as $data){
+        foreach($this->_data['movies']['results'] as $data){
             $movies[] = new Movie($data);
         }
 

@@ -78,8 +78,8 @@
             echo 'Now the <b>$collection</b> var got all the data, check the <a href="http://code.octal.es/php/tmdb-api/class-Collection.html">documentation</a> for the complete list of methods.<br><br>';
 
             echo '<b>'. $collection->getName() .'</b><ul>';
-            echo '  <li>ID:'. $collection->getID() .'</li>';
-            echo '  <li>Overview:'. $collection->getOverview() .'</li>';
+            echo '  <li>ID: '. $collection->getID() .'</li>';
+            echo '  <li>Overview: '. $collection->getOverview() .'</li>';
             echo '  <li>Movies<ul>';
             $movies = $collection->getMovies();
             foreach ($movies as $movie) {
@@ -88,6 +88,37 @@
             echo '  </ul></li>';
             echo '</ul>...';
             echo '<img src="'. $tmdb->getImageURL('w185') . $collection->getPoster() .'"/></li>';
+
+            // 7. Search a Company
+
+            echo '<li><a id="searchCompany"><h3>Search Company</h3></a><ul>';
+
+            $companies = $tmdb->searchCompany("Sony");
+            foreach($companies as $company){
+                echo '<li>'. $company->getName() .' (<a href="https://www.themoviedb.org/company/'. $company->getID() .'">'. $company->getID() .'</a>)</li>';
+            }
+
+            echo '</ul></li><hr>';
+
+            // 8. Full Company Info
+
+            echo '<li><a id="companyInfo"><h3>Full Company Info</h3></a>';
+
+            $company = $tmdb->getCompany(34);
+            echo 'Now the <b>$company</b> var got all the data, check the <a href="http://code.octal.es/php/tmdb-api/class-Company.html">documentation</a> for the complete list of methods.<br><br>';
+
+            echo '<b>'. $company->getName() .'</b><ul>';
+            echo '  <li>ID: '. $company->getID() .'</li>';
+            echo '  <li>Description: '. $company->getDescription() .'</li>';
+            echo '  <li>Movies<ul>';
+            // in this case, getMovies returns only one page of the movies (20 results) 
+            $movies = $company->getMovies();
+            foreach ($movies as $movie) {
+                echo '<li>'. $movie->getTitle() .' (<a href="https://www.themoviedb.org/movie/'. $movie->getID() .'">'. $movie->getID() .'</a>)</li>';
+            }
+            echo '  </ul></li>';
+            echo '</ul>...';
+            echo '<img src="'. $tmdb->getImageURL('w185') . $company->getLogo() .'"/></li>';
         ?>
     </body>
 </html>

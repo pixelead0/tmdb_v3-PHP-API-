@@ -59,5 +59,18 @@ class Role{
     public function get($item = ''){
         return (empty($item)) ? $this->_data : $this->_data[$item];
     }
+
+    //------------------------------------------------------------------------------
+    // Export
+    //------------------------------------------------------------------------------
+
+    /** 
+     *  Get the JSON representation of the Movie
+     *
+     *  @return string
+     */
+    public function getJSON() {
+        return json_encode($this->_data, JSON_PRETTY_PRINT);
+    }
 }
 ?>

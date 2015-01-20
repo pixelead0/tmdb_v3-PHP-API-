@@ -77,6 +77,7 @@ include("data/Role.php");
 include("data/roles/MovieRole.php");
 include("data/roles/TVShowRole.php");
 include("data/Collection.php");
+include("data/Company.php");
 
 class TMDB{
 
@@ -416,6 +417,17 @@ class TMDB{
 		return new Collection($this->_call('collection/' . $idCollection, $appendToResponse));
 	}
 
+	/**
+	 * 	Get a Company
+	 *
+	 * 	@param int $idCompany The Person id
+	 * 	@param string $appendToResponse The extra append of the request, by default all
+	 * 	@return Company
+	 */
+	public function getCompany($idCompany, $appendToResponse = 'append_to_response=movies'){
+		return new Company($this->_call('company/' . $idCompany, $appendToResponse));
+	}
+
 	//------------------------------------------------------------------------------
 	// Searches
 	//------------------------------------------------------------------------------
@@ -494,6 +506,25 @@ class TMDB{
 		}
 
 		return $collections;
+	}
+
+	/**
+	 *  Search Company
+	 *
+	 * 	@param string $companyName The name of the Company
+	 * 	@return Company[]
+	 */
+	public function searchCompany($companyName){
+
+		$companies = array();
+
+		$result = $this->_call('search/company', 'query='. urlencode($companyName), $this->getLang());
+
+		foreach($result['results'] as $data){
+			$companies[] = new Company($data);
+		}
+
+		return $companies;
 	}
 }
 ?>

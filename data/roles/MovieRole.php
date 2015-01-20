@@ -33,7 +33,7 @@ class MovieRole extends Role{
     //------------------------------------------------------------------------------
 
     /** 
-     *  Get the Movie's title of the role
+     *  Get the Movie's title of the MovieRole
      *
      *  @return string
      */
@@ -42,7 +42,7 @@ class MovieRole extends Role{
     }
 
     /** 
-     *  Get the Movie's id
+     *  Get the Movie's id of the MovieRole
      *
      *  @return int
      */
@@ -51,7 +51,7 @@ class MovieRole extends Role{
     }
 
     /** 
-     *  Get the Movie's original title of the role
+     *  Get the Movie's original title of the MovieRole
      *
      *  @return string
      */
@@ -60,7 +60,7 @@ class MovieRole extends Role{
     }
 
     /** 
-     *  Get the Movie's release date of the role
+     *  Get the Movie's release date of the MovieRole
      *
      *  @return string
      */

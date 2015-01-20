@@ -43,7 +43,7 @@
 
             echo '<li><a id="nowPlayingMovies"><h3>Now Playing Movies</h3></a><ul>';
 
-            $movies = $tmdb->nowPlayingMovies();
+            $movies = $tmdb->getNowPlayingMovies();
             foreach($movies as $movie){
                 echo '<li>'. $movie->getTitle() .' (<a href="https://www.themoviedb.org/movie/'. $movie->getID() .'">'. $movie->getID() .'</a>)</li>';
             }

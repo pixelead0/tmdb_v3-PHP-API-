@@ -1,71 +1,32 @@
 <?php
 /**
- * TMDB API v3 PHP class - wrapper to API version 3 of 'themoviedb.org
- * API Documentation: http://help.themoviedb.org/kb/api/about-3
- * Documentation and usage in README file
+ * 	TMDB API v3 PHP class - wrapper to API version 3 of 'themoviedb.org
+ * 	API Documentation: http://help.themoviedb.org/kb/api/about-3
+ * 	Libray Documentation: http://code.octal.es/php/tmdb-api/
  *
- * @pakage TMDB_V3_API_PHP
- * @author adangq <adangq@gmail.com>
- * @copyright 2012 pixelead0
- * @date 2012-02-12
- * @link http://www.github.com/pixelead
- * @version 0.0.2
- * @license BSD http://www.opensource.org/licenses/bsd-license.php
+ * 	@pakage TMDB-PHP-API
+ * 	@author adangq <adangq@gmail.com>
+ * 	@copyright 2012 pixelead0
+ * 	@date 2012-02-12
+ * 	@link http://www.github.com/pixelead
+ * 	@version 0.0.2
+ * 	@license BSD http://www.opensource.org/licenses/bsd-license.php
  *
+ * 	Portions of this file are based on pieces of TMDb PHP API class - API 'themoviedb.org'
+ * 	@Copyright Jonas De Smet - Glamorous | https://github.com/glamorous/TMDb-PHP-API
+ * 	Licensed under BSD (http://www.opensource.org/licenses/bsd-license.php)
+ * 	@date 10.12.2010
+ * 	@version 0.9.10
+ * 	@author Jonas De Smet - Glamorous
+ * 	@link {https://github.com/glamorous/TMDb-PHP-API}
  *
- * Portions of this file are based on pieces of TMDb PHP API class - API 'themoviedb.org'
- * @Copyright Jonas De Smet - Glamorous | https://github.com/glamorous/TMDb-PHP-API
- * Licensed under BSD (http://www.opensource.org/licenses/bsd-license.php)
- * @date 10.12.2010
- * @version 0.9.10
- * @author Jonas De Smet - Glamorous
- * @link {https://github.com/glamorous/TMDb-PHP-API}
- *
- * Mostly code cleaning and documentation
- * @Copyright Alvaro Octal | https://github.com/Alvaroctal/TMDB-PHP-API
- * Licensed under BSD (http://www.opensource.org/licenses/bsd-license.php)
- * @date 09/01/2015
- * @version 0.0.2.1
- * @author Alvaro Octal
- * @link {https://github.com/Alvaroctal/TMDB-PHP-API}
- *
- * 	Function List
- *   	public function  __construct($apikey,$lang='en')
- *   	public function setLang($lang="en") 
- *   	public function getLang() 
- *   	public function setImageURL($config) 
- *   	public function getImageURL($size="original") 
- *   	public function movieTitles($idMovie) 
- *   	public function movieTrans($idMovie)
- *   	public function movieTrailer($idMovie,$source="") 
- *   	public function movieDetail($idMovie)
- *   	public function moviePoster($idMovie)
- *   	public function movieCast($idMovie)
- *   	public function movieInfo($idMovie,$option="",$print=false)
- *   	public function searchMovie($movieTitle)
- *   	public function getConfig() 
- *   	public function latestMovie() 
- *   	public function nowPlayingMovies($page=1) 
- *
- *   	private function _getDataArray($action,$text,$lang="")
- *   	private function setApikey($apikey) 
- *   	private function getApikey()
- *
- *
- * 	URL LIST:
- *   	configuration		http://api.themoviedb.org/3/configuration
- * 		Image				http://cf2.imgobject.com/t/p/original/IMAGEN.jpg #### echar un ojo ####
- * 		Search Movie		http://api.themoviedb.org/3/search/movie
- * 		Search Person		http://api.themoviedb.org/3/search/person
- * 		Movie Info			http://api.themoviedb.org/3/movie/11
- * 		Casts				http://api.themoviedb.org/3/movie/11/casts
- * 		Posters				http://api.themoviedb.org/3/movie/11/images
- * 		Trailers			http://api.themoviedb.org/3/movie/11/trailers
- * 		translations		http://api.themoviedb.org/3/movie/11/translations
- * 		Alternative titles 	http://api.themoviedb.org/3/movie/11/alternative_titles
- *
- * 		// Collection Info 	http://api.themoviedb.org/3/collection/11
- * 		// Person images		http://api.themoviedb.org/3/person/287/images
+ * 	Mostly code cleaning, adaptation and documentation
+ * 	@Copyright Alvaro Octal | https://github.com/Alvaroctal/TMDB-PHP-API
+ * 	Licensed under BSD (http://www.opensource.org/licenses/bsd-license.php)
+ * 	@date 09/01/2015
+ * 	@version 0.0.3
+ * 	@author Alvaro Octal
+ * 	@link {https://github.com/Alvaroctal/TMDB-PHP-API}
  */
 
 include("data/Movie.php");
@@ -78,6 +39,7 @@ include("data/roles/MovieRole.php");
 include("data/roles/TVShowRole.php");
 include("data/Collection.php");
 include("data/Company.php");
+include("data/config/Configuration.php");
 
 class TMDB{
 
@@ -85,7 +47,7 @@ class TMDB{
 	const _API_URL_ = "http://api.themoviedb.org/3/";
 
 	#@var string Version of this class
-	const VERSION = '0.0.2.1';
+	const VERSION = '0.0.3';
 
 	#@var string API KEY
 	private $_apikey;
@@ -94,7 +56,7 @@ class TMDB{
 	private $_lang;
 
 	#@var array of TMDB config
-    private $_config;
+    private $_configuration;
 
 	#@var boolean for testing
 	private $_debug;
@@ -180,18 +142,18 @@ class TMDB{
 	 * 	@return boolean
 	 */
 	private function _loadConfig() {
-		$this->_config = $this->_call('configuration', '');
+		$this->_configuration = new Configuration($this->_call('configuration', ''));
 
-		return ! empty($this->_config);
+		return ! empty($this->_configuration);
 	}
 
 	/**
 	 * 	Get Configuration of the API (Revisar)
 	 *
-	 * 	@return array
+	 * 	@return Configuration
 	 */
 	public function getConfig(){
-		return $this->_config;
+		return $this->_configuration;
 	}
 
 	//------------------------------------------------------------------------------
@@ -206,7 +168,7 @@ class TMDB{
 	 * 	@return string
 	 */
 	public function getImageURL($size = 'original') {
-		return $this->_config['images']['base_url'] . $size;
+		return $this->_configuration->getImageBaseURL() . $size;
 	}
 
 	/**
@@ -217,7 +179,7 @@ class TMDB{
 	 *  @param string $option The request option
 	 * 	@param string $append_request additional request
 	 * 	@return array
-	 *	@deprecated
+	 *	@deprecated Will be removed in 0.0.4, do not get used to use this method
 	 */
 	public function getMovieInfo($idMovie, $option = '', $append_request = ''){
 		$option = (empty($option)) ? '' : '/' . $option;
@@ -225,68 +187,6 @@ class TMDB{
 		$result = $this->_call($params, $append_request);
 			
 		return $result;
-	}
-
-	//------------------------------------------------------------------------------
-	// Get Lists of Movies
-	//------------------------------------------------------------------------------
-
-	/**
-	 * 	Get latest Movie
-	 *
-	 * 	@return Movie
-	 */
-	public function getLatestMovie() {
-		return new Movie($this->_call('movie/latest',''));
-	}
-
-	/**
-	 *  Now Playing Movies
-	 *
-	 * 	@param integer $page
-	 * 	@return array
-	 */
-	public function nowPlayingMovies($page = 1) {
-
-		$movies = array();
-
-		$result = $this->_call('movie/now-playing', 'page='. $page);
-
-		foreach($result['results'] as $data){
-			$movies[] = new Movie($data);
-		}
-
-		return $movies;
-	}
-
-	//------------------------------------------------------------------------------
-	// Get Lists of Persons
-	//------------------------------------------------------------------------------
-
-	/**
-	 * 	Get latest Person
-	 *
-	 * 	@return Person
-	 */
-	public function getLatestPerson() {
-		return new Person($this->_call('person/latest',''));
-	}
-
-	/**
-	 * 	Get Popular Persons
-	 *
-	 * 	@return Person[]
-	 */
-	public function getPopularPersons($page = 1) {
-		$persons = array();
-
-		$result = $this->_call('person/popular','page='. $page);
-
-		foreach($result['results'] as $data){
-			$persons[] = new Person($data);
-		}
-
-		return $persons;
 	}
 
 	//------------------------------------------------------------------------------
@@ -358,29 +258,6 @@ class TMDB{
 	public function getSeason($idTVShow, $numSeason, $appendToResponse = 'append_to_response=trailers,images,casts,translations'){
 		return new Season($this->_call('tv/'. $idTVShow .'/season/' . $numSeason, $appendToResponse), $idTVShow);
 	}
-
-	/**
-	 * 	Get a Season by Number
-	 *
-	 *  @param int $idTVShow The TVShow id
-	 *  @param int $numSeason The Season number
-	 * 	@param string $appendToResponse The extra append of the request, by default all
-	 * 	@return Season
-	 */
-	/*public function getSeasonByNumber($idTVShow, $numSeason, $appendToResponse = 'append_to_response=trailers,images,casts,translations'){
-		return new Season($this->_call('tv/'. $idTVShow .'/season/' . $numSeason, $appendToResponse));
-	}*/
-
-	/**
-	 * 	Get a Episode
-	 *
-	 *  @param int $idEpisode The Episode id
-	 * 	@param string $appendToResponse The extra append of the request, by default all
-	 * 	@return Episode
-	 */
-	/*public function getEpisode($idEpisode, $appendToResponse = 'append_to_response=trailers,images,casts,translations'){
-		return new Episode($this->_call('tv/season/episode/' . $idEpisode, $appendToResponse));
-	}*/
 
 	/**
 	 * 	Get a Episode
@@ -525,6 +402,212 @@ class TMDB{
 		}
 
 		return $companies;
+	}
+
+	//------------------------------------------------------------------------------
+	//
+	// Get Lists 
+	//
+	//------------------------------------------------------------------------------
+
+	//------------------------------------------------------------------------------
+	// Get Lists of Movies
+	//------------------------------------------------------------------------------
+
+	/**
+	 * 	Get the latest Movie 
+	 *
+	 * 	@return Movie
+	 */
+	public function getLatestMovie() {
+		return new Movie($this->_call('movie/latest',''));
+	}
+
+	/**
+	 *  Get the upcoming Movies
+	 *
+	 * 	@param integer $page The page number of the results
+	 * 	@return Movie[]
+	 */
+	public function getUpcomingMovies($page = 1) {
+
+		$movies = array();
+
+		$result = $this->_call('movie/upcoming', 'page='. $page);
+
+		foreach($result['results'] as $data){
+			$movies[] = new Movie($data);
+		}
+
+		return $movies;
+	}
+
+	/**
+	 *  Get now playing Movies
+	 *
+	 * 	@param integer $page The page number of the results
+	 * 	@return Movie[]
+	 */
+	public function getNowPlayingMovies($page = 1) {
+
+		$movies = array();
+
+		$result = $this->_call('movie/now-playing', 'page='. $page);
+
+		foreach($result['results'] as $data){
+			$movies[] = new Movie($data);
+		}
+
+		return $movies;
+	}
+
+	/**
+	 *  Get popular Movies
+	 *
+	 * 	@param integer $page The page number of the results
+	 * 	@return Movie[]
+	 */
+	public function getPopularMovies($page = 1) {
+
+		$movies = array();
+
+		$result = $this->_call('movie/popular', 'page='. $page);
+
+		foreach($result['results'] as $data){
+			$movies[] = new Movie($data);
+		}
+
+		return $movies;
+	}
+
+	/**
+	 *  Get top rated Movies
+	 *
+	 * 	@param integer $page The page number of the results
+	 * 	@return Movie[]
+	 */
+	public function getTopRatedMovies($page = 1) {
+
+		$movies = array();
+
+		$result = $this->_call('movie/top_rated', 'page='. $page);
+
+		foreach($result['results'] as $data){
+			$movies[] = new Movie($data);
+		}
+
+		return $movies;
+	}
+
+	//------------------------------------------------------------------------------
+	// Get Lists of TVShows
+	//------------------------------------------------------------------------------
+
+	/**
+	 * 	Get latest TVShow
+	 *
+	 * 	@return TVShow
+	 */
+	public function getLatestTVShow() {
+		return new TVShow($this->_call('tv/latest',''));
+	}
+
+	/**
+	 * 	Get popular TVShows
+	 *
+	 * 	@return TVShow[]
+	 */
+	public function getPopularTVShows($page = 1) {
+		$tvShows = array();
+
+		$result = $this->_call('tv/popular','page='. $page);
+
+		foreach($result['results'] as $data){
+			$tvShows[] = new TVShow($data);
+		}
+
+		return $tvShows;
+	}
+
+	/**
+	 * 	Get on the air TVShows
+	 *
+	 * 	@return TVShow[]
+	 */
+	public function getOnTheAirTVShows($page = 1) {
+		$tvShows = array();
+
+		$result = $this->_call('tv/on_the_air','page='. $page);
+
+		foreach($result['results'] as $data){
+			$tvShows[] = new TVShow($data);
+		}
+
+		return $tvShows;
+	}
+
+	/**
+	 * 	Get airing today TVShows
+	 *
+	 * 	@return TVShow[]
+	 */
+	public function getAiringTodayTVShows($page = 1) {
+		$tvShows = array();
+
+		$result = $this->_call('tv/airing_today','page='. $page);
+
+		foreach($result['results'] as $data){
+			$tvShows[] = new TVShow($data);
+		}
+
+		return $tvShows;
+	}
+
+	/**
+	 * 	Get top rated TVShows
+	 *
+	 * 	@return TVShow[]
+	 */
+	public function getTopRatedTVShows($page = 1) {
+		$tvShows = array();
+
+		$result = $this->_call('tv/top_rated','page='. $page);
+
+		foreach($result['results'] as $data){
+			$tvShows[] = new TVShow($data);
+		}
+
+		return $tvShows;
+	}
+
+	//------------------------------------------------------------------------------
+	// Get Lists of Persons
+	//------------------------------------------------------------------------------
+
+	/**
+	 * 	Get latest Person
+	 *
+	 * 	@return Person
+	 */
+	public function getLatestPerson() {
+		return new Person($this->_call('person/latest',''));
+	}
+
+	/**
+	 * 	Get Popular Persons
+	 *
+	 * 	@return Person[]
+	 */
+	public function getPopularPersons($page = 1) {
+		$persons = array();
+
+		$result = $this->_call('person/popular','page='. $page);
+
+		foreach($result['results'] as $data){
+			$persons[] = new Person($data);
+		}
+
+		return $persons;
 	}
 }
 ?>

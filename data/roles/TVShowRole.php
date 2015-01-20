@@ -33,7 +33,7 @@ class TVShowRole extends Role{
     //------------------------------------------------------------------------------
 
     /** 
-     *  Get the TVShow's title of the role
+     *  Get the TVShow's title of the TVShowRole
      *
      *  @return string
      */
@@ -42,7 +42,7 @@ class TVShowRole extends Role{
     }
 
     /** 
-     *  Get the TVShow's id
+     *  Get the TVShow's id of the TVShowRole
      *
      *  @return int
      */
@@ -51,7 +51,7 @@ class TVShowRole extends Role{
     }
 
     /** 
-     *  Get the TVShow's original title of the role
+     *  Get the TVShow's original title of the TVShowRole
      *
      *  @return string
      */
@@ -60,7 +60,7 @@ class TVShowRole extends Role{
     }
 
     /** 
-     *  Get the TVShow's release date of the role
+     *  Get the TVShow's release date of the TVShowRole
      *
      *  @return string
      */

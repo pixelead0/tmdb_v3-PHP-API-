@@ -139,7 +139,7 @@ class Person{
     //------------------------------------------------------------------------------
 
     /**
-     *  Get the JSON representation of the Episode
+     *  Get the JSON representation of the Person
      *
      *  @return string
      */

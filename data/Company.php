@@ -124,7 +124,7 @@ class Company {
     //------------------------------------------------------------------------------
 
     /** 
-     *  Get the JSON representation of the Movie
+     *  Get the JSON representation of the Company
      *
      *  @return string
      */

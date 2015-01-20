@@ -1,15 +1,15 @@
 <?php
 /**
- * 	This class handles all the data you can get from a Collection
+ * 	This class handles all the data you can get from the api Configuration
  *
  * 	@author Alvaro Octal | <a href="https://twitter.com/Alvaro_Octal">Twitter</a>
  * 	@version 0.1
- * 	@date 11/01/2015
+ * 	@date 20/01/2015
  * 	@link https://github.com/Alvaroctal/TMDB-PHP-API
  * 	@copyright Licensed under BSD (http://www.opensource.org/licenses/bsd-license.php)
  */
 
-class Collection {
+class Configuration {
 
     //------------------------------------------------------------------------------
     // Class Variables
@@ -20,7 +20,7 @@ class Collection {
     /**
      * 	Construct Class
      *
-     * 	@param array $data An array with the data of a Collection
+     * 	@param array $data An array with the data of a Configuration
      */
     public function __construct($data) {
         $this->_data = $data;
@@ -31,63 +31,66 @@ class Collection {
     //------------------------------------------------------------------------------
 
     /** 
-     *  Get the Collection's name
+     *  Get the Configuration's base URL for images
      *
      *  @return string
      */
-    public function getName() {
-        return $this->_data['name'];
+    public function getImageBaseURL() {
+        return $this->_data['images']['base_url'];
     }
 
     /** 
-     *  Get the Collection's id
-     *
-     *  @return int
-     */
-    public function getID() {
-        return $this->_data['id'];
-    }
-
-    /** 
-     *  Get the Collection's overview
+     *  Get the Configuration's secure base URL for images
      *
      *  @return string
      */
-    public function getOverview() {
-        return $this->_data['overview'];
+    public function getSecureImageBaseURL() {
+        return $this->_data['images']['secure_base_url'];
     }
 
     /** 
-     *  Get the Collection's poster
+     *  Get the Configuration's list of sizes for backdrops
      *
-     *  @return string
+     *  @return string[]
      */
-    public function getPoster() {
-        return $this->_data['poster_path'];
+    public function getBackdropSizes() {
+        return $this->_data['images']['backdrop_sizes'];
     }
 
     /** 
-     *  Get the Collection's backdrop
+     *  Get the Configuration's list of sizes for logos
      *
-     *  @return string
+     *  @return string[]
      */
-    public function getBackdrop() {
-        return $this->_data['backdrop_path'];
+    public function getLogoSizes() {
+        return $this->_data['images']['logo_sizes'];
     }
 
-    /**
-     *  Get the Collection's Movies
+    /** 
+     *  Get the Configuration's list of sizes for posters
      *
-     *  @return Movie[]
+     *  @return string[]
      */
-    public function getMovies() {
-        $movies = array();
+    public function getPosterSizes() {
+        return $this->_data['images']['poster_sizes'];
+    }
 
-        foreach($this->_data['parts'] as $data){
-            $movies[] = new Movie($data);
-        }
+    /** 
+     *  Get the Configuration's list of sizes for profiles
+     *
+     *  @return string[]
+     */
+    public function getProfileSizes() {
+        return $this->_data['images']['profile_sizes'];
+    }
 
-        return $movies;
+    /** 
+     *  Get the Configuration's list of sizes for stills
+     *
+     *  @return string[]
+     */
+    public function getStillSizes() {
+        return $this->_data['images']['still_sizes'];
     }
 
     /**
@@ -106,7 +109,7 @@ class Collection {
     //------------------------------------------------------------------------------
 
     /** 
-     *  Get the JSON representation of the Collection
+     *  Get the JSON representation of the Configuration
      *
      *  @return string
      */

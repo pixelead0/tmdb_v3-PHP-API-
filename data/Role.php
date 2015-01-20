@@ -65,7 +65,7 @@ class Role{
     //------------------------------------------------------------------------------
 
     /** 
-     *  Get the JSON representation of the Movie
+     *  Get the JSON representation of the Role
      *
      *  @return string
      */

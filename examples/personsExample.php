@@ -82,6 +82,16 @@
 				echo '<li>'. $person->getName() .' (<a href="https://www.themoviedb.org/person/'. $person->getID() .'">'. $person->getID() .'</a>)</li>';
 			}
 			echo '</ol></li><hr>';
+
+			// 6. Find Person by external ID
+
+			echo '<li><a id="findPerson"><h3>Find person by external ID</h3></a><ul>';
+
+			$persons = $tmdb->findPerson('nm0000652');
+			foreach($persons as $person){
+				echo '<li>'. $person->getName() .' (<a href="https://www.themoviedb.org/person/'. $person->getID() .'">'. $person->getID() .'</a>)</li>';
+			}
+			echo '</ul></li><hr>';
 		?>
 	</body>
 </html>

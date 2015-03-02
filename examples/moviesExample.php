@@ -119,6 +119,17 @@
             echo '  </ul></li>';
             echo '</ul>...';
             echo '<img src="'. $tmdb->getImageURL('w185') . $company->getLogo() .'"/></li>';
+
+            // 9. Find Movie by IMDB id
+
+            echo '<li><a id="findMovie"><h3>Find Movie by IMDB id</h3></a><ul>';
+
+            $movies = $tmdb->findMovie('tt0133093');
+            foreach($movies as $movie){
+                echo '<li>'. $movie->getTitle() .' (<a href="https://www.themoviedb.org/movie/'. $movie->getID() .'">'. $movie->getID() .'</a>)</li>';
+            }
+
+            echo '</ul></li><hr>';
         ?>
     </body>
 </html>

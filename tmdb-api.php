@@ -609,5 +609,94 @@ class TMDB{
 
 		return $persons;
 	}
+
+	//------------------------------------------------------------------------------
+	// Find
+	//------------------------------------------------------------------------------
+
+	/**
+	 *	Get a Movie by an external ID (f.e.: imdb)
+	 *
+	 *	@return Movie[]
+	 */
+	public function findMovie($movieID, $externalSource = 'imdb_id'){
+		$movies = array();
+
+		$result = $this->_call('find/' . $movieID, 'external_source=' . $externalSource);
+
+		foreach ($result['movie_results'] as $data) {
+			$movies[] = new Movie($data);
+		}
+
+		return $movies;
+	}
+
+	/**
+	 *	Get a Person by an external ID (f.e.: imdb)
+	 *
+	 *	@return Person[]
+	 */
+	public function findPerson($personID, $externalSource = 'imdb_id'){
+		$persons = array();
+
+		$result = $this->_call('find/' . $personID, 'external_source=' . $externalSource);
+
+		foreach ($result['person_results'] as $data) {
+			$persons[] = new Person($data);
+		}
+
+		return $persons;
+	}
+
+	/**
+	 *	Get a TVShow by an external ID (f.e.: imdb)
+	 *
+	 *	@return TVShow[]
+	 */
+	public function findTVShow($tvShowID, $externalSource = 'imdb_id'){
+		$tvShows = array();
+
+		$result = $this->_call('find/' . $tvShowID, 'external_source=' . $externalSource);
+
+		foreach ($result['tv_results'] as $data) {
+			$tvShows[] = new TVShow($data);
+		}
+
+		return $tvShows;
+	}
+
+	/**
+	 *	Get a Season by an external ID (f.e.: imdb)
+	 *
+	 *	@return Season[]
+	 */
+	public function findSeason($seasonID, $externalSource = 'tvdb_id'){
+		$seasons = array();
+
+		$result = $this->_call('find/' . $seasonID, 'external_source=' . $externalSource);
+
+		foreach ($result['tv_season_results'] as $data) {
+			$seasons[] = new Season($data);
+		}
+
+		return $seasons;
+	}
+
+	/**
+	 *	Get a Episode by an external ID (f.e.: imdb)
+	 *
+	 *	@return Episode[]
+	 */
+	public function findEpisode($episodeID, $externalSource = 'imdb_id'){
+		$episodes = array();
+
+		$result = $this->_call('find/' . $episodeID, 'external_source=' . $externalSource);
+
+		foreach ($result['tv_episode_results'] as $data) {
+			$episodes[] = new Episode($data);
+		}
+
+		return $episodes;
+	}
 }
 ?>

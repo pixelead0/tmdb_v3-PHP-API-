@@ -75,6 +75,16 @@
             echo '  <li>Vote Average: '. $episode->getVoteAverage() .'</li>';
             echo '  <li>Vode Count: '. $episode->getVoteCount() .'</li>';
             echo ' </ul></ul>...<hr>';
+
+            // 5. Find TVShow by external ID
+
+            echo '<li><a id="findPerson"><h3>Find TVShow by external ID</h3></a><ul>';
+
+            $tvShows = $tmdb->findTVShow('tt3032476');
+            foreach($tvShows as $tvShow){
+                echo '<li>'. $tvShow->getName() .' (<a href="https://www.themoviedb.org/tv/'. $tvShow->getID() .'">'. $tvShow->getID() .'</a>)</li>';
+            }
+            echo '</ul></li><hr>';
         ?>
     </body>
 </html>

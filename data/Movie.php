@@ -111,10 +111,10 @@ class Movie{
 	/** 
 	 * 	Get the Movie's trailer
 	 *
-	 * 	@return string
+	 * 	@return string|null returns null if no youtube link is available
 	 */
 	public function getTrailer() {
-		return $this->getTrailers()['youtube'][0]['source'];
+		return empty($this->getTrailers()['youtube'][0]['source']) ? null : $this->getTrailers()['youtube'][0]['source'];
 	}
 
 	/**

@@ -225,6 +225,29 @@ class TMDB{
 			
 		return $result;
 	}
+	
+	//------------------------------------------------------------------------------
+	// Get Lists of Discover
+	//------------------------------------------------------------------------------
+
+	/**
+	 * 	Get latest Movie
+	 *	@add by tnsws
+	 * 
+	 * 	@return Movie
+	 */
+	public function getDiscoverMovie($page = 1) {
+
+		$movies = array();
+
+		$result = $this->_call('discover/movie', 'page='. $page);
+
+		foreach($result['results'] as $data){
+			$movies[] = new Movie($data);
+		}
+
+		return $movies;
+	}
 
 	//------------------------------------------------------------------------------
 	// Get Lists of Movies
@@ -250,6 +273,46 @@ class TMDB{
 		$movies = array();
 
 		$result = $this->_call('movie/now-playing', 'page='. $page);
+
+		foreach($result['results'] as $data){
+			$movies[] = new Movie($data);
+		}
+
+		return $movies;
+	}
+	
+	/**
+	 *  Top Rated Movies
+	 *	@add by tnsws
+	 * 
+	 * 	@param integer $page
+	 * 	@return array
+	 */
+	public function topRatedMovies($page = 1) {
+
+		$movies = array();
+
+		$result = $this->_call('movie/top-rated', 'page='. $page);
+
+		foreach($result['results'] as $data){
+			$movies[] = new Movie($data);
+		}
+
+		return $movies;
+	}
+
+	/**
+	 *  Upcoming Movies
+	 *	@add by tnsws
+	 * 
+	 * 	@param integer $page
+	 * 	@return array
+	 */
+	public function upcomingMovies($page = 1) {
+
+		$movies = array();
+
+		$result = $this->_call('movie/upcoming', 'page='. $page);
 
 		foreach($result['results'] as $data){
 			$movies[] = new Movie($data);

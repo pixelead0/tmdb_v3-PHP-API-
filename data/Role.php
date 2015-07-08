@@ -24,7 +24,7 @@ class Role{
      */
     protected function __construct($data, $ipPerson) {
         $this->_data = $data;
-        $this->_data['person_id'] = $person_id;
+        $this->_data['person_id'] = $ipPerson;
     }
 
     //------------------------------------------------------------------------------

@@ -44,7 +44,7 @@ View examples/
 
 		// Insert your api key of TMDB
 		$apikey = 'YOUR_APIKEY';
-		$languaje = 'es';
+		$language = 'es';
 		$tmdb = new TMDB($apikey, $language); // by simply giving $apikey it sets the default lang to 'en'
 	?>
 ## Movies ##

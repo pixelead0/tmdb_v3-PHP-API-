@@ -9,24 +9,7 @@
  * 	@copyright Licensed under BSD (http://www.opensource.org/licenses/bsd-license.php)
  */
 
-class TVShowRole extends Role{
-
-    //------------------------------------------------------------------------------
-    // Class Variables
-    //------------------------------------------------------------------------------
-
-    private $_data;
-
-    /**
-     * 	Construct Class
-     *
-     * 	@param array $data An array with the data of a TVShowRole
-     */
-    public function __construct($data, $idPerson) {
-        $this->_data = $data;
-
-        parent::__construct($data, $idPerson);
-    }
+class TVShowRole extends Role {
 
     //------------------------------------------------------------------------------
     // Get Variables

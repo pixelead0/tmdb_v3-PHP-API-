@@ -29,6 +29,7 @@
  * 	@link {https://github.com/Alvaroctal/TMDB-PHP-API}
  */
 
+include("data/TMDBObject.php");
 include("data/Movie.php");
 include("data/TVShow.php");
 include("data/Season.php");
@@ -39,6 +40,7 @@ include("data/roles/MovieRole.php");
 include("data/roles/TVShowRole.php");
 include("data/Collection.php");
 include("data/Company.php");
+include("data/Genre.php");
 include("data/config/Configuration.php");
 
 class TMDB{
@@ -232,7 +234,7 @@ class TMDB{
 	 * 	@param string $appendToResponse The extra append of the request, by default all
 	 * 	@return Movie
 	 */
-	public function getMovie($idMovie, $appendToResponse = 'append_to_response=trailers,images,casts,translations'){
+	public function getMovie($idMovie, $appendToResponse = 'append_to_response=trailers,images,credits,translations'){
 		return new Movie($this->_call('movie/' . $idMovie, $appendToResponse));
 	}
 
@@ -243,7 +245,7 @@ class TMDB{
 	 * 	@param string $appendToResponse The extra append of the request, by default all
 	 * 	@return TVShow
 	 */
-	public function getTVShow($idTVShow, $appendToResponse = 'append_to_response=trailers,images,casts,translations,keywords'){
+	public function getTVShow($idTVShow, $appendToResponse = 'append_to_response=trailers,images,credits,translations,keywords'){
 		return new TVShow($this->_call('tv/' . $idTVShow, $appendToResponse));
 	}
 
@@ -255,7 +257,7 @@ class TMDB{
 	 * 	@param string $appendToResponse The extra append of the request, by default all
 	 * 	@return Season
 	 */
-	public function getSeason($idTVShow, $numSeason, $appendToResponse = 'append_to_response=trailers,images,casts,translations'){
+	public function getSeason($idTVShow, $numSeason, $appendToResponse = 'append_to_response=trailers,images,credits,translations'){
 		return new Season($this->_call('tv/'. $idTVShow .'/season/' . $numSeason, $appendToResponse), $idTVShow);
 	}
 
@@ -268,7 +270,7 @@ class TMDB{
 	 * 	@param string $appendToResponse The extra append of the request, by default all
 	 * 	@return Episode
 	 */
-	public function getEpisode($idTVShow, $numSeason, $numEpisode, $appendToResponse = 'append_to_response=trailers,images,casts,translations'){
+	public function getEpisode($idTVShow, $numSeason, $numEpisode, $appendToResponse = 'append_to_response=trailers,images,credits,translations'){
 		return new Episode($this->_call('tv/'. $idTVShow .'/season/'. $numSeason .'/episode/'. $numEpisode, $appendToResponse), $idTVShow);
 	}
 

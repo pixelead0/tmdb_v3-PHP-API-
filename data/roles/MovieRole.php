@@ -9,24 +9,7 @@
  * 	@copyright Licensed under BSD (http://www.opensource.org/licenses/bsd-license.php)
  */
 
-class MovieRole extends Role{
-
-    //------------------------------------------------------------------------------
-    // Class Variables
-    //------------------------------------------------------------------------------
-
-    private $_data;
-
-    /**
-     * 	Construct Class
-     *
-     * 	@param array $data An array with the data of a MovieRole
-     */
-    public function __construct($data, $idPerson) {
-        $this->_data = $data;
-
-        parent::__construct($data, $idPerson);
-    }
+class MovieRole extends Role {
 
     //------------------------------------------------------------------------------
     // Get Variables

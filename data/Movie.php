@@ -9,37 +9,8 @@
  * 	@copyright Licensed under BSD (http://www.opensource.org/licenses/bsd-license.php)
  */
 
-class Movie{
-
-	//------------------------------------------------------------------------------
-	// Class Variables
-	//------------------------------------------------------------------------------
-
-	private $_data;
-	private $_tmdb;
-
-	/**
-	 * 	Construct Class
-	 *
-	 * 	@param array $data An array with the data of the Movie
-	 */
-	public function __construct($data) {
-		$this->_data = $data;
-	}
-
-	//------------------------------------------------------------------------------
-	// Get Variables
-	//------------------------------------------------------------------------------
-
-	/** 
-	 * 	Get the Movie's id
-	 *
-	 * 	@return int
-	 */
-	public function getID() {
-		return $this->_data['id'];
-	}
-
+class Movie extends TMDBObject {
+	
 	/** 
 	 * 	Get the Movie's title
 	 *
@@ -117,17 +88,6 @@ class Movie{
 		return empty($this->getTrailers()['youtube'][0]['source']) ? null : $this->getTrailers()['youtube'][0]['source'];
 	}
 
-	/**
-	 *  Get Generic.<br>
-	 *  Get a item of the array, you should not get used to use this, better use specific get's.
-	 *
-	 * 	@param string $item The item of the $data array you want
-	 * 	@return array
-	 */
-	public function get($item = ''){
-		return (empty($item)) ? $this->_data : $this->_data[$item];
-	}
-
 	//------------------------------------------------------------------------------
 	// Load Variables
 	//------------------------------------------------------------------------------
@@ -162,32 +122,6 @@ class Movie{
 	 */
 	public function loadTranslations(){
 		$this->_data['translations'] = $this->_tmdb->getMovieInfo($this->getID(), 'translations', false);
-	}
-
-	//------------------------------------------------------------------------------
-	// Import an API instance
-	//------------------------------------------------------------------------------
-
-	/**
-	 *	Set an instance of the API
-	 *
-	 *	@param TMDB $tmdb An instance of the api, necessary for the lazy load
-	 */
-	public function setAPI($tmdb){
-		$this->_tmdb = $tmdb;
-	}
-
-	//------------------------------------------------------------------------------
-	// Export
-	//------------------------------------------------------------------------------
-
-	/** 
-	 * 	Get the JSON representation of the Movie
-	 *
-	 * 	@return string
-	 */
-	public function getJSON() {
-		return json_encode($this->_data, JSON_PRETTY_PRINT);
 	}
 }
 ?>

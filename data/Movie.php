@@ -105,7 +105,8 @@ class Movie{
 	 * 	@return string
 	 */
 	public function getTrailer() {
-		return $this->getTrailers()['youtube'][0]['source'];
+		$trailers = $this->getTrailers();
+		return $trailers['youtube'][0]['source'];
 	}
 
 	/**

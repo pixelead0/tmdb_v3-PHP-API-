@@ -97,6 +97,9 @@ class TMDB{
 
 	#@var boolean for testing
 	private $_debug;
+	
+	#@var string for adult content
+	private $_adult = 'false';
 
 
 	/**
@@ -167,6 +170,29 @@ class TMDB{
 	 */
 	public function getLang() {
 		return $this->_lang;
+	}
+	
+	//------------------------------------------------------------------------------
+	// Adult Content
+	//------------------------------------------------------------------------------
+	
+	/**
+	 *  Set adult content flag
+	 *	By default false
+	 *
+	 * 	@param string $adult
+	 */
+	public function setAdult($adult = 'false') {
+		$this->_adult = $adult;
+	}
+	
+	/**
+	 * 	Get the adult content flag
+	 *
+	 * 	@return string
+	 */
+	public function getAdult() {
+		return $this->_adult;
 	}
 
 	//------------------------------------------------------------------------------
@@ -364,7 +390,7 @@ class TMDB{
 	 */
 	private function _call($action, $appendToResponse){
 
-		$url = self::_API_URL_.$action .'?api_key='. $this->getApikey() .'&language='. $this->getLang() .'&'.$appendToResponse;
+		$url = self::_API_URL_.$action .'?api_key='. $this->getApikey() .'&language='. $this->getLang() .'&'.$appendToResponse .'&include_adult='. $this->getAdult();
 
 		if ($this->_debug) {
 			echo '<pre><a href="' . $url . '">check request</a></pre>';

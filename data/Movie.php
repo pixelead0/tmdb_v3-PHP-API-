@@ -91,11 +91,6 @@ class Movie{
 	 * 	@return array
 	 */
 	public function getTrailers() {
-
-		if (empty($this->_data['trailers']) && isset($this->_tmdb)){
-			$this->loadTrailer();
-		}
-
 		return $this->_data['trailers'];
 	}
 
@@ -124,6 +119,21 @@ class Movie{
 		return $genres;
 	}
 
+	/** 
+	 * 	Get the Movie's review
+	 *
+	 * 	@return Review[]
+	 */
+	public function getReviews() {
+		$reviews = array();
+
+		foreach ($this->_data['review']['result'] as $data) {
+			$reviews[] = new Review($data);
+		}
+
+		return $reviews;
+	}
+
 	/**
 	 *  Get Generic.<br>
 	 *  Get a item of the array, you should not get used to use this, better use specific get's.
@@ -133,42 +143,6 @@ class Movie{
 	 */
 	public function get($item = ''){
 		return (empty($item)) ? $this->_data : $this->_data[$item];
-	}
-
-	//------------------------------------------------------------------------------
-	// Load Variables
-	//------------------------------------------------------------------------------
-
-	/**
-	 * 	Load the images of the Movie
-	 *	Used in a Lazy load technique
-	 */
-	public function loadImages(){
-		$this->_data['images'] = $this->_tmdb->getMovieInfo($this->getID(), 'images', false);
-	}
-
-	/**
-	 * 	Load the trailer of the Movie
-	 *	Used in a Lazy load technique
-	 */
-	public function loadTrailer() {
-		$this->_data['trailers'] = $this->_tmdb->getMovieInfo($this->getID(), 'trailers', false);
-	}
-
-	/**
-	 * 	Load the casting of the Movie
-	 *	Used in a Lazy load technique
-	 */
-	public function loadCasting(){
-		$this->_data['casts'] = $this->_tmdb->getMovieInfo($this->getID(), 'casts', false);
-	}
-
-	/**
-	 * 	Load the translations of the Movie
-	 *	Used in a Lazy load technique
-	 */
-	public function loadTranslations(){
-		$this->_data['translations'] = $this->_tmdb->getMovieInfo($this->getID(), 'translations', false);
 	}
 
 	//------------------------------------------------------------------------------

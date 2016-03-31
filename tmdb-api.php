@@ -79,6 +79,7 @@ include("data/roles/TVShowRole.php");
 include("data/Collection.php");
 include("data/Company.php");
 include("data/Genre.php");
+include("data/config/Configuration.php");
 
 class TMDB {
 
@@ -207,9 +208,9 @@ class TMDB {
 	 * 	@return boolean
 	 */
 	private function _loadConfig() {
-		$this->_config = $this->_call('configuration', '');
+		$this->_configuration = new Configuration($this->_call('configuration', ''));
 
-		return ! empty($this->_config);
+		return ! empty($this->_configuration);
 	}
 
 	/**

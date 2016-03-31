@@ -49,7 +49,7 @@ tree: false
 deprecated: true
 
 # generate list of tasks with @todo annotation
-todo: true
+todo: false
 
 # add link to ZIP archive of documentation
-download: true
+download: false

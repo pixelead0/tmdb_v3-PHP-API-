@@ -1,13 +1,10 @@
 ## Documentation ##
 
-[![Join the chat at https://gitter.im/pixelead0/tmdb_v3-PHP-API-](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/pixelead0/tmdb_v3-PHP-API-?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+TMDB API v3 PHP Library - wrapper to [API](http://help.themoviedb.org/kb/api/about-3) version 3 of [themoviedb.org](http://themoviedb.org).
 
-TMDB API v3 PHP Library - wrapper to API version 3 of [themoviedb.org](http://themoviedb.org).
-API Documentation: http://help.themoviedb.org/kb/api/about-3
- 
 For using this library maybe you should take a look at the full [Documentation](http://code.octal.es/php/tmdb-api/) of this project.
 
-@pakage TMDB_V3_API_PHP<br/>
+@pakage TMDB-API-PHP<br/>
 @author [Pixelead0](https://twitter.com/pixelead0) also on [Github](https://github.com/pixelead0)<br/>
 @author [Alvaro Octal](https://twitter.com/Alvaro_Octal) also on [Github](https://github.com/Alvaroctal)<br/>
 @date 17/01/2015<br/>
@@ -21,13 +18,17 @@ Forked from a similar [project](https://github.com/glamorous/TMDb-PHP-API) by [J
   * [17/01/2015] v0.3 - Upgraded by
 	- Upgrade by  [/Alvaroctal/TMDB-PHP-API](https://github.com/Alvaroctal/TMDB-PHP-API).
 	- Some modifications and dedicated classes added.
-  
+
   * [07/11/2012] v0.2
     - Fixed issue #2 (Object created in class php file)
     - Added functions latestMovie, nowPlayingMovies (thank's to steffmeister)
- 
-  * [12/02/2012] v0.1 
-    - This is the first version of the class without inline documentation or testing    
+
+  * [12/02/2012] v0.1
+    - This is the first version of the class without inline documentation or testing
+    - Forked from [glamorous/TMDb-PHP-API](https://github.com/glamorous/TMDb-PHP-API)
+
+  * [12/02/2012] v0.1
+    - This is the first version of the class without inline documentation or testing
     - Forked from [glamorous/TMDb-PHP-API](https://github.com/glamorous/TMDb-PHP-API)
 
 ### Requirements ###
@@ -157,8 +158,8 @@ returns an array of [TVShowRole](http://code.octal.es/php/tmdb-api/class-TVShowR
 
 	<?php
 		// Name to search for
-		$title = 'the hobbit';
-		$collections = $tmdb->searchCollection($title);
+		$name = 'the hobbit';
+		$collections = $tmdb->searchCollection($name);
 		foreach($collections as $collection){
 			echo $collection->getName() .'<br>';
 		}
@@ -174,6 +175,28 @@ You should take a look at the Collection class [Documentation](http://code.octal
 		echo $collection->getName();
 	?>
 returns a [Collection](http://code.octal.es/php/tmdb-api/class-Collection.html) Object.
+## Companies ##
+### Search a Company ###
+
+	<?php
+		// Name to search for
+		$name = 'Sony';
+		$companies = $tmdb->searchCompany($name);
+		foreach($companies as $company){
+			echo $company->getName() .'<br>';
+		}
+	?>
+returns an array of [Company](http://code.octal.es/php/tmdb-api/class-Company.html) Objects.
+### Get a Company ###
+You should take a look at the Company class [Documentation](http://code.octal.es/php/tmdb-api/class-Company.html) and see all the info you can get from a Company Object.
+
+	<?php
+		$idCompany = 34;
+		$company = $tmdb->getCompany($idCompany);
+		// returns a Company Object
+		echo $company->getName();
+	?>
+returns a [Company](http://code.octal.es/php/tmdb-api/class-Company.html) Object.
 ## Issues/Bugs ##
 Bugs are expected, this is still under development, you can [report](https://github.com/Alvaroctal/TMDB-PHP-API/issues) them.
 

@@ -9,14 +9,31 @@
  * 	@copyright Licensed under BSD (http://www.opensource.org/licenses/bsd-license.php)
  */
 
-class TVShowRole extends Role {
+class TVShowRole extends Role{
+
+    //------------------------------------------------------------------------------
+    // Class Variables
+    //------------------------------------------------------------------------------
+
+    private $_data;
+
+    /**
+     * 	Construct Class
+     *
+     * 	@param array $data An array with the data of a TVShowRole
+     */
+    public function __construct($data, $idPerson) {
+        $this->_data = $data;
+
+        parent::__construct($data, $idPerson);
+    }
 
     //------------------------------------------------------------------------------
     // Get Variables
     //------------------------------------------------------------------------------
 
     /** 
-     *  Get the TVShow's title of the TVShowRole
+     *  Get the TVShow's title of the role
      *
      *  @return string
      */
@@ -25,7 +42,7 @@ class TVShowRole extends Role {
     }
 
     /** 
-     *  Get the TVShow's id of the TVShowRole
+     *  Get the TVShow's id
      *
      *  @return int
      */
@@ -34,7 +51,7 @@ class TVShowRole extends Role {
     }
 
     /** 
-     *  Get the TVShow's original title of the TVShowRole
+     *  Get the TVShow's original title of the role
      *
      *  @return string
      */
@@ -43,12 +60,25 @@ class TVShowRole extends Role {
     }
 
     /** 
-     *  Get the TVShow's release date of the TVShowRole
+     *  Get the TVShow's release date of the role
      *
      *  @return string
      */
     public function getTVShowFirstAirDate() {
         return $this->_data['first_air_date'];
+    }
+
+    //------------------------------------------------------------------------------
+    // Export
+    //------------------------------------------------------------------------------
+
+    /**
+     *  Get the JSON representation of the Episode
+     *
+     *  @return string
+     */
+    public function getJSON() {
+        return json_encode($this->_data, JSON_PRETTY_PRINT);
     }
 }
 ?>

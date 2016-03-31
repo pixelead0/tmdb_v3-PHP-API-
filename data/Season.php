@@ -9,12 +9,13 @@
  * 	@copyright Licensed under BSD (http://www.opensource.org/licenses/bsd-license.php)
  */
 
-class Season extends TMDBObject {
+class Season{
 
     //------------------------------------------------------------------------------
     // Class Variables
     //------------------------------------------------------------------------------
 
+    private $_data;
     private $_idTVShow;
 
     /**
@@ -22,14 +23,32 @@ class Season extends TMDBObject {
      *
      * 	@param array $data An array with the data of the Season
      */
-    public function __construct($data, $idTVShow) {
-        parent::__construct( $data );
+    public function __construct($data, $idTVShow = 0) {
+        $this->_data = $data;
         $this->_data['tvshow_id'] = $idTVShow;
     }
 
     //------------------------------------------------------------------------------
     // Get Variables
     //------------------------------------------------------------------------------
+
+    /**
+     * 	Get the Season's id
+     *
+     * 	@return int
+     */
+    public function getID() {
+        return $this->_data['id'];
+    }
+
+    /**
+     * 	Get the Season's name
+     *
+     * 	@return string
+     */
+    public function getName() {
+        return $this->_data['name'];
+    }
 
     /**
      *  Get the Season's TVShow id
@@ -83,15 +102,6 @@ class Season extends TMDBObject {
         return $episodes;
     }
 
-	/**
-     * 	Get the Season's Overview
-     *
-     * 	@return string
-     */
-    public function getOverview() {
-        return $this->_data['overview'];
-    }
-	
     /**
      * 	Get the Seasons's Poster
      *
@@ -110,6 +120,17 @@ class Season extends TMDBObject {
         return $this->_data['air_date'];
     }
 
+    /**
+     *  Get Generic.<br>
+     *  Get a item of the array, you should not get used to use this, better use specific get's.
+     *
+     * 	@param string $item The item of the $data array you want
+     * 	@return array
+     */
+    public function get($item = '') {
+        return (empty($item)) ? $this->_data : $this->_data[$item];
+    }
+
     //------------------------------------------------------------------------------
     // Load
     //------------------------------------------------------------------------------
@@ -121,8 +142,20 @@ class Season extends TMDBObject {
      *  @param TMDB $tmdb An instance of the API handler, necesary to make the API call.
      */
     public function reload($tmdb) {
-       return $tmdb->getSeason($this->getTVShowID(), $this->getSeasonNumber());
+        $tmdb->getSeason($this->getTVShowID(), $this->getSeasonNumber());
     }
 
+    //------------------------------------------------------------------------------
+    // Export
+    //------------------------------------------------------------------------------
+
+    /**
+     * 	Get the JSON representation of the Season
+     *
+     * 	@return string
+     */
+    public function getJSON() {
+        return json_encode($this->_data, JSON_PRETTY_PRINT);
+    }
 }
 ?>

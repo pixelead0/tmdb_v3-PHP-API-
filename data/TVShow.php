@@ -9,7 +9,44 @@
  * 	@copyright Licensed under BSD (http://www.opensource.org/licenses/bsd-license.php)
  */
 
-class TVShow extends TMDBObject {
+class TVShow{
+
+    //------------------------------------------------------------------------------
+    // Class Variables
+    //------------------------------------------------------------------------------
+
+    private $_data;
+
+    /**
+     * 	Construct Class
+     *
+     * 	@param array $data An array with the data of the TVShow
+     */
+    public function __construct($data) {
+        $this->_data = $data;
+    }
+
+    //------------------------------------------------------------------------------
+    // Get Variables
+    //------------------------------------------------------------------------------
+
+    /**
+     * 	Get the TVShow's id
+     *
+     * 	@return int
+     */
+    public function getID() {
+        return $this->_data['id'];
+    }
+
+    /**
+     * 	Get the TVShow's name
+     *
+     * 	@return string
+     */
+    public function getName() {
+        return $this->_data['name'];
+    }
 
     /**
      * 	Get the TVShow's original name
@@ -123,73 +160,28 @@ class TVShow extends TMDBObject {
         return $this->_data['in_production'];
     }
 
-	/**
-     * 	Get the TVShow Credits
+    /**
+     *  Get Generic.<br>
+     *  Get a item of the array, you should not get used to use this, better use specific get's.
      *
+     * 	@param string $item The item of the $data array you want
      * 	@return array
      */
-    public function getCredits() {
-        return $this->_data['credits'];
-    }
-	
-	/**
-     * 	Get the TVShow Cast
-     *
-     * 	@return person[]
-     */
-    public function getCast() {
-         $cast = array();
-
-        foreach( $this->_data['credits']['cast'] as $data ){
-            $cast[] = new Person( $data );
-        }
-
-        return $cast;
-    }
-	
-	/**
-     * 	Get the TVShow Crew
-     *
-     * 	@return person[]
-     */
-    public function getCrew() {
-         $crew = array();
-
-        foreach( $this->_data['credits']['crew'] as $data ){
-            $crew[] = new Person( $data );
-        }
-
-        return $crew;
-    }
-	
-	/**
-     * 	Get the TVShow Genres
-     *
-     * 	@return genre[]
-     */
-    public function getGenres() {
-         $genres = array();
-
-        foreach( $this->_data['genres'] as $data ){
-            $genres[] = new Genre( $data );
-        }
-
-        return $genres;
+    public function get($item = ''){
+        return (empty($item)) ? $this->_data : $this->_data[$item];
     }
 
-	//------------------------------------------------------------------------------
-    // Load
+    //------------------------------------------------------------------------------
+    // Export
     //------------------------------------------------------------------------------
 
     /**
-     *  Reload the content of this class.<br>
-     *  Could be used to update or complete the information.
-     *  
-     *  @param TMDB $tmdb An instance of the API handler, necesary to make the API call.
+     * 	Get the JSON representation of the TVShow
+     *
+     * 	@return string
      */
-    public function reload($tmdb) {
-         return $tmdb->getTVShow($this->getID());
+    public function getJSON() {
+        return json_encode($this->_data, JSON_PRETTY_PRINT);
     }
-
 }
 ?>

@@ -9,21 +9,45 @@
  * 	@copyright Licensed under BSD (http://www.opensource.org/licenses/bsd-license.php)
  */
 
-class Episode extends TMDBObject {
+class Episode{
+
+    //------------------------------------------------------------------------------
+    // Class Variables
+    //------------------------------------------------------------------------------
+
+    private $_data;
 
     /**
      * 	Construct Class
      *
      * 	@param array $data An array with the data of the Episode
      */
-    public function __construct($data, $idTVShow) {
-        parent::__construct( $data );
+    public function __construct($data, $idTVShow = 0) {
+        $this->_data = $data;
         $this->_data['tvshow_id'] = $idTVShow;
     }
 
     //------------------------------------------------------------------------------
     // Get Variables
     //------------------------------------------------------------------------------
+
+    /**
+     * 	Get the episode's id
+     *
+     * 	@return int
+     */
+    public function getID() {
+        return $this->_data['id'];
+    }
+
+    /**
+     * 	Get the Episode's name
+     *
+     * 	@return string
+     */
+    public function getName() {
+        return $this->_data['name'];
+    }
 
     /**
      *  Get the Season's TVShow id
@@ -97,6 +121,17 @@ class Episode extends TMDBObject {
         return $this->_data['vote_count'];
     }
 
+    /**
+     *  Get Generic.<br>
+     *  Get a item of the array, you should not get used to use this, better use specific get's.
+     *
+     * 	@param string $item The item of the $data array you want
+     * 	@return array
+     */
+    public function get($item = ''){
+        return (empty($item)) ? $this->_data : $this->_data[$item];
+    }
+
     //------------------------------------------------------------------------------
     // Load
     //------------------------------------------------------------------------------
@@ -109,6 +144,19 @@ class Episode extends TMDBObject {
      */
     public function reload($tmdb) {
         $tmdb->getEpisode($this->getTVShowID(), $this->getSeasonNumber(), $this->getEpisodeNumber);
+    }
+
+    //------------------------------------------------------------------------------
+    // Export
+    //------------------------------------------------------------------------------
+
+    /**
+     * 	Get the JSON representation of the Episode
+     *
+     * 	@return string
+     */
+    public function getJSON() {
+        return json_encode($this->_data, JSON_PRETTY_PRINT);
     }
 }
 ?>

@@ -9,7 +9,44 @@
  * 	@copyright Licensed under BSD (http://www.opensource.org/licenses/bsd-license.php)
  */
 
-class Person extends TMDBObject {
+class Person{
+
+    //------------------------------------------------------------------------------
+    // Class Variables
+    //------------------------------------------------------------------------------
+
+    private $_data;
+
+    /**
+     * 	Construct Class
+     *
+     * 	@param array $data An array with the data of the Person
+     */
+    public function __construct($data) {
+        $this->_data = $data;
+    }
+
+    //------------------------------------------------------------------------------
+    // Get Variables
+    //------------------------------------------------------------------------------
+
+    /** 
+     *  Get the Person's name
+     *
+     *  @return string
+     */
+    public function getName() {
+        return $this->_data['name'];
+    }
+
+    /** 
+     *  Get the Person's id
+     *
+     *  @return int
+     */
+    public function getID() {
+        return $this->_data['id'];
+    }
 
     /** 
      *  Get the Person's profile image
@@ -85,37 +122,29 @@ class Person extends TMDBObject {
 
         return $tvShowRole;
     }
-	
-	/** 
-     *  Get the Person's biography
+
+    /**
+     *  Get Generic.<br>
+     *  Get a item of the array, you should not get used to use this, better use specific get's.
      *
-     *  @return string
+     *  @param string $item The item of the $data array you want
+     *  @return array
      */
-    public function getBiography() {
-        return $this->_data['biography'];
+    public function get($item = ''){
+        return (empty($item)) ? $this->_data : $this->_data[$item];
     }
-	
-	/** 
-     *  Get the Person's deathday
-     *
-     *  @return string
-     */
-    public function getDeathday() {
-        return $this->_data['deathday'];
-    }
-	
-	//------------------------------------------------------------------------------
-    // Load
+
+    //------------------------------------------------------------------------------
+    // Export
     //------------------------------------------------------------------------------
 
     /**
-     *  Reload the content of this class.<br>
-     *  Could be used to update or complete the information.
-     *  
-     *  @param TMDB $tmdb An instance of the API handler, necesary to make the API call.
+     *  Get the JSON representation of the Episode
+     *
+     *  @return string
      */
-    public function reload($tmdb) {
-       return $tmdb->getPerson($this->getID());
+    public function getJSON() {
+        return json_encode($this->_data, JSON_PRETTY_PRINT);
     }
 }
 ?>

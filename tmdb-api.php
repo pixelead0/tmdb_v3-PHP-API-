@@ -78,6 +78,7 @@ include("data/roles/MovieRole.php");
 include("data/roles/TVShowRole.php");
 include("data/Collection.php");
 include("data/Company.php");
+include("data/Genre.php");
 
 class TMDB {
 
@@ -531,7 +532,7 @@ class TMDB {
 	 * 	@param string $appendToResponse The extra append of the request, by default all
 	 * 	@return Movie
 	 */
-	public function getMovie($idMovie, $appendToResponse = array('trailers','images','casts','translations')) {
+	public function getMovie($idMovie, $appendToResponse = array('trailers','images','credits','translations')) {
 		return new Movie($this->_call('movie/' . $idMovie, $appendToResponse));
 	}
 
@@ -542,7 +543,7 @@ class TMDB {
 	 * 	@param string $appendToResponse The extra append of the request, by default all
 	 * 	@return TVShow
 	 */
-	public function getTVShow($idTVShow, $appendToResponse = array('trailers','images','casts','translations','keywords')) {
+	public function getTVShow($idTVShow, $appendToResponse = array('trailers','images','credits','translations','keywords')) {
 		return new TVShow($this->_call('tv/' . $idTVShow, $appendToResponse));
 	}
 
@@ -554,7 +555,7 @@ class TMDB {
 	 * 	@param string $appendToResponse The extra append of the request, by default all
 	 * 	@return Season
 	 */
-	public function getSeason($idTVShow, $numSeason, $appendToResponse = array('trailers', 'images', 'casts', 'translations')) {
+	public function getSeason($idTVShow, $numSeason, $appendToResponse = array('trailers', 'images', 'credits', 'translations')) {
 		return new Season($this->_call('tv/'. $idTVShow .'/season/' . $numSeason, $appendToResponse), $idTVShow);
 	}
 
@@ -567,7 +568,7 @@ class TMDB {
 	 * 	@param string $appendToResponse The extra append of the request, by default all
 	 * 	@return Episode
 	 */
-	public function getEpisode($idTVShow, $numSeason, $numEpisode, $appendToResponse = array('trailers','images','casts','translations')) {
+	public function getEpisode($idTVShow, $numSeason, $numEpisode, $appendToResponse = array('trailers','images','credits','translations')) {
 		return new Episode($this->_call('tv/'. $idTVShow .'/season/'. $numSeason .'/episode/'. $numEpisode, $appendToResponse), $idTVShow);
 	}
 
@@ -578,7 +579,7 @@ class TMDB {
 	 * 	@param string $appendToResponse The extra append of the request, by default all
 	 * 	@return Person
 	 */
-	public function getPerson($idPerson, $appendToResponse = array('tv_credits','movie_credits')) {
+	public function getPerson($idPerson, $appendToResponse = array('movie_credits','tv_credits','images')) {
 		return new Person($this->_call('person/' . $idPerson, $appendToResponse));
 	}
 
@@ -757,7 +758,67 @@ class TMDB {
 	 * 	@return array
 	 */
 	public function getJobs() {
-		return $this->_call('/job/list');
+		return $this->_call('job/list');
+	}
+
+	/**
+	 * 	Get Movie Genres
+	 *
+	 * 	@return Genre[]
+	 */
+	public function getMovieGenres() {
+
+		$genres = array();
+
+		$result = $this->_call('genre/movie/list');
+
+		foreach($result['genres'] as $data){
+			$genres[] = new Genre($data);
+		}
+
+		return $genres;
+	}
+
+	/**
+	 * 	Get TV Genres
+	 *
+	 * 	@return Genre[]
+	 */
+	public function getTVGenres() {
+
+		$genres = array();
+
+		$result = $this->_call('genre/tv/list');
+
+		foreach($result['genres'] as $data){
+			$genres[] = new Genre($data);
+		}
+
+		return $genres;
+	}
+
+	//------------------------------------------------------------------------------
+	// Genre
+	//------------------------------------------------------------------------------
+
+	/**
+	 *  Get Movies by Genre
+	 *
+	 *  @param integer $idGenre
+	 * 	@param integer $page
+	 * 	@return Movie[]
+	 */
+	public function getMoviesByGenre($idGenre, $page = 1) {
+
+		$movies = array();
+
+		$result = $this->_call('genre/'.$idGenre.'/movies', '&page='. $page);
+
+		foreach($result['results'] as $data){
+			$movies[] = new Movie($data);
+		}
+
+		return $movies;
 	}
 }
 ?>

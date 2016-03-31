@@ -109,6 +109,21 @@ class Movie{
 		return $trailers['youtube'][0]['source'];
 	}
 
+	/** 
+	 * 	Get the Movie's genres
+	 *
+	 * 	@return Genre[]
+	 */
+	public function getGenres() {
+		$genres = array();
+
+		foreach ($this->_data['genres'] as $data) {
+			$genres[] = new Genre($data);
+		}
+
+		return $genres;
+	}
+
 	/**
 	 *  Get Generic.<br>
 	 *  Get a item of the array, you should not get used to use this, better use specific get's.

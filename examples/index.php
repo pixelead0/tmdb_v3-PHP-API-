@@ -58,6 +58,7 @@
                                 'searchMovie' => 'Search Movie',
                                 'infoMovie' => 'Full Movie Info',
                                 'featuredMovies' => 'Featured Movies',
+                                'searchMovieByGenre' => 'Search Movie by Genre',
                                 '1' => 'hr',
                                 'searchCollection' => 'Search Collection',
                                 'infoCollection' => 'Full Collection Info',

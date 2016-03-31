@@ -1,0 +1,3 @@
+php_flag display_startup_errors on
+php_flag display_errors on
+php_flag html_errors on

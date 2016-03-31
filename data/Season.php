@@ -23,7 +23,7 @@ class Season{
      *
      * 	@param array $data An array with the data of the Season
      */
-    public function __construct($data, $idTVShow) {
+    public function __construct($data, $idTVShow = 0) {
         $this->_data = $data;
         $this->_data['tvshow_id'] = $idTVShow;
     }
@@ -129,20 +129,6 @@ class Season{
      */
     public function get($item = '') {
         return (empty($item)) ? $this->_data : $this->_data[$item];
-    }
-
-    //------------------------------------------------------------------------------
-    // Load
-    //------------------------------------------------------------------------------
-
-    /**
-     *  Reload the content of this class.<br>
-     *  Could be used to update or complete the information.
-     *  
-     *  @param TMDB $tmdb An instance of the API handler, necesary to make the API call.
-     */
-    public function reload($tmdb) {
-        $tmdb->getSeason($this->getTVShowID(), $this->getSeasonNumber());
     }
 
     //------------------------------------------------------------------------------

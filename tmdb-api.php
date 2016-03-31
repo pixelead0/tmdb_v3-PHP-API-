@@ -96,7 +96,7 @@ class TMDB {
 	private $_lang;
 
 	#@var array of TMDB config
-    private $_config;
+    private $_configuration;
 
 	#@var boolean for testing
 	private $_debug;
@@ -216,10 +216,10 @@ class TMDB {
 	/**
 	 * 	Get Configuration of the API (Revisar)
 	 *
-	 * 	@return array
+	 * 	@return Configuration
 	 */
 	public function getConfig() {
-		return $this->_config;
+		return $this->_configuration;
 	}
 
 	//------------------------------------------------------------------------------
@@ -234,7 +234,7 @@ class TMDB {
 	 * 	@return string
 	 */
 	public function getImageURL($size = 'original') {
-		return $this->_config['images']['base_url'] . $size;
+		return $this->_configuration->getImageBaseURL().$size;
 	}
 	
 	//------------------------------------------------------------------------------

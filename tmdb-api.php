@@ -114,10 +114,11 @@ class TMDB {
 	
 	
 	/**
-	 * 	Construct Class
+	 * 	Construct Class<br />
+	 * 	If any param is not specified, will load from config.
 	 *
 	 * 	@param string $apikey The API key token
-	 * 	@param string $lang The language to work with, default is english
+	 * 	@param string $lang The language to work with
 	 *  @param boolean $adult The flag for adult content
 	 *  @param boolean $debug The flag for debug output
 	 */
@@ -620,8 +621,8 @@ class TMDB {
 	 * 	@return Movie
 	 */
 	public function getMovie($idMovie, $appendToResponse = null) {
-		$appendToResponse = (isset($appendToResponse)) ? $appendToResponse : $this->getConfig()['appender']['movie'];
-		
+		$appendToResponse = (isset($appendToResponse)) ? $appendToResponse : $this->getConfig()['appender']['movie']['default'];
+
 		return new Movie($this->_call('movie/' . $idMovie, $appendToResponse));
 	}
 
@@ -633,7 +634,7 @@ class TMDB {
 	 * 	@return TVShow
 	 */
 	public function getTVShow($idTVShow, $appendToResponse = null) {
-		$appendToResponse = (isset($appendToResponse)) ? $appendToResponse : $this->getConfig()['appender']['tvshow'];
+		$appendToResponse = (isset($appendToResponse)) ? $appendToResponse : $this->getConfig()['appender']['tvshow']['default'];
 		
 		return new TVShow($this->_call('tv/' . $idTVShow, $appendToResponse));
 	}
@@ -647,7 +648,7 @@ class TMDB {
 	 * 	@return Season
 	 */
 	public function getSeason($idTVShow, $numSeason, $appendToResponse = null) {
-		$appendToResponse = (isset($appendToResponse)) ? $appendToResponse : $this->getConfig()['appender']['season'];
+		$appendToResponse = (isset($appendToResponse)) ? $appendToResponse : $this->getConfig()['appender']['season']['default'];
 		
 		return new Season($this->_call('tv/'. $idTVShow .'/season/' . $numSeason, $appendToResponse), $idTVShow);
 	}
@@ -662,7 +663,7 @@ class TMDB {
 	 * 	@return Episode
 	 */
 	public function getEpisode($idTVShow, $numSeason, $numEpisode, $appendToResponse = null) {
-		$appendToResponse = (isset($appendToResponse)) ? $appendToResponse : $this->getConfig()['appender']['episode'];
+		$appendToResponse = (isset($appendToResponse)) ? $appendToResponse : $this->getConfig()['appender']['episode']['default'];
 		
 		return new Episode($this->_call('tv/'. $idTVShow .'/season/'. $numSeason .'/episode/'. $numEpisode, $appendToResponse), $idTVShow);
 	}
@@ -675,7 +676,7 @@ class TMDB {
 	 * 	@return Person
 	 */
 	public function getPerson($idPerson, $appendToResponse = null) {
-		$appendToResponse = (isset($appendToResponse)) ? $appendToResponse : $this->getConfig()['appender']['person'];
+		$appendToResponse = (isset($appendToResponse)) ? $appendToResponse : $this->getConfig()['appender']['person']['default'];
 		
 		return new Person($this->_call('person/' . $idPerson, $appendToResponse));
 	}
@@ -688,7 +689,7 @@ class TMDB {
 	 * 	@return Collection
 	 */
 	public function getCollection($idCollection, $appendToResponse = null) {
-		$appendToResponse = (isset($appendToResponse)) ? $appendToResponse : $this->getConfig()['appender']['collection'];
+		$appendToResponse = (isset($appendToResponse)) ? $appendToResponse : $this->getConfig()['appender']['collection']['default'];
 		
 		return new Collection($this->_call('collection/' . $idCollection, $appendToResponse));
 	}
@@ -701,7 +702,7 @@ class TMDB {
 	 * 	@return Company
 	 */
 	public function getCompany($idCompany, $appendToResponse = null) {
-		$appendToResponse = (isset($appendToResponse)) ? $appendToResponse : $this->getConfig()['appender']['company'];
+		$appendToResponse = (isset($appendToResponse)) ? $appendToResponse : $this->getConfig()['appender']['company']['default'];
 		
 		return new Company($this->_call('company/' . $idCompany, $appendToResponse));
 	}

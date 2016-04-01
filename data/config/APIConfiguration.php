@@ -9,7 +9,7 @@
  *  @copyright Licensed under BSD (http://www.opensource.org/licenses/bsd-license.php)
  */
 
-class Configuration {
+class APIConfiguration {
 
     //------------------------------------------------------------------------------
     // Class Variables

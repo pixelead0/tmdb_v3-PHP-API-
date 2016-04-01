@@ -455,45 +455,6 @@ class TMDB {
 		return $movies;
 	}
 
-	/**
-	 *  Top Rated Movies
-	 *	@add by tnsws
-	 *
-	 * 	@param integer $page
-	 * 	@return array
-	 */
-	public function topRatedMovies($page = 1) {
-
-		$movies = array();
-
-		$result = $this->_call('movie/top-rated', 'page='. $page);
-
-		foreach($result['results'] as $data){
-			$movies[] = new Movie($data);
-		}
-
-		return $movies;
-	}
-
-	/**
-	 *  Upcoming Movies
-	 *	@add by tnsws
-	 *
-	 * 	@param integer $page
-	 * 	@return array
-	 */
-	public function upcomingMovies($page = 1) {
-
-		$movies = array();
-
-		$result = $this->_call('movie/upcoming', 'page='. $page);
-
-		foreach($result['results'] as $data){
-			$movies[] = new Movie($data);
-		}
-
-		return $movies;
-	}
 
 	//------------------------------------------------------------------------------
 	// Get Featured TVShows

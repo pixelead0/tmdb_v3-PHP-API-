@@ -31,24 +31,24 @@
  *
  * 	Function List
  *   	public function  __construct($apikey,$lang='en')
- *   	public function setLang($lang="en") 
- *   	public function getLang() 
- *   	public function setImageURL($config) 
- *   	public function getImageURL($size="original") 
- *   	public function movieTitles($idMovie) 
+ *   	public function setLang($lang="en")
+ *   	public function getLang()
+ *   	public function setImageURL($config)
+ *   	public function getImageURL($size="original")
+ *   	public function movieTitles($idMovie)
  *   	public function movieTrans($idMovie)
- *   	public function movieTrailer($idMovie,$source="") 
+ *   	public function movieTrailer($idMovie,$source="")
  *   	public function movieDetail($idMovie)
  *   	public function moviePoster($idMovie)
  *   	public function movieCast($idMovie)
  *   	public function movieInfo($idMovie,$option="",$print=false)
  *   	public function searchMovie($movieTitle)
- *   	public function getConfig() 
- *   	public function latestMovie() 
- *   	public function nowPlayingMovies($page=1) 
+ *   	public function getConfig()
+ *   	public function latestMovie()
+ *   	public function nowPlayingMovies($page=1)
  *
  *   	private function _getDataArray($action,$text,$lang="")
- *   	private function setApikey($apikey) 
+ *   	private function setApikey($apikey)
  *   	private function getApikey()
  *
  *
@@ -100,7 +100,7 @@ class TMDB {
 
 	#@var boolean for testing
 	private $_debug;
-	
+
 	#@var string for adult content
 	private $_adult = 'false';
 
@@ -115,7 +115,7 @@ class TMDB {
 
 		// Sets the API key
 		$this->setApikey($apikey);
-	
+
 		// Setting Language
 		$this->setLang($lang);
 
@@ -132,8 +132,8 @@ class TMDB {
 	//------------------------------------------------------------------------------
 	// Api Key
 	//------------------------------------------------------------------------------
-         
-	/** 
+
+	/**
 	 * 	Set the API key
 	 *
 	 * 	@param string $apikey
@@ -143,7 +143,7 @@ class TMDB {
 		$this->_apikey = (string) $apikey;
 	}
 
-	/** 
+	/**
 	 * 	Get the API key
 	 *
 	 * 	@return string
@@ -156,7 +156,7 @@ class TMDB {
 	// Language
 	//------------------------------------------------------------------------------
 
-	/** 
+	/**
 	 *  Set the language
 	 *	By default english
 	 *
@@ -166,7 +166,7 @@ class TMDB {
 		$this->_lang = $lang;
 	}
 
-	/** 
+	/**
 	 * 	Get the language
 	 *
 	 * 	@return string
@@ -174,11 +174,11 @@ class TMDB {
 	public function getLang() {
 		return $this->_lang;
 	}
-	
+
 	//------------------------------------------------------------------------------
 	// Adult Content
 	//------------------------------------------------------------------------------
-	
+
 	/**
 	 *  Set adult content flag
 	 *	By default false
@@ -188,7 +188,7 @@ class TMDB {
 	public function setAdult($adult = 'false') {
 		$this->_adult = $adult;
 	}
-	
+
 	/**
 	 * 	Get the adult content flag
 	 *
@@ -226,7 +226,7 @@ class TMDB {
 	// Get Variables
 	//------------------------------------------------------------------------------
 
-	/** 
+	/**
 	 *	Get the URL images
 	 * 	You can specify the width, by default original
 	 *
@@ -236,7 +236,7 @@ class TMDB {
 	public function getImageURL($size = 'original') {
 		return $this->_configuration->getImageBaseURL().$size;
 	}
-	
+
 	//------------------------------------------------------------------------------
 	// Get Lists of Discover
 	//------------------------------------------------------------------------------
@@ -244,7 +244,7 @@ class TMDB {
 	/**
 	 * 	Discover Movies
 	 *	@add by tnsws
-	 * 
+	 *
 	 * 	@return Movie[]
 	 */
 	public function getDiscoverMovies($page = 1) {
@@ -263,7 +263,7 @@ class TMDB {
 	/**
 	 * 	Discover TVShows
 	 *	@add by tnsws
-	 * 
+	 *
 	 * 	@return TVShow[]
 	 */
 	public function getDiscoverTVShows($page = 1) {
@@ -277,6 +277,29 @@ class TMDB {
 		}
 
 		return $tvShows;
+	}
+
+	//------------------------------------------------------------------------------
+	// Get Lists of Discover
+	//------------------------------------------------------------------------------
+
+	/**
+	 * 	Get latest Movie
+	 *	@add by tnsws
+	 *
+	 * 	@return Movie
+	 */
+	public function getDiscoverMovie($page = 1) {
+
+		$movies = array();
+
+		$result = $this->_call('discover/movie', 'page='. $page);
+
+		foreach($result['results'] as $data){
+			$movies[] = new Movie($data);
+		}
+
+		return $movies;
 	}
 
 	//------------------------------------------------------------------------------
@@ -329,11 +352,11 @@ class TMDB {
 
 		return $movies;
 	}
-	
+
 	/**
 	 *  Get Top Rated Movies
 	 *	@add by tnsws
-	 * 
+	 *
 	 * 	@param integer $page
 	 * 	@return Movie[]
 	 */
@@ -353,7 +376,7 @@ class TMDB {
 	/**
 	 *  Get Upcoming Movies
 	 *	@add by tnsws
-	 * 
+	 *
 	 * 	@param integer $page
 	 * 	@return Movie[]
 	 */
@@ -362,6 +385,46 @@ class TMDB {
 		$movies = array();
 
 		$result = $this->_call('movie/upcoming', '&page='. $page);
+
+		foreach($result['results'] as $data){
+			$movies[] = new Movie($data);
+		}
+
+		return $movies;
+	}
+
+	/**
+	 *  Top Rated Movies
+	 *	@add by tnsws
+	 *
+	 * 	@param integer $page
+	 * 	@return array
+	 */
+	public function topRatedMovies($page = 1) {
+
+		$movies = array();
+
+		$result = $this->_call('movie/top-rated', 'page='. $page);
+
+		foreach($result['results'] as $data){
+			$movies[] = new Movie($data);
+		}
+
+		return $movies;
+	}
+
+	/**
+	 *  Upcoming Movies
+	 *	@add by tnsws
+	 *
+	 * 	@param integer $page
+	 * 	@return array
+	 */
+	public function upcomingMovies($page = 1) {
+
+		$movies = array();
+
+		$result = $this->_call('movie/upcoming', 'page='. $page);
 
 		foreach($result['results'] as $data){
 			$movies[] = new Movie($data);
@@ -385,7 +448,7 @@ class TMDB {
 
 	/**
 	 *  Get On The Air TVShows
-	 * 
+	 *
 	 * 	@param integer $page
 	 * 	@return TVShow[]
 	 */
@@ -404,7 +467,7 @@ class TMDB {
 
 	/**
 	 *  Get Airing Today TVShows
-	 * 
+	 *
 	 * 	@param integer $page
 	 * 	@param string $timezone
 	 * 	@return TVShow[]
@@ -424,7 +487,7 @@ class TMDB {
 
 	/**
 	 *  Get Top Rated TVShows
-	 * 
+	 *
 	 * 	@param integer $page
 	 * 	@return TVShow[]
 	 */
@@ -443,7 +506,7 @@ class TMDB {
 
 	/**
 	 *  Get Popular TVShows
-	 * 
+	 *
 	 * 	@param integer $page
 	 * 	@return TVShow[]
 	 */

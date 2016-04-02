@@ -6,7 +6,7 @@ TMDB API v3 PHP Library - wrapper to [API](http://help.themoviedb.org/kb/api/abo
 
 For using this library maybe you should take a look at the full [Documentation](http://code.octal.es/php/tmdb-api/) of this project.
 
-@pakage TMDB-API-PHP<br/>
+@package TMDB-V3-PHP-API<br/>
 @author [Pixelead0](https://twitter.com/pixelead0) also on [Github](https://github.com/pixelead0)<br/>
 @author [Alvaro Octal](https://twitter.com/Alvaro_Octal) also on [Github](https://github.com/Alvaroctal)<br/>
 @author [Deso85](https://twitter.com/Cizero) also on [Github](https://github.com/deso85)<br/>

@@ -30,6 +30,7 @@
  *
  * 	Function List
  *   	public function  __construct($config = null)
+ *		public function setAPIKey($apikey)
  *   	public function setLang($lang = "en")
  *   	public function getLang()
  *   	public function setTimeZone($timezone = 'Europe/Berlin')
@@ -162,8 +163,21 @@ class TMDB {
 	private function getConfig() {
 		return $this->config;
 	}
+	
+	//------------------------------------------------------------------------------
+	// API Key
+	//------------------------------------------------------------------------------
+	
+	/**
+	 *  Set the API Key
+	 *
+	 * 	@param string $apikey
+	 */
+	public function setAPIKey($apikey) {
+		$this->getConfig()->setAPIKey($apikey);
+	}
 
-//------------------------------------------------------------------------------
+	//------------------------------------------------------------------------------
 	// Language
 	//------------------------------------------------------------------------------
 

@@ -10,16 +10,22 @@ For using this library maybe you should take a look at the full [Documentation](
 @author [Pixelead0](https://twitter.com/pixelead0) also on [Github](https://github.com/pixelead0)<br/>
 @author [Alvaro Octal](https://twitter.com/Alvaro_Octal) also on [Github](https://github.com/Alvaroctal)<br/>
 @author [Deso85](https://twitter.com/Cizero) also on [Github](https://github.com/deso85)<br/>
-@date 01/04/2016<br/>
-@version 0.3<br/>
+@date 02/04/2016<br/>
+@version 0.5<br/>
 
 ## CREDITS  ###
 
 Forked from a similar [project](https://github.com/glamorous/TMDb-PHP-API) by [Jonas De Smet](https://github.com/glamorous)
 
 ### CHANGE LOG ###
+  * [02/04/2016] v0.5
+	- Made a class for configuration to load external configs
+	- Updated functions list
+	- Changed a few functions to use config object
+	- Changed package structure of the project
+	
   * [01/04/2016] v0.4
-    - Added config file
+	- Added config file
 	- Some code changes to use config file
 	- Some formal corrections inside comments
 	- (Hopefully) Corrected Versioning
@@ -31,10 +37,6 @@ Forked from a similar [project](https://github.com/glamorous/TMDb-PHP-API) by [J
   * [07/11/2012] v0.2
     - Fixed issue #2 (Object created in class php file)
     - Added functions latestMovie, nowPlayingMovies (thank's to steffmeister)
-
-  * [12/02/2012] v0.1
-    - This is the first version of the class without inline documentation or testing
-    - Forked from [glamorous/TMDb-PHP-API](https://github.com/glamorous/TMDb-PHP-API)
 
   * [12/02/2012] v0.1
     - This is the first version of the class without inline documentation or testing

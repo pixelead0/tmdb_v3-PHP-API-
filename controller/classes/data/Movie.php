@@ -2,9 +2,10 @@
 /**
  * 	This class handles all the data you can get from a Movie
  *
+ *	@package TMDB-V3-PHP-API
  * 	@author Alvaro Octal | <a href="https://twitter.com/Alvaro_Octal">Twitter</a>
- * 	@version 0.1
- * 	@date 09/01/2015
+ * 	@version 0.2
+ * 	@date 02/04/2016
  * 	@link https://github.com/Alvaroctal/TMDB-PHP-API
  * 	@copyright Licensed under BSD (http://www.opensource.org/licenses/bsd-license.php)
  */
@@ -120,7 +121,7 @@ class Movie{
 	}
 
 	/** 
-	 * 	Get the Movie's review
+	 * 	Get the Movie's reviews
 	 *
 	 * 	@return Review[]
 	 */
@@ -134,6 +135,22 @@ class Movie{
 		return $reviews;
 	}
 
+	/**
+	 * 	Get the Movie's companies
+	 *
+	 * 	@return Company[]
+	 */
+	public function getCompanies() {
+		$companies = array();
+		
+		foreach ($this->_data['production_companies'] as $data) {
+			$companies[] = new Company($data);
+		}
+		
+		return $companies;
+	}
+
+	
 	/**
 	 *  Get Generic.<br>
 	 *  Get a item of the array, you should not get used to use this, better use specific get's.

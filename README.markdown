@@ -6,20 +6,26 @@ TMDB API v3 PHP Library - wrapper to [API](http://help.themoviedb.org/kb/api/abo
 
 For using this library maybe you should take a look at the full [Documentation](http://code.octal.es/php/tmdb-api/) of this project.
 
-@pakage TMDB-API-PHP<br/>
+@package TMDB-V3-PHP-API<br/>
 @author [Pixelead0](https://twitter.com/pixelead0) also on [Github](https://github.com/pixelead0)<br/>
 @author [Alvaro Octal](https://twitter.com/Alvaro_Octal) also on [Github](https://github.com/Alvaroctal)<br/>
 @author [Deso85](https://twitter.com/Cizero) also on [Github](https://github.com/deso85)<br/>
-@date 01/04/2016<br/>
-@version 0.3<br/>
+@date 02/04/2016<br/>
+@version 0.5<br/>
 
 ## CREDITS  ###
 
 Forked from a similar [project](https://github.com/glamorous/TMDb-PHP-API) by [Jonas De Smet](https://github.com/glamorous)
 
 ### CHANGE LOG ###
+  * [02/04/2016] v0.5
+	- Made a class for configuration to load external configs
+	- Updated functions list
+	- Changed a few functions to use config object
+	- Changed package structure of the project
+	
   * [01/04/2016] v0.4
-    - Added config file
+	- Added config file
 	- Some code changes to use config file
 	- Some formal corrections inside comments
 	- (Hopefully) Corrected Versioning
@@ -36,26 +42,37 @@ Forked from a similar [project](https://github.com/glamorous/TMDb-PHP-API) by [J
     - This is the first version of the class without inline documentation or testing
     - Forked from [glamorous/TMDb-PHP-API](https://github.com/glamorous/TMDb-PHP-API)
 
-  * [12/02/2012] v0.1
-    - This is the first version of the class without inline documentation or testing
-    - Forked from [glamorous/TMDb-PHP-API](https://github.com/glamorous/TMDb-PHP-API)
-
 ### Requirements ###
 - PHP 5.2.x or higher
 - cURL
 - TMDB API-key
 
 ## How to use ##
-View examples/
+View examples
 
 ### Initialize the class ###
+If you have a $conf array
+
 	<?php
 		include('tmdb-api.php');
+		
+		// if you have a $conf array - (See LIB_ROOT/configuration/default.php as an example)
+		$tmdb = new TMDB($conf);
+		
+	?>
+	
+If you have no $conf array it uses the default conf but you need to have an API Key
 
-		// Insert your api key of TMDB
-		$apikey = 'YOUR_APIKEY';
-		$language = 'en';
-		$tmdb = new TMDB($apikey, $language); // by simply giving $apikey it sets the default lang to 'en'
+	<?php
+		include('tmdb-api.php');
+		
+		// if you have no $conf it uses the default config
+		$tmdb = new TMDB(); 
+		
+		//Insert your API Key of TMDB
+		//Necessary if you use default conf
+		$tmdb->setAPIKey('YOUR_API_KEY');
+		
 	?>
 ## Movies ##
 ### Search a Movie ###

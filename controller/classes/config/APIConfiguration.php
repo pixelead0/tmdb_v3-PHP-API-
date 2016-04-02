@@ -2,6 +2,7 @@
 /**
  *  This class handles all the data you can get from the api Configuration
  *
+ *	@package TMDB_V3_API_PHP
  *  @author Alvaro Octal | <a href="https://twitter.com/Alvaro_Octal">Twitter</a>
  *  @version 0.1
  *  @date 20/01/2015

@@ -1,7 +1,8 @@
 <?php
 /**
- * 	This class handles all the data you can get from a Season
+ * 	This class handles all the data you can get from a Episode
  *
+ *	@package TMDB-V3-PHP-API
  * 	@author Alvaro Octal | <a href="https://twitter.com/Alvaro_Octal">Twitter</a>
  * 	@version 0.1
  * 	@date 11/01/2015
@@ -9,19 +10,18 @@
  * 	@copyright Licensed under BSD (http://www.opensource.org/licenses/bsd-license.php)
  */
 
-class Season{
+class Episode{
 
     //------------------------------------------------------------------------------
     // Class Variables
     //------------------------------------------------------------------------------
 
     private $_data;
-    private $_idTVShow;
 
     /**
      * 	Construct Class
      *
-     * 	@param array $data An array with the data of the Season
+     * 	@param array $data An array with the data of the Episode
      */
     public function __construct($data, $idTVShow = 0) {
         $this->_data = $data;
@@ -33,7 +33,7 @@ class Season{
     //------------------------------------------------------------------------------
 
     /**
-     * 	Get the Season's id
+     * 	Get the episode's id
      *
      * 	@return int
      */
@@ -42,7 +42,7 @@ class Season{
     }
 
     /**
-     * 	Get the Season's name
+     * 	Get the Episode's name
      *
      * 	@return string
      */
@@ -60,55 +60,39 @@ class Season{
     }
 
     /**
-     * 	Get the Season's number
+     *  Get the Season's number
      *
-     * 	@return int
+     *  @return int
      */
     public function getSeasonNumber() {
         return $this->_data['season_number'];
     }
 
     /**
-     * 	Get the Season's number of episodes
-     *
-     * 	@return int
-     */
-    public function getNumEpisodes() {
-        return count($this->_data['episodes']);
-    }
-
-    /**
-     *  Get a Seasons's Episode
-     *
-     *  @param int $numEpisode The episode number
-     * 	@return int
-     */
-    public function getEpisode($numEpisode) {
-        return new Episode($this->_data['episodes'][$numEpisode]);
-    }
-
-    /**
-     *  Get the Season's Episodes
-     *
-     * 	@return Episode[]
-     */
-    public function getEpisodes() {
-        $episodes = array();
-
-        foreach($this->_data['episodes'] as $data){
-            $episodes[] = new Episode($data, $this->getTVShowID());
-        }
-
-        return $episodes;
-    }
-
-    /**
-     * 	Get the Seasons's Poster
+     * 	Get the Episode's number
      *
      * 	@return string
      */
-    public function getPoster() {
-        return $this->_data['poster_path'];
+    public function getEpisodeNumber() {
+        return $this->_data['episode_number'];
+    }
+
+    /**
+     *  Get the Episode's Overview
+     *
+     *  @return string
+     */
+    public function getOverview() {
+        return $this->_data['overview'];
+    }
+
+    /**
+     * 	Get the Seasons's Still
+     *
+     * 	@return string
+     */
+    public function getStill() {
+        return $this->_data['still_path'];
     }
 
     /**
@@ -121,13 +105,31 @@ class Season{
     }
 
     /**
+     * 	Get the Episode's vote average
+     *
+     * 	@return int
+     */
+    public function getVoteAverage() {
+        return $this->_data['vote_average'];
+    }
+
+    /**
+     * 	Get the Episode's vote count
+     *
+     * 	@return int
+     */
+    public function getVoteCount() {
+        return $this->_data['vote_count'];
+    }
+
+    /**
      *  Get Generic.<br>
      *  Get a item of the array, you should not get used to use this, better use specific get's.
      *
      * 	@param string $item The item of the $data array you want
      * 	@return array
      */
-    public function get($item = '') {
+    public function get($item = ''){
         return (empty($item)) ? $this->_data : $this->_data[$item];
     }
 
@@ -136,7 +138,7 @@ class Season{
     //------------------------------------------------------------------------------
 
     /**
-     * 	Get the JSON representation of the Season
+     * 	Get the JSON representation of the Episode
      *
      * 	@return string
      */

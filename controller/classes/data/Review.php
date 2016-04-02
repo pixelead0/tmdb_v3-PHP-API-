@@ -2,6 +2,7 @@
 /**
  *  This class handles all the data you can get from a Review
  *
+ *	@package TMDB-V3-PHP-API
  *  @author Alvaro Octal | <a href="https://twitter.com/Alvaro_Octal">Twitter</a>
  *  @version 0.1
  *  @date 31/03/2016

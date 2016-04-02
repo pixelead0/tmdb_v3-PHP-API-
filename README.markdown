@@ -48,16 +48,19 @@ Forked from a similar [project](https://github.com/glamorous/TMDb-PHP-API) by [J
 - TMDB API-key
 
 ## How to use ##
-View examples/
+View examples
 
 ### Initialize the class ###
 	<?php
 		include('tmdb-api.php');
-
-		// Insert your api key of TMDB
-		$apikey = 'YOUR_APIKEY';
-		$language = 'en';
-		$tmdb = new TMDB($apikey, $language); // by simply giving $apikey it sets the default lang to 'en'
+		
+		// if you have no $conf it uses the default config
+		$tmdb = new TMDB($conf); 
+		
+		//Insert your API Key of TMDB
+		//Necessary if you use default conf
+		$tmdb->setAPIKey('YOUR_API_KEY');
+		
 	?>
 ## Movies ##
 ### Search a Movie ###

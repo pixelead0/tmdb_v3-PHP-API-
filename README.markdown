@@ -52,6 +52,7 @@ View examples
 
 ### Initialize the class ###
 If you have a $conf array
+
 	<?php
 		include('tmdb-api.php');
 		
@@ -61,6 +62,7 @@ If you have a $conf array
 	?>
 	
 If you have no $conf array it uses the default conf but you need to have an API Key
+
 	<?php
 		include('tmdb-api.php');
 		

@@ -78,7 +78,7 @@ class Configuration {
 	 *  @param string $timezone
 	 */
 	public function setTimeZone($timezone){
-		$this->lang = $timezone;
+		$this->timezone = $timezone;
 	}
 	
 	/**

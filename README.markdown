@@ -51,11 +51,21 @@ Forked from a similar [project](https://github.com/glamorous/TMDb-PHP-API) by [J
 View examples
 
 ### Initialize the class ###
+If you have a $conf array
+	<?php
+		include('tmdb-api.php');
+		
+		// if you have a $conf array - (See LIB_ROOT/configuration/default.php as an example)
+		$tmdb = new TMDB($conf);
+		
+	?>
+	
+If you have no $conf array it uses the default conf but you need to have an API Key
 	<?php
 		include('tmdb-api.php');
 		
 		// if you have no $conf it uses the default config
-		$tmdb = new TMDB($conf); 
+		$tmdb = new TMDB(); 
 		
 		//Insert your API Key of TMDB
 		//Necessary if you use default conf

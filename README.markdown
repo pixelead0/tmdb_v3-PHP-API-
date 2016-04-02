@@ -1,5 +1,7 @@
 ## Documentation ##
 
+[![Join the chat at https://gitter.im/pixelead0/tmdb_v3-PHP-API-](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/pixelead0/tmdb_v3-PHP-API-?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 TMDB API v3 PHP Library - wrapper to [API](http://help.themoviedb.org/kb/api/about-3) version 3 of [themoviedb.org](http://themoviedb.org).
 
 For using this library maybe you should take a look at the full [Documentation](http://code.octal.es/php/tmdb-api/) of this project.
@@ -7,7 +9,8 @@ For using this library maybe you should take a look at the full [Documentation](
 @pakage TMDB-API-PHP<br/>
 @author [Pixelead0](https://twitter.com/pixelead0) also on [Github](https://github.com/pixelead0)<br/>
 @author [Alvaro Octal](https://twitter.com/Alvaro_Octal) also on [Github](https://github.com/Alvaroctal)<br/>
-@date 17/01/2015<br/>
+@author [Deso85](https://twitter.com/Cizero) also on [Github](https://github.com/deso85)<br/>
+@date 01/04/2016<br/>
 @version 0.3<br/>
 
 ## CREDITS  ###
@@ -15,6 +18,12 @@ For using this library maybe you should take a look at the full [Documentation](
 Forked from a similar [project](https://github.com/glamorous/TMDb-PHP-API) by [Jonas De Smet](https://github.com/glamorous)
 
 ### CHANGE LOG ###
+  * [01/04/2016] v0.4
+    - Added config file
+	- Some code changes to use config file
+	- Some formal corrections inside comments
+	- (Hopefully) Corrected Versioning
+
   * [17/01/2015] v0.3 - Upgraded by
 	- Upgrade by  [/Alvaroctal/TMDB-PHP-API](https://github.com/Alvaroctal/TMDB-PHP-API).
 	- Some modifications and dedicated classes added.
@@ -45,7 +54,7 @@ View examples/
 
 		// Insert your api key of TMDB
 		$apikey = 'YOUR_APIKEY';
-		$language = 'es';
+		$language = 'en';
 		$tmdb = new TMDB($apikey, $language); // by simply giving $apikey it sets the default lang to 'en'
 	?>
 ## Movies ##

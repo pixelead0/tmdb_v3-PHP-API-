@@ -21,18 +21,22 @@
  * @author Jonas De Smet - Glamorous
  * @link {https://github.com/glamorous/TMDb-PHP-API}
  *
- * Mostly code cleaning and documentation
- * @Copyright Alvaro Octal | https://github.com/Alvaroctal/TMDB-PHP-API
+ * Added config file + some formal corrections inside comments + some code changes to use config + (hopefully) corrected versioning
+ * @Copyright Deso85 | https://github.com/deso85/tmdb_v3-PHP-API-
  * Licensed under BSD (http://www.opensource.org/licenses/bsd-license.php)
- * @date 09/01/2015
- * @version 0.0.2.1
- * @author Alvaro Octal
- * @link {https://github.com/Alvaroctal/TMDB-PHP-API}
+ * @date 01.04.2016
+ * @version 0.4
+ * @author Deso85
+ * @link {https://github.com/deso85/tmdb_v3-PHP-API-}
  *
  * 	Function List
- *   	public function  __construct($apikey,$lang='en')
+ *   	public function  __construct($apikey,$lang,$adult,$debug)
  *   	public function setLang($lang="en")
  *   	public function getLang()
+ *   	public function setAdult($adult=false);
+ *   	public function getAdult();
+ *   	public function setDebug($debug=false);
+ *   	public function getDebug();
  *   	public function setImageURL($config)
  *   	public function getImageURL($size="original")
  *   	public function movieTitles($idMovie)
@@ -43,7 +47,7 @@
  *   	public function movieCast($idMovie)
  *   	public function movieInfo($idMovie,$option="",$print=false)
  *   	public function searchMovie($movieTitle)
- *   	public function getConfig()
+ *   	public function getAPIConfig()
  *   	public function latestMovie()
  *   	public function nowPlayingMovies($page=1)
  *
@@ -79,56 +83,92 @@ include("data/roles/TVShowRole.php");
 include("data/Collection.php");
 include("data/Company.php");
 include("data/Genre.php");
-include("data/config/Configuration.php");
+include("data/config/APIConfiguration.php");
 
 class TMDB {
-
+	
 	#@var string url of API TMDB
 	const _API_URL_ = "http://api.themoviedb.org/3/";
 
 	#@var string Version of this class
-	const VERSION = '0.0.2.1';
+	const VERSION = '0.0.3.0';
 
+	#@var array of config parameters
+	private $_config;
+	
 	#@var string API KEY
 	private $_apikey;
 
 	#@var string Default language
 	private $_lang;
-
+	
+	#@var string for adult content
+	private $_adult;
+	
 	#@var array of TMDB config
-    private $_configuration;
-
+    private $_apiconfiguration;
+    
 	#@var boolean for testing
 	private $_debug;
 
-	#@var string for adult content
-	private $_adult = 'false';
-
-
+	
+	
 	/**
-	 * 	Construct Class
+	 * 	Construct Class<br />
+	 * 	If any param is not specified, will load from config.
 	 *
 	 * 	@param string $apikey The API key token
-	 * 	@param string $lang The languaje to work with, default is english
+	 * 	@param string $lang The language to work with
+	 *  @param boolean $adult The flag for adult content
+	 *  @param boolean $debug The flag for debug output
 	 */
-	public function __construct($apikey, $lang = 'en', $debug = false) {
-
+	public function __construct($apikey = null, $lang = null, $adult = null, $debug = null) {
+		require_once("data/config/config.php");
+		
+		// Set config params
+		$this->setConfig($cnf);
+		
 		// Sets the API key
-		$this->setApikey($apikey);
+		$this->setApikey((isset($apikey)) ? $apikey : $cnf['apikey']);
 
 		// Setting Language
-		$this->setLang($lang);
-
+		$this->setLang((isset($lang)) ? $lang : $cnf['lang']);
+		
+		// Set if adult content shall be displayed
+		$this->setAdult((isset($adult)) ? $adult : $cnf['adult']);
+		
 		// Set the debug mode
-		$this->_debug = $debug;
+		$this->setDebug((isset($debug)) ? $debug : $cnf['debug']);
 
-		// Load the configuration
+		// Load the API configuration
 		if (! $this->_loadConfig()){
-			echo "Unable to read configuration, verify that the API key is valid";
+			echo _("Unable to read configuration, verify that the API key is valid");
 			exit;
 		}
 	}
 
+	//------------------------------------------------------------------------------
+	// Configuration Parameters
+	//------------------------------------------------------------------------------
+	
+	/**
+	 *  Set configuration parameters
+	 *
+	 * 	@param array $config
+	 */
+	private function setConfig($config) {
+		$this->_config = $config;
+	}
+	
+	/**
+	 * 	Get the config parameters
+	 *
+	 * 	@return array $config
+	 */
+	private function getConfig() {
+		return $this->_config;
+	}
+	
 	//------------------------------------------------------------------------------
 	// Api Key
 	//------------------------------------------------------------------------------
@@ -163,7 +203,7 @@ class TMDB {
 	 * 	@param string $lang
 	 */
 	public function setLang($lang = 'en') {
-		$this->_lang = $lang;
+		$this->_lang = (string) $lang;
 	}
 
 	/**
@@ -183,9 +223,9 @@ class TMDB {
 	 *  Set adult content flag
 	 *	By default false
 	 *
-	 * 	@param string $adult
+	 * 	@param boolean $adult
 	 */
-	public function setAdult($adult = 'false') {
+	public function setAdult($adult = false) {
 		$this->_adult = $adult;
 	}
 
@@ -195,7 +235,30 @@ class TMDB {
 	 * 	@return string
 	 */
 	public function getAdult() {
-		return $this->_adult;
+		return ($this->_adult) ? 'true' : 'false';
+	}
+	
+	//------------------------------------------------------------------------------
+	// Debug Mode
+	//------------------------------------------------------------------------------
+	
+	/**
+	 *  Set debug mode
+	 *	By default false
+	 *
+	 * 	@param boolean $debug
+	 */
+	public function setDebug($debug = false) {
+		$this->_debug = $debug;
+	}
+	
+	/**
+	 * 	Get debug status
+	 *
+	 * 	@return boolean
+	 */
+	public function getDebug() {
+		return $this->_debug;
 	}
 
 	//------------------------------------------------------------------------------
@@ -208,9 +271,9 @@ class TMDB {
 	 * 	@return boolean
 	 */
 	private function _loadConfig() {
-		$this->_configuration = new Configuration($this->_call('configuration', ''));
+		$this->_apiconfiguration = new APIConfiguration($this->_call('configuration'));
 
-		return ! empty($this->_configuration);
+		return ! empty($this->_apiconfiguration);
 	}
 
 	/**
@@ -218,8 +281,8 @@ class TMDB {
 	 *
 	 * 	@return Configuration
 	 */
-	public function getConfig() {
-		return $this->_configuration;
+	public function getAPIConfig() {
+		return $this->_apiconfiguration;
 	}
 
 	//------------------------------------------------------------------------------
@@ -234,7 +297,7 @@ class TMDB {
 	 * 	@return string
 	 */
 	public function getImageURL($size = 'original') {
-		return $this->_configuration->getImageBaseURL().$size;
+		return $this->_apiconfiguration->getImageBaseURL().$size;
 	}
 
 	//------------------------------------------------------------------------------
@@ -312,7 +375,7 @@ class TMDB {
 	 * 	@return Movie
 	 */
 	public function getLatestMovie() {
-		return new Movie($this->_call('movie/latest',''));
+		return new Movie($this->_call('movie/latest'));
 	}
 
 	/**
@@ -393,45 +456,6 @@ class TMDB {
 		return $movies;
 	}
 
-	/**
-	 *  Top Rated Movies
-	 *	@add by tnsws
-	 *
-	 * 	@param integer $page
-	 * 	@return array
-	 */
-	public function topRatedMovies($page = 1) {
-
-		$movies = array();
-
-		$result = $this->_call('movie/top-rated', 'page='. $page);
-
-		foreach($result['results'] as $data){
-			$movies[] = new Movie($data);
-		}
-
-		return $movies;
-	}
-
-	/**
-	 *  Upcoming Movies
-	 *	@add by tnsws
-	 *
-	 * 	@param integer $page
-	 * 	@return array
-	 */
-	public function upcomingMovies($page = 1) {
-
-		$movies = array();
-
-		$result = $this->_call('movie/upcoming', 'page='. $page);
-
-		foreach($result['results'] as $data){
-			$movies[] = new Movie($data);
-		}
-
-		return $movies;
-	}
 
 	//------------------------------------------------------------------------------
 	// Get Featured TVShows
@@ -443,7 +467,7 @@ class TMDB {
 	 * 	@return TVShow
 	 */
 	public function getLatestTVShow() {
-		return new TVShow($this->_call('tv/latest',''));
+		return new TVShow($this->_call('tv/latest'));
 	}
 
 	/**
@@ -533,7 +557,7 @@ class TMDB {
 	 * 	@return Person
 	 */
 	public function getLatestPerson() {
-		return new Person($this->_call('person/latest',''));
+		return new Person($this->_call('person/latest'));
 	}
 
 	/**
@@ -544,7 +568,7 @@ class TMDB {
 	public function getPopularPersons($page = 1) {
 		$persons = array();
 
-		$result = $this->_call('person/popular','&page='. $page);
+		$result = $this->_call('person/popular', '&page='. $page);
 
 		foreach($result['results'] as $data){
 			$persons[] = new Person($data);
@@ -564,7 +588,7 @@ class TMDB {
 	 * 	@param string $appendToResponse	The extra append of the request
 	 * 	@return string
 	 */
-	private function _call($action, $appendToResponse) {
+	private function _call($action, $appendToResponse = '') {
 
 		$url = self::_API_URL_.$action .'?api_key='. $this->getApikey() .'&language='.$this->getLang().'&append_to_response='.implode(',', (array) $appendToResponse).'&include_adult='.$this->getAdult();
 
@@ -593,10 +617,12 @@ class TMDB {
 	 * 	Get a Movie
 	 *
 	 * 	@param int $idMovie The Movie id
-	 * 	@param string $appendToResponse The extra append of the request, by default all
+	 * 	@param array $appendToResponse The extra append of the request
 	 * 	@return Movie
 	 */
-	public function getMovie($idMovie, $appendToResponse = array('trailers','images','credits','translations')) {
+	public function getMovie($idMovie, $appendToResponse = null) {
+		$appendToResponse = (isset($appendToResponse)) ? $appendToResponse : $this->getConfig()['appender']['movie']['default'];
+
 		return new Movie($this->_call('movie/' . $idMovie, $appendToResponse));
 	}
 
@@ -604,10 +630,12 @@ class TMDB {
 	 * 	Get a TVShow
 	 *
 	 * 	@param int $idTVShow The TVShow id
-	 * 	@param string $appendToResponse The extra append of the request, by default all
+	 * 	@param array $appendToResponse The extra append of the request
 	 * 	@return TVShow
 	 */
-	public function getTVShow($idTVShow, $appendToResponse = array('trailers','images','credits','translations','keywords')) {
+	public function getTVShow($idTVShow, $appendToResponse = null) {
+		$appendToResponse = (isset($appendToResponse)) ? $appendToResponse : $this->getConfig()['appender']['tvshow']['default'];
+		
 		return new TVShow($this->_call('tv/' . $idTVShow, $appendToResponse));
 	}
 
@@ -616,10 +644,12 @@ class TMDB {
 	 *
 	 *  @param int $idTVShow The TVShow id
 	 *  @param int $numSeason The Season number
-	 * 	@param string $appendToResponse The extra append of the request, by default all
+	 * 	@param array $appendToResponse The extra append of the request
 	 * 	@return Season
 	 */
-	public function getSeason($idTVShow, $numSeason, $appendToResponse = array('trailers', 'images', 'credits', 'translations')) {
+	public function getSeason($idTVShow, $numSeason, $appendToResponse = null) {
+		$appendToResponse = (isset($appendToResponse)) ? $appendToResponse : $this->getConfig()['appender']['season']['default'];
+		
 		return new Season($this->_call('tv/'. $idTVShow .'/season/' . $numSeason, $appendToResponse), $idTVShow);
 	}
 
@@ -629,10 +659,12 @@ class TMDB {
 	 *  @param int $idTVShow The TVShow id
 	 *  @param int $numSeason The Season number
 	 *  @param int $numEpisode the Episode number
-	 * 	@param string $appendToResponse The extra append of the request, by default all
+	 * 	@param array $appendToResponse The extra append of the request
 	 * 	@return Episode
 	 */
-	public function getEpisode($idTVShow, $numSeason, $numEpisode, $appendToResponse = array('trailers','images','credits','translations')) {
+	public function getEpisode($idTVShow, $numSeason, $numEpisode, $appendToResponse = null) {
+		$appendToResponse = (isset($appendToResponse)) ? $appendToResponse : $this->getConfig()['appender']['episode']['default'];
+		
 		return new Episode($this->_call('tv/'. $idTVShow .'/season/'. $numSeason .'/episode/'. $numEpisode, $appendToResponse), $idTVShow);
 	}
 
@@ -640,10 +672,12 @@ class TMDB {
 	 * 	Get a Person
 	 *
 	 * 	@param int $idPerson The Person id
-	 * 	@param string $appendToResponse The extra append of the request, by default all
+	 * 	@param array $appendToResponse The extra append of the request
 	 * 	@return Person
 	 */
-	public function getPerson($idPerson, $appendToResponse = array('movie_credits','tv_credits','images')) {
+	public function getPerson($idPerson, $appendToResponse = null) {
+		$appendToResponse = (isset($appendToResponse)) ? $appendToResponse : $this->getConfig()['appender']['person']['default'];
+		
 		return new Person($this->_call('person/' . $idPerson, $appendToResponse));
 	}
 
@@ -651,10 +685,12 @@ class TMDB {
 	 * 	Get a Collection
 	 *
 	 * 	@param int $idCollection The Person id
-	 * 	@param string $appendToResponse The extra append of the request, by default all
+	 * 	@param array $appendToResponse The extra append of the request
 	 * 	@return Collection
 	 */
-	public function getCollection($idCollection, $appendToResponse = array('images')) {
+	public function getCollection($idCollection, $appendToResponse = null) {
+		$appendToResponse = (isset($appendToResponse)) ? $appendToResponse : $this->getConfig()['appender']['collection']['default'];
+		
 		return new Collection($this->_call('collection/' . $idCollection, $appendToResponse));
 	}
 
@@ -662,10 +698,12 @@ class TMDB {
 	 * 	Get a Company
 	 *
 	 * 	@param int $idCompany The Person id
-	 * 	@param string $appendToResponse The extra append of the request, by default all
+	 * 	@param array $appendToResponse The extra append of the request
 	 * 	@return Company
 	 */
-	public function getCompany($idCompany, $appendToResponse = array('movies')) {
+	public function getCompany($idCompany, $appendToResponse = null) {
+		$appendToResponse = (isset($appendToResponse)) ? $appendToResponse : $this->getConfig()['appender']['company']['default'];
+		
 		return new Company($this->_call('company/' . $idCompany, $appendToResponse));
 	}
 

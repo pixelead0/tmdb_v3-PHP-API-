@@ -120,7 +120,7 @@ class Movie{
 	}
 
 	/** 
-	 * 	Get the Movie's review
+	 * 	Get the Movie's reviews
 	 *
 	 * 	@return Review[]
 	 */
@@ -132,6 +132,21 @@ class Movie{
 		}
 
 		return $reviews;
+	}
+
+	/** 
+	 * 	Get the Movie's companies
+	 *
+	 * 	@return Company[]
+	 */
+	public function getCompanies() {
+		$companies = array();
+
+		foreach ($this->_data['production_companies'] as $data) {
+			$companies[] = new Company($data);
+		}
+
+		return $companies;
 	}
 
 	/**

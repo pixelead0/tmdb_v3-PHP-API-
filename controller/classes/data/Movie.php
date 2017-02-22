@@ -60,6 +60,15 @@ class Movie{
 	}
 
 	/** 
+	 * 	Get the Movie's overview
+	 *
+	 * 	@return string
+	 */
+	public function getOverview() {
+		return $this->_data['overview'];
+	}
+	
+	/** 
 	 * 	Get the Movie's Poster
 	 *
 	 * 	@return string

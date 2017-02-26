@@ -58,7 +58,25 @@ class Movie{
 	public function getTagline() {
 		return $this->_data['tagline'];
 	}
+	/** 
+	 * 	Get the Movie Directors IDs
+	 *
+	 * 	@return Array(int)
+	 */
+	public function getDirectorIds() {
 
+		$director_ids = array();
+
+		$crew = $this->_data['credits']['crew'];
+
+		foreach ($crew as $crew_member) {
+
+			if ($crew_member['job'] == 'Director'){
+				array_push($director_ids, $crew_member["id"]);
+			}
+		}
+		return $director_ids;
+	}
 	/** 
 	 * 	Get the Movie's Poster
 	 *

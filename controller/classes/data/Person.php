@@ -13,6 +13,12 @@
 class Person{
 
     //------------------------------------------------------------------------------
+    // Class Constants
+    //------------------------------------------------------------------------------
+
+    const MEDIA_TYPE_PERSON = 'person';
+
+    //------------------------------------------------------------------------------
     // Class Variables
     //------------------------------------------------------------------------------
 
@@ -146,6 +152,14 @@ class Person{
      */
     public function getJSON() {
         return json_encode($this->_data, JSON_PRETTY_PRINT);
+    }
+
+
+    /**
+     * @return string
+     */
+    public function getMediaType(){
+        return self::MEDIA_TYPE_PERSON;
     }
 }
 ?>

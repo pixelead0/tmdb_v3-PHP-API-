@@ -1,12 +1,11 @@
 <?php
     $multiSearchResults = $tmdb->multiSearch("Wesley");
 
-    echo '  <div class="panel panel-default">
-                <div class="panel-body">
-                    <ul>';
     foreach($multiSearchResults as $mediaType => $searchResults){
-        echo '<hr>'.$mediaType.'</hr>';
-
+        echo '  <div class="panel panel-default">';
+        echo '<div class="panel-heading">'.$mediaType.'</div>';
+        echo '<div class="panel-body">';
+        echo '<ul>';
         foreach($searchResults as $searchResult) {
             if($searchResult->getMediaType() === 'movie') {
                 echo '          <li>' . $searchResult->getTitle() . ' (<a href="https://www.themoviedb.org/movie/' . $searchResult->getID() . '">' . $searchResult->getID() . '</a>)</li>';
@@ -16,8 +15,6 @@
                 echo '          <li>' . $searchResult->getName() . ' (<a href="https://www.themoviedb.org/person/' . $searchResult->getID() . '">' . $searchResult->getID() . '</a>)</li>';
             }
         }
+        echo '</ul></div></div>';
     }
-    echo '          </ul>
-                </div>
-            </div>';
 ?>

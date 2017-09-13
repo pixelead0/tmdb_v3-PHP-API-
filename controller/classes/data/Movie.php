@@ -17,6 +17,8 @@ class Movie{
 	//------------------------------------------------------------------------------
 
 	const MEDIA_TYPE_MOVIE = 'movie';
+	const CREDITS_TYPE_CAST = 'cast';
+	const CREDITS_TYPE_CREW = 'crew';
 
 	//------------------------------------------------------------------------------
 	// Class Variables
@@ -157,6 +159,37 @@ class Movie{
 		}
 
 		return $reviews;
+	}
+
+	/**
+	 * Get the movies Cast
+	 * @return array of Person
+	 */
+	public function getCast(){
+		return $this->getCredits(self::CREDITS_TYPE_CAST);
+	}
+
+	/**
+	 * Get the Cast or the Crew of a movie
+	 * @param string $key
+	 * @return array of Person
+	 */
+	private function getCredits($key){
+		$persons = [];
+
+		foreach ($this->_data['credits'][$key] as $data) {
+			$persons[] = new Person($data);
+		}
+
+		return $persons;
+	}
+
+	/**
+	 * Get the movies crew
+	 * @return array of Person
+	 */
+	public function getCrew(){
+		return $this->getCredits(self::CREDITS_TYPE_CREW);
 	}
 
 	/**

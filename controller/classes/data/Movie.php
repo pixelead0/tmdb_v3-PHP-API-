@@ -9,45 +9,13 @@
  * 	@link https://github.com/Alvaroctal/TMDB-PHP-API
  * 	@copyright Licensed under BSD (http://www.opensource.org/licenses/bsd-license.php)
  */
+class Movie extends ApiBaseObject{
 
-class Movie{
-
-	//------------------------------------------------------------------------------
-	// Class Constants
-	//------------------------------------------------------------------------------
-
-	const MEDIA_TYPE_MOVIE = 'movie';
-	const CREDITS_TYPE_CAST = 'cast';
-	const CREDITS_TYPE_CREW = 'crew';
-
-	//------------------------------------------------------------------------------
-	// Class Variables
-	//------------------------------------------------------------------------------
-
-	private $_data;
 	private $_tmdb;
-
-	/**
-	 * 	Construct Class
-	 *
-	 * 	@param array $data An array with the data of the Movie
-	 */
-	public function __construct($data) {
-		$this->_data = $data;
-	}
 
 	//------------------------------------------------------------------------------
 	// Get Variables
 	//------------------------------------------------------------------------------
-
-	/** 
-	 * 	Get the Movie's id
-	 *
-	 * 	@return int
-	 */
-	public function getID() {
-		return $this->_data['id'];
-	}
 
 	/** 
 	 * 	Get the Movie's title
@@ -69,47 +37,21 @@ class Movie{
 	/** 
 	 * 	Get the Movie Directors IDs
 	 *
-	 * 	@return Array(int)
+	 * 	@return array(int)
 	 */
 	public function getDirectorIds() {
 
 		$director_ids = array();
 
-		$crew = $this->_data['credits']['crew'];
+		$crew = $this->getCrew();
 
 		foreach ($crew as $crew_member) {
 
-			if ($crew_member['job'] == 'Director'){
-				array_push($director_ids, $crew_member["id"]);
+			if ($crew_member['job'] === 'Director'){
+				$director_ids[] = $crew_member['id'];
 			}
 		}
 		return $director_ids;
-	}
-	/** 
-	 * 	Get the Movie's Poster
-	 *
-	 * 	@return string
-	 */
-	public function getPoster() {
-		return $this->_data['poster_path'];
-	}
-
-	/** 
-	 * 	Get the Movie's vote average
-	 *
-	 * 	@return int
-	 */
-	public function getVoteAverage() {
-		return $this->_data['vote_average'];
-	}
-
-	/** 
-	 * 	Get the Movie's vote count
-	 *
-	 * 	@return int
-	 */
-	public function getVoteCount() {
-		return $this->_data['vote_count'];
 	}
 
 	/** 
@@ -162,37 +104,6 @@ class Movie{
 	}
 
 	/**
-	 * Get the movies Cast
-	 * @return array of Person
-	 */
-	public function getCast(){
-		return $this->getCredits(self::CREDITS_TYPE_CAST);
-	}
-
-	/**
-	 * Get the Cast or the Crew of a movie
-	 * @param string $key
-	 * @return array of Person
-	 */
-	private function getCredits($key){
-		$persons = [];
-
-		foreach ($this->_data['credits'][$key] as $data) {
-			$persons[] = new Person($data);
-		}
-
-		return $persons;
-	}
-
-	/**
-	 * Get the movies crew
-	 * @return array of Person
-	 */
-	public function getCrew(){
-		return $this->getCredits(self::CREDITS_TYPE_CREW);
-	}
-
-	/**
 	 * 	Get the Movie's companies
 	 *
 	 * 	@return Company[]
@@ -205,18 +116,6 @@ class Movie{
 		}
 		
 		return $companies;
-	}
-
-	
-	/**
-	 *  Get Generic.<br>
-	 *  Get a item of the array, you should not get used to use this, better use specific get's.
-	 *
-	 * 	@param string $item The item of the $data array you want
-	 * 	@return array
-	 */
-	public function get($item = ''){
-		return (empty($item)) ? $this->_data : $this->_data[$item];
 	}
 
 	//------------------------------------------------------------------------------
@@ -253,4 +152,3 @@ class Movie{
 		return self::MEDIA_TYPE_MOVIE;
 	}
 }
-?>

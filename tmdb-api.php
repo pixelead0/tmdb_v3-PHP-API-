@@ -98,6 +98,7 @@
  * 		Person images		http://api.themoviedb.org/3/person/287/images
  */
 
+include("controller/classes/data/ApiBaseObject.php");
 include("controller/classes/data/Collection.php");
 include("controller/classes/data/Company.php");
 include("controller/classes/data/Episode.php");

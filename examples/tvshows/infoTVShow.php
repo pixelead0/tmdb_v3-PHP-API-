@@ -26,6 +26,7 @@
                             $cast = $tvShow->getCast();
                             foreach ($cast as $person) {
                                 echo '<li>'. $person->getName() .' </li>';
+                                echo '<img src="'. $tmdb->getImageURL('w185') . $person->getProfile() .'"/></li>';
                             }
                             echo '</ul>
                         </li>
@@ -34,6 +35,7 @@
                             $crew = $tvShow->getCrew();
                             foreach ($crew as $person) {
                                 echo '<li>'. $person->getName() .' </li>';
+                                echo '<img src="'. $tmdb->getImageURL('w185') . $person->getProfile() .'"/></li>';
                             }
                             echo '</ul>
                         </li>

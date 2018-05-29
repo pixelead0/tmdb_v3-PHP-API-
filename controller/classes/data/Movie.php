@@ -34,6 +34,7 @@ class Movie extends ApiBaseObject{
 	public function getTagline() {
 		return $this->_data['tagline'];
 	}
+
 	/** 
 	 * 	Get the Movie Directors IDs
 	 *
@@ -41,14 +42,15 @@ class Movie extends ApiBaseObject{
 	 */
 	public function getDirectorIds() {
 
-		$director_ids = array();
+		$director_ids = [];
 
 		$crew = $this->getCrew();
 
-		foreach ($crew as $crew_member) {
+		/** @var Person $crew_member */
+        foreach ($crew as $crew_member) {
 
-			if ($crew_member['job'] === 'Director'){
-				$director_ids[] = $crew_member['id'];
+			if ($crew_member->getJob() === Person::JOB_DIRECTOR){
+				$director_ids[] = $crew_member->getID();
 			}
 		}
 		return $director_ids;

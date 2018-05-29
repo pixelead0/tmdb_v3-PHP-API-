@@ -18,6 +18,8 @@ class Person{
 
     const MEDIA_TYPE_PERSON = 'person';
 
+    const JOB_DIRECTOR = 'Director';
+
     //------------------------------------------------------------------------------
     // Class Variables
     //------------------------------------------------------------------------------
@@ -98,6 +100,15 @@ class Person{
      */
     public function getPopularity() {
         return $this->_data['popularity'];
+    }
+
+    /**
+     *  Get the Person's popularity
+     *
+     *  @return int
+     */
+    public function getJob() {
+        return $this->_data['job'];
     }
 
     /**

@@ -19,7 +19,7 @@
     },
     "autoload": {
         "classmap": [
-            "src/"
+            "/"
         ]
     }
 }

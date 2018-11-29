@@ -77,7 +77,8 @@ namespace buibr\tmdbapi;
  *		public function getMovieGenres()
  *		public function getTVGenres()
  *		public function getMoviesByGenre($idGenre, $page = 1)
- *		
+ *		public function multiSearch($searchQuery)
+ *
  *		private function _loadConfig()
  *   	private function setConfig($config)
  *   	private function getConfig()
@@ -116,7 +117,7 @@ require ("controller/classes/config/Configuration.php");
 
 
 class TMDB {
-	
+
 	#@var string url of API TMDB
 	const _API_URL_ = "http://api.themoviedb.org/3/";
 
@@ -125,17 +126,17 @@ class TMDB {
 
 	#@var array of config parameters
 	private $config;
-	
+
 	#@var array of TMDB config
     private $apiconfiguration;
-	
+
 	/**
 	 * 	Construct Class
 	 *
 	 * 	@param array $cnf The necessary configuration
 	 */
 	public function __construct($config = null) {
-		
+
 		// Set configuration
 		$this->setConfig($config);
 
@@ -149,7 +150,7 @@ class TMDB {
 	//------------------------------------------------------------------------------
 	// Configuration Parameters
 	//------------------------------------------------------------------------------
-	
+
 	/**
 	 *  Set configuration parameters
 	 *
@@ -158,7 +159,7 @@ class TMDB {
 	private function setConfig($config) {
 		$this->config = new Configuration($config);
 	}
-	
+
 	/**
 	 * 	Get the config parameters
 	 *
@@ -167,11 +168,11 @@ class TMDB {
 	private function getConfig() {
 		return $this->config;
 	}
-	
+
 	//------------------------------------------------------------------------------
 	// API Key
 	//------------------------------------------------------------------------------
-	
+
 	/**
 	 *  Set the API Key
 	 *
@@ -203,11 +204,11 @@ class TMDB {
 	public function getLang() {
 		return $this->getConfig()->getLang();
 	}
-	
+
 	//------------------------------------------------------------------------------
 	// TimeZone
 	//------------------------------------------------------------------------------
-	
+
 	/**
 	 *  Set the timezone
 	 *	By default 'Europe/London'
@@ -217,7 +218,7 @@ class TMDB {
 	public function setTimeZone($timezone = 'Europe/London') {
 		$this->getConfig()->setTimeZone($timezone);
 	}
-	
+
 	/**
 	 * 	Get the timezone
 	 *
@@ -249,11 +250,11 @@ class TMDB {
 	public function getAdult() {
 		return $this->getConfig()->getAdult();
 	}
-	
+
 	//------------------------------------------------------------------------------
 	// Debug Mode
 	//------------------------------------------------------------------------------
-	
+
 	/**
 	 *  Set debug mode
 	 *	By default false
@@ -263,7 +264,7 @@ class TMDB {
 	public function setDebug($debug = false) {
 		$this->getConfig()->setDebug($debug);
 	}
-	
+
 	/**
 	 * 	Get debug status
 	 *
@@ -633,7 +634,7 @@ class TMDB {
 	 */
 	public function getMovie($idMovie, $appendToResponse = null) {
 		$appendToResponse = (isset($appendToResponse)) ? $appendToResponse : $this->getConfig()->getAppender('movie');
-		
+
 		return new Movie($this->_call('movie/' . $idMovie, $appendToResponse));
 	}
 
@@ -646,7 +647,7 @@ class TMDB {
 	 */
 	public function getTVShow($idTVShow, $appendToResponse = null) {
 		$appendToResponse = (isset($appendToResponse)) ? $appendToResponse : $this->getConfig()->getAppender('tvshow');
-		
+
 		return new TVShow($this->_call('tv/' . $idTVShow, $appendToResponse));
 	}
 
@@ -660,7 +661,7 @@ class TMDB {
 	 */
 	public function getSeason($idTVShow, $numSeason, $appendToResponse = null) {
 		$appendToResponse = (isset($appendToResponse)) ? $appendToResponse : $this->getConfig()->getAppender('season');
-		
+
 		return new Season($this->_call('tv/'. $idTVShow .'/season/' . $numSeason, $appendToResponse), $idTVShow);
 	}
 
@@ -675,7 +676,7 @@ class TMDB {
 	 */
 	public function getEpisode($idTVShow, $numSeason, $numEpisode, $appendToResponse = null) {
 		$appendToResponse = (isset($appendToResponse)) ? $appendToResponse : $this->getConfig()->getAppender('episode');
-		
+
 		return new Episode($this->_call('tv/'. $idTVShow .'/season/'. $numSeason .'/episode/'. $numEpisode, $appendToResponse), $idTVShow);
 	}
 
@@ -688,7 +689,7 @@ class TMDB {
 	 */
 	public function getPerson($idPerson, $appendToResponse = null) {
 		$appendToResponse = (isset($appendToResponse)) ? $appendToResponse : $this->getConfig()->getAppender('person');
-		
+
 		return new Person($this->_call('person/' . $idPerson, $appendToResponse));
 	}
 
@@ -701,7 +702,7 @@ class TMDB {
 	 */
 	public function getCollection($idCollection, $appendToResponse = null) {
 		$appendToResponse = (isset($appendToResponse)) ? $appendToResponse : $this->getConfig()->getAppender('collection');
-		
+
 		return new Collection($this->_call('collection/' . $idCollection, $appendToResponse));
 	}
 
@@ -714,13 +715,46 @@ class TMDB {
 	 */
 	public function getCompany($idCompany, $appendToResponse = null) {
 		$appendToResponse = (isset($appendToResponse)) ? $appendToResponse : $this->getConfig()->getAppender('company');
-		
+
 		return new Company($this->_call('company/' . $idCompany, $appendToResponse));
 	}
 
 	//------------------------------------------------------------------------------
 	// Searches
 	//------------------------------------------------------------------------------
+
+	/**
+	 *  Multi Search
+	 *
+	 * 	@param string $searchQuery The query for the search
+	 * 	@return array[]
+	 */
+    public function multiSearch($searchQuery)
+    {
+        $searchResults = array(
+            Movie::MEDIA_TYPE_MOVIE => array(),
+            TVShow::MEDIA_TYPE_TV => array(),
+            Person::MEDIA_TYPE_PERSON => array(),
+        );
+
+        $result = $this->_call('search/multi', '&query=' . urlencode($searchQuery));
+
+        if(!array_key_exists('results', $result)){
+            return $searchResults;
+        }
+
+        foreach ($result['results'] as $data) {
+            if ($data['media_type'] === Movie::MEDIA_TYPE_MOVIE) {
+                $searchResults[Movie::MEDIA_TYPE_MOVIE][] = new Movie($data);
+            } elseif ($data['media_type']  === TVShow::MEDIA_TYPE_TV) {
+                $searchResults[TVShow::MEDIA_TYPE_TV][] = new TvShow($data);
+            } elseif ($data['media_type']  === Person::MEDIA_TYPE_PERSON) {
+                $searchResults[Person::MEDIA_TYPE_PERSON][] = new Person($data);
+            }
+        }
+
+        return $searchResults;
+    }
 
 	/**
 	 *  Search Movie

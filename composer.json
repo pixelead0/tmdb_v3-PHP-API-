@@ -1,7 +1,9 @@
 {
-    "name": "buibr/tmdb-php-api",
+    "name": "buibr/tmdbapi",
     "description": "PHP wrapper for The Movie Data Base API version 3",
+    "keywords": ["markdown", "gfm", "markdown-extra", "fast", "extensible"],
     "type": "library",
+    "license": "MIT",
     "authors": [
         {
             "name": "Adan GQ",
@@ -17,5 +19,5 @@
     "require": {
         "php": ">=5.5.0"
     },
-    "minimum-stability": "dev",
+    "minimum-stability": "dev"
 }

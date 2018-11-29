@@ -19,5 +19,10 @@
     "require": {
         "php": ">=5.5.0"
     },
-    "minimum-stability": "dev"
+    "minimum-stability": "dev",
+    "autoload": {
+        "psr-4": {
+            "buibr\\tmdbapi\\": ""
+        }
+    }
 }

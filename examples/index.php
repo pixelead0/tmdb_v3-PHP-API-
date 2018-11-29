@@ -1,5 +1,7 @@
 <?php
     $apikey = "Your API Key";
+    $selectedZone = array_key_exists('zone', $_GET) ? $_GET['zone'] : null;
+    $selectedExample = array_key_exists('example', $_GET) ? $_GET['example'] : null;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -89,6 +91,12 @@
                                 '1' => 'hr',
                                 'infoRoles' => 'Full Roles Info'
                             )
+                        ),
+                        'search' => array(
+                            'name' => 'Search',
+                            'examples' => array(
+                                'multiSearch' => 'Multisearch movies, TV Show and Persons',
+                            )
                         )
                     );
                 ?>
@@ -97,12 +105,12 @@
                     <ul class="nav navbar-nav">
                         <?php
                             foreach ($zones as $zoneID => $zone) {
-                                echo '  <li class="dropdown '.($_GET['zone'] == $zoneID ? 'active' : '').'">
+                                echo '  <li class="dropdown '.($selectedZone == $zoneID ? 'active' : '').'">
                                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">'.$zone['name'].' <span class="caret"></span></a>
                                             <ul class="dropdown-menu">';
                                 foreach ($zone['examples'] as $exampleID => $example) {
                                     if ($example == 'hr') echo '<li role="separator" class="divider"></li>';
-                                    else echo '      <li '.($_GET['zone'] == $zoneID && $_GET['example'] == $exampleID ? 'class="active"' : '').'><a href="./?zone='.$zoneID.'&example='.$exampleID.'">'.$example.'</a></li>';
+                                    else echo '      <li '.($selectedZone == $zoneID && $selectedExample == $exampleID ? 'class="active"' : '').'><a href="./?zone='.$zoneID.'&example='.$exampleID.'">'.$example.'</a></li>';
                                 }
                                 echo '      </ul>
                                         </li>';
@@ -118,14 +126,19 @@
             <!-- Container -->
 
             <div id="main-container" class="container">
-                <h3 id="page-title"><?php echo htmlspecialchars($_GET['zone'].' - '.$_GET['example']) ?></h3>
+                <h3 id="page-title"><?php echo htmlspecialchars($selectedZone.' - '.$selectedExample) ?></h3>
 
                 <?php
                     include("../tmdb-api.php");
-                    $tmdb = new TMDB($apikey, 'en', true);
 
-                    $path = './'.$_GET['zone'].'/'.$_GET['example'].'.php';
-                    
+                    $tmdb = new TMDB();
+
+                    if(null !== $selectedZone && null !== $selectedExample) {
+                        $path = './' . $selectedZone . '/' . $selectedExample . '.php';
+                    } else {
+                        $path = null;
+                    }
+
                     if(strpos($path,'../') === false && file_exists($path)) {
                         include $path;
                     }

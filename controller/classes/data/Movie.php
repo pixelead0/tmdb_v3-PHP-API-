@@ -9,37 +9,13 @@
  * 	@link https://github.com/Alvaroctal/TMDB-PHP-API
  * 	@copyright Licensed under BSD (http://www.opensource.org/licenses/bsd-license.php)
  */
+class Movie extends ApiBaseObject{
 
-class Movie{
-
-	//------------------------------------------------------------------------------
-	// Class Variables
-	//------------------------------------------------------------------------------
-
-	private $_data;
 	private $_tmdb;
-
-	/**
-	 * 	Construct Class
-	 *
-	 * 	@param array $data An array with the data of the Movie
-	 */
-	public function __construct($data) {
-		$this->_data = $data;
-	}
 
 	//------------------------------------------------------------------------------
 	// Get Variables
 	//------------------------------------------------------------------------------
-
-	/** 
-	 * 	Get the Movie's id
-	 *
-	 * 	@return int
-	 */
-	public function getID() {
-		return $this->_data['id'];
-	}
 
 	/** 
 	 * 	Get the Movie's title
@@ -60,30 +36,24 @@ class Movie{
 	}
 
 	/** 
-	 * 	Get the Movie's Poster
+	 * 	Get the Movie Directors IDs
 	 *
-	 * 	@return string
+	 * 	@return array(int)
 	 */
-	public function getPoster() {
-		return $this->_data['poster_path'];
-	}
+	public function getDirectorIds() {
 
-	/** 
-	 * 	Get the Movie's vote average
-	 *
-	 * 	@return int
-	 */
-	public function getVoteAverage() {
-		return $this->_data['vote_average'];
-	}
+		$director_ids = [];
 
-	/** 
-	 * 	Get the Movie's vote count
-	 *
-	 * 	@return int
-	 */
-	public function getVoteCount() {
-		return $this->_data['vote_count'];
+		$crew = $this->getCrew();
+
+		/** @var Person $crew_member */
+        foreach ($crew as $crew_member) {
+
+			if ($crew_member->getJob() === Person::JOB_DIRECTOR){
+				$director_ids[] = $crew_member->getID();
+			}
+		}
+		return $director_ids;
 	}
 
 	/** 
@@ -150,18 +120,6 @@ class Movie{
 		return $companies;
 	}
 
-	
-	/**
-	 *  Get Generic.<br>
-	 *  Get a item of the array, you should not get used to use this, better use specific get's.
-	 *
-	 * 	@param string $item The item of the $data array you want
-	 * 	@return array
-	 */
-	public function get($item = ''){
-		return (empty($item)) ? $this->_data : $this->_data[$item];
-	}
-
 	//------------------------------------------------------------------------------
 	// Import an API instance
 	//------------------------------------------------------------------------------
@@ -187,5 +145,12 @@ class Movie{
 	public function getJSON() {
 		return json_encode($this->_data, JSON_PRETTY_PRINT);
 	}
+
+
+	/**
+	 * @return string
+	 */
+	public function getMediaType(){
+		return self::MEDIA_TYPE_MOVIE;
+	}
 }
-?>

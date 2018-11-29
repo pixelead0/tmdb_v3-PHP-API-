@@ -9,8 +9,29 @@
                         <li>ID: '. $movie->getID() .'</li>
                         <li>Tagline: '. $movie->getTagline() .'</li>
                         <li>Trailer: <a href="https://www.youtube.com/watch?v='. $movie->getTrailer() .'">link</a></li>
+
                     </ul>
                     <img src="'. $tmdb->getImageURL('w185') . $movie->getPoster() .'"/></li>
+                    <ul>
+                        <li>Cast:
+                            <ul>';
+                            $cast = $movie->getCast();
+                            foreach ($cast as $person) {
+                                echo '<li>'. $person->getName() .' </li>';
+                                echo '<img src="'. $tmdb->getImageURL('w185') . $person->getProfile() .'"/></li>';
+                            }
+                            echo '</ul>
+                        </li>
+                        <li>Crew:
+                            <ul>';
+                            $crew = $movie->getCrew();
+                            foreach ($crew as $person) {
+                                echo '<li>'. $person->getName() .' </li>';
+                                echo '<img src="'. $tmdb->getImageURL('w185') . $person->getProfile() .'"/></li>';
+                            }
+                            echo '</ul>
+                        </li>
+                    </ul>
                 </div>
             </div>';
 ?>

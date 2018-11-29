@@ -18,6 +18,11 @@ For using this library maybe you should take a look at the full [Documentation](
 Forked from a similar [project](https://github.com/glamorous/TMDb-PHP-API) by [Jonas De Smet](https://github.com/glamorous)
 
 ### CHANGE LOG ###
+  * [18/06/2017] v0.6
+	- Implemented function for multiSearch
+	- Added example for multiSearch
+	- Fixed examples
+		 
   * [02/04/2016] v0.5
 	- Made a class for configuration to load external configs
 	- Updated functions list

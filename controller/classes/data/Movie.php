@@ -76,21 +76,6 @@ class Movie extends ApiBaseObject{
 	}
 
 	/** 
-	 * 	Get the Movie's genres
-	 *
-	 * 	@return Genre[]
-	 */
-	public function getGenres() {
-		$genres = array();
-
-		foreach ($this->_data['genres'] as $data) {
-			$genres[] = new Genre($data);
-		}
-
-		return $genres;
-	}
-
-	/** 
 	 * 	Get the Movie's reviews
 	 *
 	 * 	@return Review[]

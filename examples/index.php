@@ -97,6 +97,13 @@
                             'examples' => array(
                                 'multiSearch' => 'Multisearch movies, TV Show and Persons',
                             )
+                        ),
+                        'genres' => array(
+                            'name' => 'Genre',
+                            'examples' => array(
+                                'movieGenres' => 'Get a List of Movie Genres',
+                                'tvShowGenres' => 'Get a List of TV Show Genres',
+                            )
                         )
                     );
                 ?>

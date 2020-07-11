@@ -7,10 +7,11 @@
                     <b>'. $movie->getTitle() .'</b>
                     <ul>
                         <li>ID: '. $movie->getID() .'</li>
-                        <li>Tagline: '. $movie->getTagline() .'</li>
-                        <li>Trailer: <a href="https://www.youtube.com/watch?v='. $movie->getTrailer() .'">link</a></li>
-
-                    </ul>
+                        <li>Tagline: '. $movie->getTagline() .'</li>';
+                        if ($movie->getTrailer() !== null) {
+                            echo '<li>Trailer: <a href="https://www.youtube.com/watch?v='. $movie->getTrailer() .'">link</a></li>';
+                        }
+                    echo'</ul>
                     <img src="'. $tmdb->getImageURL('w185') . $movie->getPoster() .'"/></li>
                     <ul>
                         <li>Genres:

@@ -95,6 +95,21 @@ class ApiBaseObject
         return $persons;
     }
 
+	/** 
+	 * 	Get the ApiObject's genres
+	 *
+	 * 	@return Genre[]
+	 */
+	public function getGenres() {
+		$genres = array();
+
+		foreach ($this->_data['genres'] as $data) {
+			$genres[] = new Genre($data);
+		}
+
+		return $genres;
+	}
+
     /**
      * Get the ApiObject crew
      * @return array of Person

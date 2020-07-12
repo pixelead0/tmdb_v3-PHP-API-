@@ -68,26 +68,20 @@ class Movie extends ApiBaseObject{
 	/** 
 	 * 	Get the Movie's trailer
 	 *
-	 * 	@return string
+	 * 	@return string | null
 	 */
 	public function getTrailer() {
 		$trailers = $this->getTrailers();
-		return $trailers['youtube'][0]['source'];
-	}
 
-	/** 
-	 * 	Get the Movie's genres
-	 *
-	 * 	@return Genre[]
-	 */
-	public function getGenres() {
-		$genres = array();
-
-		foreach ($this->_data['genres'] as $data) {
-			$genres[] = new Genre($data);
+		if (!array_key_exists('youtube', $trailers)) {
+			return null;
 		}
 
-		return $genres;
+		if (count($trailers['youtube']) === 0) {
+			return null;
+		}
+
+		return $trailers['youtube'][0]['source'];
 	}
 
 	/** 

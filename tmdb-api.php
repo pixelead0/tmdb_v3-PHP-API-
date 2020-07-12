@@ -1,7 +1,5 @@
 <?php
 
-namespace buibr\tmdbapi;
-
 /**
  * TMDB API v3 PHP class - wrapper to API version 3 of 'themoviedb.org
  * API Documentation: http://help.themoviedb.org/kb/api/about-3
@@ -101,6 +99,7 @@ namespace buibr\tmdbapi;
  * 		Person images		http://api.themoviedb.org/3/person/287/images
  */
 
+require ("controller/classes/data/ApiBaseObject.php");
 require ("controller/classes/data/Collection.php");
 require ("controller/classes/data/Company.php");
 require ("controller/classes/data/Episode.php");

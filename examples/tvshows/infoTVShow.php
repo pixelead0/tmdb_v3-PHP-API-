@@ -21,6 +21,17 @@
                     </ul>
                     <img src="'. $tmdb->getImageURL('w185') . $tvShow->getPoster() .'"/>
                     <ul>
+                        <li>Genres:
+                            <ul>';
+                            $genres = $tvShow->getGenres();
+                            foreach ($genres as $genre) {
+                                echo '<li>ID: '. $genre->getID() .' </li>';
+                                echo '<li>Name: '. $genre->getName() .' </li>';
+                            }
+                            echo '</ul>
+                        </li>
+                    </ul>
+                    <ul>
                         <li>Cast:
                             <ul>';
                             $cast = $tvShow->getCast();

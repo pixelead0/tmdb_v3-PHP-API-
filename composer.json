@@ -1,9 +1,18 @@
 {
     "name": "buibr/tmdbapi",
     "description": "PHP wrapper for The Movie Data Base API version 3",
-    "keywords": ["markdown", "gfm", "markdown-extra", "fast", "extensible"],
+    "keywords": [
+        "markdown",
+        "gfm",
+        "markdown-extra",
+        "fast",
+        "extensible"
+    ],
     "type": "library",
     "license": "MIT",
+    "scripts": {
+        "documentation": "php vendor/bin/apigen generate controller --destination docs"
+    },
     "authors": [
         {
             "name": "Adan GQ",
@@ -24,5 +33,9 @@
         "psr-4": {
             "buibr\\tmdbapi\\": ""
         }
+    },
+    "require-dev": {
+        "apigen/apigen": "dev-master",
+        "roave/better-reflection": "dev-master#1efdfe5"
     }
 }

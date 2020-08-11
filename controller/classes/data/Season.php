@@ -1,7 +1,8 @@
 <?php
 /**
- * 	This class handles all the data you can get from a Episode
+ * 	This class handles all the data you can get from a Season
  *
+ *	@package TMDB-V3-PHP-API
  * 	@author Alvaro Octal | <a href="https://twitter.com/Alvaro_Octal">Twitter</a>
  * 	@version 0.1
  * 	@date 11/01/2015
@@ -9,18 +10,19 @@
  * 	@copyright Licensed under BSD (http://www.opensource.org/licenses/bsd-license.php)
  */
 
-class Episode{
+class Season{
 
     //------------------------------------------------------------------------------
     // Class Variables
     //------------------------------------------------------------------------------
 
     private $_data;
+    private $_idTVShow;
 
     /**
      * 	Construct Class
      *
-     * 	@param array $data An array with the data of the Episode
+     * 	@param array $data An array with the data of the Season
      */
     public function __construct($data, $idTVShow = 0) {
         $this->_data = $data;
@@ -32,7 +34,7 @@ class Episode{
     //------------------------------------------------------------------------------
 
     /**
-     * 	Get the episode's id
+     * 	Get the Season's id
      *
      * 	@return int
      */
@@ -41,7 +43,7 @@ class Episode{
     }
 
     /**
-     * 	Get the Episode's name
+     * 	Get the Season's name
      *
      * 	@return string
      */
@@ -59,39 +61,55 @@ class Episode{
     }
 
     /**
-     *  Get the Season's number
+     * 	Get the Season's number
      *
-     *  @return int
+     * 	@return int
      */
     public function getSeasonNumber() {
         return $this->_data['season_number'];
     }
 
     /**
-     * 	Get the Episode's number
+     * 	Get the Season's number of episodes
      *
-     * 	@return string
+     * 	@return int
      */
-    public function getEpisodeNumber() {
-        return $this->_data['episode_number'];
+    public function getNumEpisodes() {
+        return count($this->_data['episodes']);
     }
 
     /**
-     *  Get the Episode's Overview
+     *  Get a Seasons's Episode
      *
-     *  @return string
+     *  @param int $numEpisode The episode number
+     * 	@return int
      */
-    public function getOverview() {
-        return $this->_data['overview'];
+    public function getEpisode($numEpisode) {
+        return new Episode($this->_data['episodes'][$numEpisode]);
     }
 
     /**
-     * 	Get the Seasons's Still
+     *  Get the Season's Episodes
+     *
+     * 	@return Episode[]
+     */
+    public function getEpisodes() {
+        $episodes = array();
+
+        foreach($this->_data['episodes'] as $data){
+            $episodes[] = new Episode($data, $this->getTVShowID());
+        }
+
+        return $episodes;
+    }
+
+    /**
+     * 	Get the Seasons's Poster
      *
      * 	@return string
      */
-    public function getStill() {
-        return $this->_data['still_path'];
+    public function getPoster() {
+        return $this->_data['poster_path'];
     }
 
     /**
@@ -104,31 +122,13 @@ class Episode{
     }
 
     /**
-     * 	Get the Episode's vote average
-     *
-     * 	@return int
-     */
-    public function getVoteAverage() {
-        return $this->_data['vote_average'];
-    }
-
-    /**
-     * 	Get the Episode's vote count
-     *
-     * 	@return int
-     */
-    public function getVoteCount() {
-        return $this->_data['vote_count'];
-    }
-
-    /**
      *  Get Generic.<br>
      *  Get a item of the array, you should not get used to use this, better use specific get's.
      *
      * 	@param string $item The item of the $data array you want
      * 	@return array
      */
-    public function get($item = ''){
+    public function get($item = '') {
         return (empty($item)) ? $this->_data : $this->_data[$item];
     }
 
@@ -137,7 +137,7 @@ class Episode{
     //------------------------------------------------------------------------------
 
     /**
-     * 	Get the JSON representation of the Episode
+     * 	Get the JSON representation of the Season
      *
      * 	@return string
      */

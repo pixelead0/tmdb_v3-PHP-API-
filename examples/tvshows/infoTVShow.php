@@ -20,5 +20,36 @@
                         </li>
                     </ul>
                     <img src="'. $tmdb->getImageURL('w185') . $tvShow->getPoster() .'"/>
+                    <ul>
+                        <li>Genres:
+                            <ul>';
+                            $genres = $tvShow->getGenres();
+                            foreach ($genres as $genre) {
+                                echo '<li>ID: '. $genre->getID() .' </li>';
+                                echo '<li>Name: '. $genre->getName() .' </li>';
+                            }
+                            echo '</ul>
+                        </li>
+                    </ul>
+                    <ul>
+                        <li>Cast:
+                            <ul>';
+                            $cast = $tvShow->getCast();
+                            foreach ($cast as $person) {
+                                echo '<li>'. $person->getName() .' </li>';
+                                echo '<img src="'. $tmdb->getImageURL('w185') . $person->getProfile() .'"/></li>';
+                            }
+                            echo '</ul>
+                        </li>
+                        <li>Crew:
+                            <ul>';
+                            $crew = $tvShow->getCrew();
+                            foreach ($crew as $person) {
+                                echo '<li>'. $person->getName() .' </li>';
+                                echo '<img src="'. $tmdb->getImageURL('w185') . $person->getProfile() .'"/></li>';
+                            }
+                            echo '</ul>
+                        </li>
+                    </ul>
                 </div>
             </div>';

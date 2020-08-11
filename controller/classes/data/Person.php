@@ -2,6 +2,7 @@
 /**
  * 	This class handles all the data you can get from a Person
  *
+ *	@package TMDB-V3-PHP-API
  * 	@author Alvaro Octal | <a href="https://twitter.com/Alvaro_Octal">Twitter</a>
  * 	@version 0.1
  * 	@date 11/01/2015
@@ -10,6 +11,14 @@
  */
 
 class Person{
+
+    //------------------------------------------------------------------------------
+    // Class Constants
+    //------------------------------------------------------------------------------
+
+    const MEDIA_TYPE_PERSON = 'person';
+
+    const JOB_DIRECTOR = 'Director';
 
     //------------------------------------------------------------------------------
     // Class Variables
@@ -94,6 +103,15 @@ class Person{
     }
 
     /**
+     *  Get the Person's popularity
+     *
+     *  @return int
+     */
+    public function getJob() {
+        return $this->_data['job'];
+    }
+
+    /**
      *  Get the Person's MovieRoles
      *
      *  @return MovieRole[]
@@ -145,6 +163,14 @@ class Person{
      */
     public function getJSON() {
         return json_encode($this->_data, JSON_PRETTY_PRINT);
+    }
+
+
+    /**
+     * @return string
+     */
+    public function getMediaType(){
+        return self::MEDIA_TYPE_PERSON;
     }
 }
 ?>

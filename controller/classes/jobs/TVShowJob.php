@@ -1,15 +1,17 @@
 <?php
 /**
- * 	This class handles all the data you can get from a TVShowRole
+ * 	This class handles the data you can get from a TVShow job
  *
+ *	@package TMDB-V3-PHP-API
  * 	@author Alvaro Octal | <a href="https://twitter.com/Alvaro_Octal">Twitter</a>
+ *  @author Kostas Stathakos | <a href="https://e-leven.net">e-leven.net</a>
  * 	@version 0.1
- * 	@date 11/01/2015
- * 	@link https://github.com/Alvaroctal/TMDB-PHP-API
+ * 	@date 01/11/2017
+ * 	@link https://github.com/pixelead0/tmdb_v3-PHP-API-
  * 	@copyright Licensed under BSD (http://www.opensource.org/licenses/bsd-license.php)
  */
 
-class TVShowRole extends Role{
+class TVShowJob {
 
     //------------------------------------------------------------------------------
     // Class Variables
@@ -20,12 +22,11 @@ class TVShowRole extends Role{
     /**
      * 	Construct Class
      *
-     * 	@param array $data An array with the data of a TVShowRole
+     * 	@param array $data An array with the data of a TVShow job
      */
-    public function __construct($data, $idPerson) {
+    public function __construct($data, $ipPerson) {
         $this->_data = $data;
-
-        parent::__construct($data, $idPerson);
+        $this->_data['person_id'] = $ipPerson;
     }
 
     //------------------------------------------------------------------------------
@@ -33,7 +34,7 @@ class TVShowRole extends Role{
     //------------------------------------------------------------------------------
 
     /** 
-     *  Get the TVShow's title of the role
+     *  Get the TVShow's title
      *
      *  @return string
      */
@@ -51,7 +52,7 @@ class TVShowRole extends Role{
     }
 
     /** 
-     *  Get the TVShow's original title of the role
+     *  Get the TVShow's original title
      *
      *  @return string
      */
@@ -60,7 +61,7 @@ class TVShowRole extends Role{
     }
 
     /** 
-     *  Get the TVShow's release date of the role
+     *  Get the TVShow's release date
      *
      *  @return string
      */
@@ -68,12 +69,58 @@ class TVShowRole extends Role{
         return $this->_data['first_air_date'];
     }
 
+    /** 
+     *  Get the TVShow's poster
+     *
+     *  @return string
+     */
+    public function getPoster() {
+        return $this->_data['backdrop_path'];
+    }
+
+    /** 
+     *  Get the name of the job
+     *
+     *  @return string
+     */
+    public function getTVShowJob() {
+        return $this->_data['job'];
+    }
+
+    /** 
+     *  Get the job department
+     *
+     *  @return string
+     */
+    public function getTVShowDepartment() {
+        return $this->_data['department'];
+    }
+
+    /** 
+     *  Get the TVShow's overview
+     *
+     *  @return string
+     */
+    public function getTVShowOverview() {
+        return $this->_data['overview'];
+    }
+
+    /** 
+     *  Get the TVShow's episode count
+     *
+     *  @return string
+     */
+    public function getTVShowEpisodeCount() {
+        return $this->_data['episode_count'];
+    }
+
+
     //------------------------------------------------------------------------------
     // Export
     //------------------------------------------------------------------------------
 
     /**
-     *  Get the JSON representation of the Episode
+     *  Get the JSON representation of the TVShow job
      *
      *  @return string
      */

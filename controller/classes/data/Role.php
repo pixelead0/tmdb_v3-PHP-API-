@@ -1,7 +1,8 @@
 <?php
 /**
- * 	This class handles all the data you can get from a Collection
+ * 	This class handles all the data you can get from a Role
  *
+ *	@package TMDB-V3-PHP-API
  * 	@author Alvaro Octal | <a href="https://twitter.com/Alvaro_Octal">Twitter</a>
  * 	@version 0.1
  * 	@date 11/01/2015
@@ -9,7 +10,7 @@
  * 	@copyright Licensed under BSD (http://www.opensource.org/licenses/bsd-license.php)
  */
 
-class Collection {
+class Role{
 
     //------------------------------------------------------------------------------
     // Class Variables
@@ -20,10 +21,11 @@ class Collection {
     /**
      * 	Construct Class
      *
-     * 	@param array $data An array with the data of a Collection
+     * 	@param array $data An array with the data of a Role
      */
-    public function __construct($data) {
+    protected function __construct($data, $ipPerson) {
         $this->_data = $data;
+        $this->_data['person_id'] = $ipPerson;
     }
 
     //------------------------------------------------------------------------------
@@ -31,63 +33,21 @@ class Collection {
     //------------------------------------------------------------------------------
 
     /** 
-     *  Get the Collection's name
+     *  Get the Role's character
      *
      *  @return string
      */
-    public function getName() {
-        return $this->_data['name'];
+    public function getCharacter() {
+        return $this->_data['character'];
     }
 
     /** 
-     *  Get the Collection's id
-     *
-     *  @return int
-     */
-    public function getID() {
-        return $this->_data['id'];
-    }
-
-    /** 
-     *  Get the Collection's overview
-     *
-     *  @return string
-     */
-    public function getOverview() {
-        return $this->_data['overview'];
-    }
-
-    /** 
-     *  Get the Collection's poster
+     *  Get the Movie's poster
      *
      *  @return string
      */
     public function getPoster() {
         return $this->_data['poster_path'];
-    }
-
-    /** 
-     *  Get the Collection's backdrop
-     *
-     *  @return string
-     */
-    public function getBackdrop() {
-        return $this->_data['backdrop_path'];
-    }
-
-    /**
-     *  Get the Collection's Movies
-     *
-     *  @return Movie[]
-     */
-    public function getMovies() {
-        $movies = array();
-
-        foreach($this->_data['parts'] as $data){
-            $movies[] = new Movie($data);
-        }
-
-        return $movies;
     }
 
     /**
@@ -97,7 +57,7 @@ class Collection {
      *  @param string $item The item of the $data array you want
      *  @return array
      */
-    public function get($item = '') {
+    public function get($item = ''){
         return (empty($item)) ? $this->_data : $this->_data[$item];
     }
 }

@@ -1,10 +1,12 @@
 ## Documentation ##
 
+[![Documentation](https://github.com/pixelead0/tmdb_v3-PHP-API-/workflows/Documentation/badge.svg?event=push)](http://pixelead0.github.io/tmdb_v3-PHP-API-/index.html)
+
 [![Join the chat at https://gitter.im/pixelead0/tmdb_v3-PHP-API-](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/pixelead0/tmdb_v3-PHP-API-?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 TMDB API v3 PHP Library - wrapper to [API](http://help.themoviedb.org/kb/api/about-3) version 3 of [themoviedb.org](http://themoviedb.org).
 
-For using this library maybe you should take a look at the full [Documentation](http://code.octal.es/php/tmdb-api/) of this project.
+For using this library maybe you should take a look at the full [Documentation](http://pixelead0.github.io/tmdb_v3-PHP-API-/index.html) of this project.
 
 @package TMDB-V3-PHP-API<br/>
 @author [Pixelead0](https://twitter.com/pixelead0) also on [Github](https://github.com/pixelead0)<br/>
@@ -90,9 +92,9 @@ If you have no $conf array it uses the default conf but you need to have an API 
 			echo $movie->getTitle() .'<br>;
 		}
 	?>
-returns an array of [Movie](http://code.octal.es/php/tmdb-api/class-Movie.html) Objects.
+returns an array of [Movie](http://pixelead0.github.io/tmdb_v3-PHP-API-/class-Movie.html) Objects.
 ### Get a Movie ###
-You should take a look at the Movie class [Documentation](http://code.octal.es/php/tmdb-api/class-Movie.html) and see all the info you can get from a Movie Object.
+You should take a look at the Movie class [Documentation](http://pixelead0.github.io/tmdb_v3-PHP-API-/class-Movie.html) and see all the info you can get from a Movie Object.
 
 	<?php
 		$idMovie = 11;
@@ -100,7 +102,7 @@ You should take a look at the Movie class [Documentation](http://code.octal.es/p
 		// returns a Movie Object
 		echo $movie->getTitle();
 	?>
-returns a [Movie](http://code.octal.es/php/tmdb-api/class-Movie.html) Object.
+returns a [Movie](http://pixelead0.github.io/tmdb_v3-PHP-API-/class-Movie.html) Object.
 ## TV Shows ##
 ### Search a TV Show ###
 	<?php
@@ -111,9 +113,9 @@ returns a [Movie](http://code.octal.es/php/tmdb-api/class-Movie.html) Object.
             echo $tvShow->getName() .'<br>';
 		}
 	?>
-returns an array of [TVShow](http://code.octal.es/php/tmdb-api/class-TVShow.html) Objects.
+returns an array of [TVShow](http://pixelead0.github.io/tmdb_v3-PHP-API-/class-TVShow.html) Objects.
 ### Get a TVShow ###
-You should take a look at the TVShow class [Documentation](http://code.octal.es/php/tmdb-api/class-TVShow.html) and see all the info you can get from a TVShow Object.
+You should take a look at the TVShow class [Documentation](http://pixelead0.github.io/tmdb_v3-PHP-API-/class-TVShow.html) and see all the info you can get from a TVShow Object.
 
 	<?php
 		$idTVShow = 1396;
@@ -121,9 +123,9 @@ You should take a look at the TVShow class [Documentation](http://code.octal.es/
 		// returns a TVShow Object
 		echo $tvShow->getName();
 	?>
-returns a [TVShow](http://code.octal.es/php/tmdb-api/class-TVShow.html) Object.
+returns a [TVShow](http://pixelead0.github.io/tmdb_v3-PHP-API-/class-TVShow.html) Object.
 ### Get a TVShow's Season ###
-You should take a look at the Season class [Documentation](http://code.octal.es/php/tmdb-api/class-Season.html) and see all the info you can get from a Season Object.
+You should take a look at the Season class [Documentation](http://pixelead0.github.io/tmdb_v3-PHP-API-/class-Season.html) and see all the info you can get from a Season Object.
 
 	<?php
 		$idTVShow = 1396;
@@ -132,9 +134,9 @@ You should take a look at the Season class [Documentation](http://code.octal.es/
 		// returns a Season Object
 		echo $season->getName();
 	?>
-returns a [Season](http://code.octal.es/php/tmdb-api/class-Season.html) Object.
+returns a [Season](http://pixelead0.github.io/tmdb_v3-PHP-API-/class-Season.html) Object.
 ### Get a TVShow's Episode ###
-You should take a look at the Episode class [Documentation](http://code.octal.es/php/tmdb-api/class-Episode.html) and see all the info you can get from a Episode Object.
+You should take a look at the Episode class [Documentation](http://pixelead0.github.io/tmdb_v3-PHP-API-/class-Episode.html) and see all the info you can get from a Episode Object.
 
 	<?php
 		$idTVShow = 1396;
@@ -144,7 +146,7 @@ You should take a look at the Episode class [Documentation](http://code.octal.es
 		// returns a Episode Object
 		echo $episode->getName();
 	?>
-returns a [Episode](http://code.octal.es/php/tmdb-api/class-Episode.html) Object.
+returns a [Episode](http://pixelead0.github.io/tmdb_v3-PHP-API-/class-Episode.html) Object.
 ## Persons ##
 ### Search a Person ###
 	<?php
@@ -155,9 +157,9 @@ returns a [Episode](http://code.octal.es/php/tmdb-api/class-Episode.html) Object
             echo $person->getName() .'<br>';
         }
 	?>
-returns an array of [Person](http://code.octal.es/php/tmdb-api/class-Person.html) Objects.
+returns an array of [Person](http://pixelead0.github.io/tmdb_v3-PHP-API-/class-Person.html) Objects.
 ### Get a Person ###
-You should take a look at the Person class [Documentation](http://code.octal.es/php/tmdb-api/class-Person.html) and see all the info you can get from a Person Object.
+You should take a look at the Person class [Documentation](http://pixelead0.github.io/tmdb_v3-PHP-API-/class-Person.html) and see all the info you can get from a Person Object.
 
 	<?php
 		$idPerson = 85;
@@ -165,9 +167,9 @@ You should take a look at the Person class [Documentation](http://code.octal.es/
 		// returns a Person Object
 		echo $person->getName();
 	?>
-returns a [Person](http://code.octal.es/php/tmdb-api/class-Person.html) Object.
+returns a [Person](http://pixelead0.github.io/tmdb_v3-PHP-API-/class-Person.html) Object.
 ### Get Person's Roles ###
-You should take a look at the Role class [Documentation](http://code.octal.es/php/tmdb-api/class-Role.html) and see all the info you can get from a Role Object.
+You should take a look at the Role class [Documentation](http://pixelead0.github.io/tmdb_v3-PHP-API-/class-Role.html) and see all the info you can get from a Role Object.
 
 	<?php
 		$movieRoles = $person->getMovieRoles();
@@ -175,7 +177,7 @@ You should take a look at the Role class [Documentation](http://code.octal.es/ph
             echo $movieRole->getCharacter() .' in '. $movieRole->getMovieTitle() .'<br>';
         }
 	?>
-returns an array of [MovieRole](http://code.octal.es/php/tmdb-api/class-MovieRole.html) Objects.
+returns an array of [MovieRole](http://pixelead0.github.io/tmdb_v3-PHP-API-/class-MovieRole.html) Objects.
 
 	<?php
 		$tvShowRoles = $person->getTVShow();
@@ -183,7 +185,7 @@ returns an array of [MovieRole](http://code.octal.es/php/tmdb-api/class-MovieRol
             echo $tvShowRole->getCharacter() .' in '. $tvShowRole->getMovieName() .'<br>';
         }
 	?>
-returns an array of [TVShowRole](http://code.octal.es/php/tmdb-api/class-TVShowRole.html) Objects.
+returns an array of [TVShowRole](http://pixelead0.github.io/tmdb_v3-PHP-API-/class-TVShowRole.html) Objects.
 ## Collections ##
 ### Search a Collection ###
 
@@ -195,9 +197,9 @@ returns an array of [TVShowRole](http://code.octal.es/php/tmdb-api/class-TVShowR
 			echo $collection->getName() .'<br>';
 		}
 	?>
-returns an array of [Collection](http://code.octal.es/php/tmdb-api/class-Collection.html) Objects.
+returns an array of [Collection](http://pixelead0.github.io/tmdb_v3-PHP-API-/class-Collection.html) Objects.
 ### Get a Collection ###
-You should take a look at the Collection class [Documentation](http://code.octal.es/php/tmdb-api/class-Collection.html) and see all the info you can get from a Collection Object.
+You should take a look at the Collection class [Documentation](http://pixelead0.github.io/tmdb_v3-PHP-API-/class-Collection.html) and see all the info you can get from a Collection Object.
 
 	<?php
 		$idCollection = 121938;
@@ -205,7 +207,7 @@ You should take a look at the Collection class [Documentation](http://code.octal
 		// returns a Collection Object
 		echo $collection->getName();
 	?>
-returns a [Collection](http://code.octal.es/php/tmdb-api/class-Collection.html) Object.
+returns a [Collection](http://pixelead0.github.io/tmdb_v3-PHP-API-/class-Collection.html) Object.
 ## Companies ##
 ### Search a Company ###
 
@@ -217,9 +219,9 @@ returns a [Collection](http://code.octal.es/php/tmdb-api/class-Collection.html) 
 			echo $company->getName() .'<br>';
 		}
 	?>
-returns an array of [Company](http://code.octal.es/php/tmdb-api/class-Company.html) Objects.
+returns an array of [Company](http://pixelead0.github.io/tmdb_v3-PHP-API-/class-Company.html) Objects.
 ### Get a Company ###
-You should take a look at the Company class [Documentation](http://code.octal.es/php/tmdb-api/class-Company.html) and see all the info you can get from a Company Object.
+You should take a look at the Company class [Documentation](http://pixelead0.github.io/tmdb_v3-PHP-API-/class-Company.html) and see all the info you can get from a Company Object.
 
 	<?php
 		$idCompany = 34;
@@ -227,7 +229,7 @@ You should take a look at the Company class [Documentation](http://code.octal.es
 		// returns a Company Object
 		echo $company->getName();
 	?>
-returns a [Company](http://code.octal.es/php/tmdb-api/class-Company.html) Object.
+returns a [Company](http://pixelead0.github.io/tmdb_v3-PHP-API-/class-Company.html) Object.
 ## Issues/Bugs ##
 Bugs are expected, this is still under development, you can [report](https://github.com/Alvaroctal/TMDB-PHP-API/issues) them.
 

@@ -234,4 +234,4 @@ returns a [Company](http://pixelead0.github.io/tmdb_v3-PHP-API-/class-Company.ht
 Bugs are expected, this is still under development, you can [report](https://github.com/Alvaroctal/TMDB-PHP-API/issues) them.
 
 ### TODO List ###
-- Empty :D, you can [propose](https://github.com/Alvaroctal/TMDB-PHP-API/issues) new functionalities.
+- Empty :D, you can [propose](https://github.com/pixelead0/tmdb_v3-PHP-API-/issues) new functionalities.

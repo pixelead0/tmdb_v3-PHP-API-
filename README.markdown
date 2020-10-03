@@ -1,6 +1,6 @@
 ## Documentation ##
 
-[![Documentation](https://github.com/pixelead0/tmdb_v3-PHP-API-/workflows/Documentation/badge.svg?event=push)](http://pixelead0.github.io/tmdb_v3-PHP-API-/index.html)
+[![Documentation](https://github.com/pixelead0/tmdb_v3-PHP-API-/workflows/Documentation/badge.svg?event=push)](https://pixelead0.github.io/tmdb_v3-PHP-API-/index.html)
 
 [![Join the chat at https://gitter.im/pixelead0/tmdb_v3-PHP-API-](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/pixelead0/tmdb_v3-PHP-API-?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 

@@ -35,7 +35,7 @@ foreach ($seasons as $season) {
         $season->getID() .
         '">Season ' .
         $season->getSeasonNumber() .
-        '</a></li>';
+        '</a> EpisodeCount: '.$season->getEpisodeCount().'</li>';
 }
 echo '          </ul>
                         </li>

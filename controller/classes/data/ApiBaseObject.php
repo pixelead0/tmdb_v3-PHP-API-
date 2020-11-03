@@ -137,4 +137,30 @@ class ApiBaseObject
 
         return null;
     }
+	
+    /**
+     * Add a magical call method to allow non defined get methods like $tmdb->getNextEpisodeToAir()
+     *
+     * @param $property
+     * @param array $arguments
+     *
+     * @return array|null
+     * @throws ErrorException
+     */
+    public function __call($property, array $arguments)
+    {
+        if (\strpos($property, 'get') !== 0) {
+            throw new \ErrorException(\sprintf('Call to undefined method: %s::%s', __CLASS__, $property));
+        }
+
+        $property = \preg_replace_callback(
+            '%[A-Z]+%',
+            static function($match) {return  '_'. \strtolower($match[0]);},
+            $property
+        );
+
+        $property = \str_replace('get_', '', $property);
+
+        return $this->get($property);
+    }
 }

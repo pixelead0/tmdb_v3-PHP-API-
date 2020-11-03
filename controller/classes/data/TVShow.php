@@ -85,6 +85,40 @@ class TVShow extends ApiBaseObject{
         return $seasons;
     }
 
+	public function getVideos() {
+        $videos = $this->_data['videos'];
+
+        if (array_key_exists('results', $videos)) {
+            return $videos['results'];
+        }
+
+        return [];
+	}
+
+    /** 
+	 * 	Get the TVShow's trailers
+	 *
+	 * 	@return array
+	 */
+    public function getTrailers() {
+        $trailers = [];
+        $videos = $this->getVideos();
+        
+        foreach($videos as $video) {
+            if($video['type'] !== 'Trailer') {
+                continue;
+            }
+
+            if($video['site'] !== 'YouTube'){
+                continue;
+            }
+
+            $trailers[] = $video;
+        }
+
+        return $trailers;
+	}
+
     /**
      * 	Get the TVShow's Backdrop
      *

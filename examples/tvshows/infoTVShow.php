@@ -17,8 +17,17 @@ echo '  <div class="panel panel-default">
     '</li>
                         <li>Number of Seasons: ' .
     $tvShow->getNumSeasons() .
-    '</li>
-                        <li>Seasons: 
+    '</li>';
+    
+    $trailers = $tvShow->getTrailers();
+    echo '<li>Trailers:</li>';
+    echo '<ul>';
+    foreach ($trailers as $trailer) {
+        echo '<li>Trailer '.$trailer['name'].': <a href="https://www.youtube.com/watch?v=' . $trailer['key'] . '">link</a></li>';
+    }
+    echo '</ul>';
+
+    echo '<li>Seasons: 
                             <ul>';
 $seasons = $tvShow->getSeasons();
 foreach ($seasons as $season) {
@@ -26,7 +35,7 @@ foreach ($seasons as $season) {
         $season->getID() .
         '">Season ' .
         $season->getSeasonNumber() .
-        '</a></li>';
+        '</a> EpisodeCount: '.$season->getEpisodeCount().'</li>';
 }
 echo '          </ul>
                         </li>

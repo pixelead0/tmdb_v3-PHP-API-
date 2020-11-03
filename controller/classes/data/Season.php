@@ -89,6 +89,16 @@ class Season{
     }
 
     /**
+     *  Get a Seasons's Episode Count
+     *
+     *  @param int $numEpisode The episode number
+     * 	@return int
+     */
+    public function getEpisodeCount() {
+        return $this->_data['episode_count'];
+    }
+
+    /**
      *  Get the Season's Episodes
      *
      * 	@return Episode[]

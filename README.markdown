@@ -4,7 +4,7 @@
 
 [![Join the chat at https://gitter.im/pixelead0/tmdb_v3-PHP-API-](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/pixelead0/tmdb_v3-PHP-API-?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-TMDB API v3 PHP Library - wrapper to [API](http://help.themoviedb.org/kb/api/about-3) version 3 of [themoviedb.org](http://themoviedb.org).
+TMDB API v3 PHP Library - wrapper to [API version 3](https://developers.themoviedb.org/3/) of [themoviedb.org](http://themoviedb.org).
 
 For using this library maybe you should take a look at the full [Documentation](http://pixelead0.github.io/tmdb_v3-PHP-API-/index.html) of this project.
 

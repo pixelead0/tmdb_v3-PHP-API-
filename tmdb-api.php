@@ -1,5 +1,4 @@
 <?php
-
 /**
  * TMDB API v3 PHP class - wrapper to API version 3 of 'themoviedb.org
  * API Documentation: http://help.themoviedb.org/kb/api/about-3
@@ -99,21 +98,20 @@
  * 		Person images		http://api.themoviedb.org/3/person/287/images
  */
 
-require ("controller/classes/data/ApiBaseObject.php");
-require ("controller/classes/data/Collection.php");
-require ("controller/classes/data/Company.php");
-require ("controller/classes/data/Episode.php");
-require ("controller/classes/data/Genre.php");
-require ("controller/classes/data/Movie.php");
-require ("controller/classes/data/Person.php");
-require ("controller/classes/data/Role.php");
-require ("controller/classes/data/Season.php");
-require ("controller/classes/data/TVShow.php");
-require ("controller/classes/roles/MovieRole.php");
-require ("controller/classes/roles/TVShowRole.php");
-require ("controller/classes/config/APIConfiguration.php");
-require ("controller/classes/config/Configuration.php");
-
+include("controller/classes/data/ApiBaseObject.php");
+include("controller/classes/data/Collection.php");
+include("controller/classes/data/Company.php");
+include("controller/classes/data/Episode.php");
+include("controller/classes/data/Genre.php");
+include("controller/classes/data/Movie.php");
+include("controller/classes/data/Person.php");
+include("controller/classes/data/Role.php");
+include("controller/classes/data/Season.php");
+include("controller/classes/data/TVShow.php");
+include("controller/classes/roles/MovieRole.php");
+include("controller/classes/roles/TVShowRole.php");
+include("controller/classes/config/APIConfiguration.php");
+include("controller/classes/config/Configuration.php");
 
 class TMDB {
 
@@ -966,5 +964,30 @@ class TMDB {
 
 		return $movies;
 	}
+	public function searchMoviesByYear($year, $page = 1) {
+
+		$movies = array();
+
+		$result = $this->_call('discover/movie', '&page='. $page."&year=".$year);
+
+		foreach($result['results'] as $data){
+			$movies[] = new Movie($data);
+		}
+
+		return $movies;
+	}
+	public function searchTVShowsByYear($year,$page = 1) {
+
+		$tvShows = array();
+
+		$result = $this->_call('discover/tv', '&page='. $page."&first_air_date_year=".$year);
+
+		foreach($result['results'] as $data){
+			$tvShows[] = new TVShow($data);
+		}
+
+		return $tvShows;
+	}
+	
 }
 ?>
